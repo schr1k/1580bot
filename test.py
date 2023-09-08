@@ -1,10 +1,17 @@
-import pandas as pd
 import json
 
-df = pd.read_excel('https://lycu1580.mskobr.ru/files/attach_files/rasp1k.xlsx', sheet_name='Расписание').T.values.tolist()
+import pandas as pd
 
-for i in df:
-    for j in range(2, 10):
-        print(i[j])
-with open('schedule.json', 'w', encoding='utf-8') as f:
-    json.dump(df, f, indent=4, ensure_ascii=False)
+df = pd.read_json('schedule.json').T
+
+weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+
+js = dict()
+for col in range(2, len(df)):
+    psl = {}
+    for i in weekdays:
+        psl[i] = {i: j for i, j in zip(range(1, 9), df[col][:8])}
+    js[df[col][8]] = psl
+
+
+print(json.dumps(js, indent=4, ensure_ascii=False))
