@@ -1,10 +1,10 @@
 ## Setup:
-```console
+```bash
 python -m venv venv
 ```
-```console
+```bash
 venv/bin/activate
 ```
-```console
+```bash
 pip install -r requirements.txt
 ```
