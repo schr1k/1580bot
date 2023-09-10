@@ -37,6 +37,7 @@ async def start(message: Message):
         warning_log.warning(e)
 
 
+# Расписание ===========================================================================================================
 @dp.callback_query(F.data == 'get_schedule')
 async def get_schedule(call: CallbackQuery, state: FSMContext):
     try:
