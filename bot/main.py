@@ -59,7 +59,7 @@ async def send_schedule(message: Message, state: FSMContext):
         warning_log.warning(e)
 
 
-async def main() -> None:
+async def main():
     await dp.start_polling(bot)
 
 
