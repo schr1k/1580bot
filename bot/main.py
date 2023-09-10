@@ -14,7 +14,7 @@ from aiogram.methods import edit_message_text
 import config
 import kb
 from states import *
-from textmaker.textmaker import make_schtext
+from textmaker.textmaker import *
 
 bot = Bot(config.TOKEN)
 dp = Dispatcher()
@@ -55,7 +55,7 @@ async def send_schedule(message: Message, state: FSMContext):
     try:
         print(schedule[message.text])
         if fullmatch(r'\d\d[а-я]\d', message.text):
-            await message.answer(make_schtext(message.text, 'Понедельник'), ensure_ascii=False)
+            await message.answer(get_day_schedule(message.text, 'Понедельник', '..\\excel\\schedule.json'))
             await state.clear()
         else:
             await message.answer('Неправильный формат. Введите класс еще раз.')

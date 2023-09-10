@@ -1,11 +1,14 @@
 import json
-
-with open('../excel/schedule.json', encoding='utf-8') as f:
-    sl = json.load(f)
+from collections import OrderedDict
 
 
-def make_schtext(group, day):
-    day_schedule = sl[group][day]
+def get_json(path_to_json):
+    with open(path_to_json, encoding='utf-8') as f:
+        return json.load(f)
+
+
+def get_day_schedule(group, day, path_to_json):
+    day_schedule = get_json(path_to_json)[group][day]
     s = f'{day}:\n'
     for key, value in day_schedule.items():
         if type(value) is dict:
@@ -13,14 +16,18 @@ def make_schtext(group, day):
     return s
 
 
-def text_find_teacher(name, day):
+def get_teachers_schedule(name, day, path_to_json):
     s = f'{day}:\n'
-    for key, value in sl.items():
+    st = {}
+    for key, value in get_json(path_to_json).items():
         for k, v in value[day].items():
             if type(v) is dict:
-                if name in v["teacher"] and f'на {k}м уроке' not in s:
-                    s += f'на {k}м уроке {name} в {v["cabinet"]}\n'
+                if name in v["teacher"]:
+                    st[k] = v['cabinet']
+    st = dict(OrderedDict(sorted(st.items())))
+    for key, value in st.items():
+        s += f'на {key}м уроке {name} в {st[key]}\n'
+    if len(s) == len(day + ':\n'):
+        s = f'В этот день {name} нет в школе'
     return s
 
-
-print(text_find_teacher('Богатин А.А.', 'Среда'))
