@@ -11,7 +11,7 @@ from aiogram.filters.command import Command
 import config
 import kb
 from states import *
-from textmaker.textmaker import make_schtext
+from textmaker.textmaker import *
 
 bot = Bot(config.TOKEN)
 dp = Dispatcher()
@@ -51,7 +51,7 @@ async def get_schedule(call: CallbackQuery, state: FSMContext):
 async def send_schedule(message: Message, state: FSMContext):
     try:
         if fullmatch(r'\d\d[а-я]\d', message.text):
-            await message.answer(make_schtext(message.text, 'Понедельник'))
+            await message.answer(get_day_schedule(message.text, 'Понедельник', '..\\excel\\1\\schedule1.json'))
             await state.clear()
         else:
             await message.answer('Неправильный формат. Введите класс еще раз.')
