@@ -3,13 +3,10 @@ import json
 import logging
 from re import fullmatch
 
-from aiogram import Bot, Dispatcher, Router, types, F
+from aiogram import Bot, Dispatcher, F
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters.command import Command
-from aiogram.fsm.storage.memory import MemoryStorage
-from aiogram.enums import ParseMode
-from aiogram.methods import edit_message_text
 
 import config
 import kb
@@ -53,13 +50,11 @@ async def get_schedule(call: CallbackQuery, state: FSMContext):
 @dp.message(GetSchedule.group)
 async def send_schedule(message: Message, state: FSMContext):
     try:
-        print(schedule[message.text])
         if fullmatch(r'\d\d[а-я]\d', message.text):
-            await message.answer(make_schtext(message.text, 'Понедельник'), ensure_ascii=False)
+            await message.answer(make_schtext(message.text, 'Понедельник'))
             await state.clear()
         else:
             await message.answer('Неправильный формат. Введите класс еще раз.')
-
     except Exception as e:
         warning_log.warning(e)
 
