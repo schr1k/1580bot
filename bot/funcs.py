@@ -16,18 +16,22 @@ def get_day_schedule(group, day, path_to_json):
     return s
 
 
-def get_teachers_schedule(name, day, path_to_json):
+def get_teachers_day_schedule(surname: str, day: str, path_to_json) -> str:
     s = f'{day}:\n'
     st = {}
+    c = 0
     for key, value in get_json(path_to_json).items():
         for k, v in value[day].items():
             if type(v) is dict:
-                if name in v["teacher"]:
+                if surname in v["teacher"]:
                     st[k] = v['cabinet']
+                    c += 1
     st = dict(OrderedDict(sorted(st.items())))
     for key, value in st.items():
-        s += f'на {key}м уроке {name} в {st[key]}\n'
-    if len(s) == len(day + ':\n'):
-        s = f'В этот день {name} нет в школе'
+        s += f'на {key}м уроке {surname} в {st[key]}\n'
+    if c == 0:
+        s = 'Такого учителя нет в корпусе'
+    elif len(s) == len(day + ':\n'):
+        s = f'В этот день {surname} нет в школе'
     return s
 
