@@ -1,5 +1,4 @@
 import json
-from collections import OrderedDict
 
 
 def get_json(path_to_json):
@@ -7,16 +6,17 @@ def get_json(path_to_json):
         return json.load(f)
 
 
-def get_day_schedule(group, day, path_to_json):
+def get_student_day_schedule(group: str, day: str, path_to_json: str) -> str:
     day_schedule = get_json(path_to_json)[group][day]
     s = f'{day}:\n'
     for key, value in day_schedule.items():
         if type(value) is dict:
-            s += f'{key}й урок - {value["lesson"]}, в {value["cabinet"]}\n'
+            s += f'{key} урок - {value["lesson"]}, в {value["cabinet"]}.\n'
     return s
+# TODO(Матвей): выдавать 'В <день> у <класс> нет уроков при отсутствии уроков'
 
 
-def get_teachers_day_schedule(surname: str, day: str, path_to_json) -> str:
+def get_teachers_day_schedule(surname: str, day: str, path_to_json: str) -> str:
     s = f'{day}:\n'
     st = {}
     c = 0
@@ -26,12 +26,13 @@ def get_teachers_day_schedule(surname: str, day: str, path_to_json) -> str:
                 if surname in v["teacher"]:
                     st[k] = v['cabinet']
                     c += 1
-    st = dict(OrderedDict(sorted(st.items())))
-    for key, value in st.items():
-        s += f'на {key}м уроке {surname} в {st[key]}\n'
+    sst = {}
+    for i in sorted(list(st.keys()), key=lambda x: int(x)):
+        sst[i] = st[i]
+    for key, value in sst.items():
+        s += f'На {key} уроке {surname} в {sst[key]}.\n'
     if c == 0:
-        s = 'Такого учителя нет в корпусе'
+        s = 'Учитель не найден'
     elif len(s) == len(day + ':\n'):
         s = f'В этот день {surname} нет в школе'
     return s
-

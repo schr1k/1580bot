@@ -18,7 +18,7 @@ dp = Dispatcher(storage=MemoryStorage())
 
 weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
 
-with open('../excel/1/schedule1.json', encoding='utf-8') as f:
+with open('../excel/schedule.json', encoding='utf-8') as f:
     schedule = json.load(f)
 
 logging.basicConfig(filename="all_log.log", level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -39,57 +39,77 @@ async def start(message: Message):
         warning_log.warning(e)
 
 
-@dp.callback_query(F.data == 'find_teacher')
-async def get_teachers_name(call: CallbackQuery, state: FSMContext):
+# Получить расписание ========================================================================================================
+@dp.callback_query(F.data == 'get_student_schedule')
+async def get_student_schedule(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text='Введите фамилию учителя')
-        await state.set_state(GetTeachersSchedule.teachers_name)
+                                    text='Введите название вашего класса (например 10а1).')
+        await state.set_state(GetStudentSchedule.group)
     except Exception as e:
         warning_log.warning(e)
 
 
-@dp.message(GetTeachersSchedule.teachers_name)
-async def chose_weekday(message: Message, state: FSMContext):
+@dp.message(GetStudentSchedule.group)
+async def set_student_group(message: Message, state: FSMContext):
     try:
-        await state.update_data(teacher=message.text)
-        await message.answer('Выберите день недели', reply_markup=kb.week_kb.as_markup())
-        await state.set_state(GetTeachersSchedule.weekday)
+        print(message.text)
+        if fullmatch(r'\d\d[а-яА-Я]\d', message.text):
+            group = message.text[:2] + message.text[2].lower() + message.text[3]
+            await state.update_data(group=group)
+            await message.answer('Выберите день недели.', reply_markup=kb.student_week_kb.as_markup())
+            await state.set_state(GetStudentSchedule.weekday)
+        else:
+            await message.answer('Класс не найден. Повторите ввод.')
     except Exception as e:
         warning_log.warning(e)
 
 
-@dp.callback_query(GetTeachersSchedule.weekday)
-async def get_teachers_schedule(call: CallbackQuery, state: FSMContext):
+@dp.callback_query(GetStudentSchedule.weekday)
+@dp.callback_query(F.data.split('-')[0] == 'student')
+async def set_student_weekday(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         data = await state.get_data()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=get_teachers_day_schedule(data['teacher'], call.data.split('-')[1], '../excel/1/schedule1.json'))
+                                    text=get_student_day_schedule(data['group'], call.data.split('-')[1], '../excel/schedule.json'))
         await state.clear()
     except Exception as e:
         warning_log.warning(e)
 
 
-@dp.callback_query(F.data == 'get_schedule')
-async def get_schedule(call: CallbackQuery, state: FSMContext):
+# Найти учителя ========================================================================================================
+@dp.callback_query(F.data == 'get_teacher_schedule')
+async def get_teacher_schedule(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
-        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id, text='Введите название вашего класса (например 10а1)')
-        await state.set_state(GetSchedule.group)
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Введите фамилию учителя.')
+        await state.set_state(GetTeacherSchedule.teacher_surname)
     except Exception as e:
         warning_log.warning(e)
 
 
-@dp.message(GetSchedule.group)
-async def send_schedule(message: Message, state: FSMContext):
+@dp.message(GetTeacherSchedule.teacher_surname)
+async def set_teacher_surname(message: Message, state: FSMContext):
     try:
-        if fullmatch(r'\d\d[а-я]\d', message.text):
-            await message.answer(get_day_schedule(message.text, 'Понедельник', '../excel/1/schedule1.json'))
-            await state.clear()
-        else:
-            await message.answer('Неправильный формат. Введите класс еще раз.')
+        await state.update_data(teacher=message.text)
+        await message.answer('Выберите день недели.', reply_markup=kb.teacher_week_kb.as_markup())
+        await state.set_state(GetTeacherSchedule.weekday)
+    except Exception as e:
+        warning_log.warning(e)
+
+
+@dp.callback_query(GetTeacherSchedule.weekday)
+@dp.callback_query(F.data.split('-')[0] == 'teacher')
+async def set_teacher_weekday(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        data = await state.get_data()
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text=get_teachers_day_schedule(data['teacher'].capitalize(), call.data.split('-')[1], '../excel/schedule.json'))
+        await state.clear()
     except Exception as e:
         warning_log.warning(e)
 
