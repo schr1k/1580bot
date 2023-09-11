@@ -11,12 +11,10 @@ def get_student_day_schedule(group: str, day: str, path_to_json: str) -> str:
     s = f'Расписание для {group} в {day}:\n'
     for key, value in day_schedule.items():
         if type(value) is dict:
-            s += f'<b>{key} урок</b> - {value["lesson"]}, <b>в {value["cabinet"]}</b>.\n'
+            s += f'<b>{key}</b> урок - <b>{value["lesson"]}</b>, в <b>{value["cabinet"]}</b>.\n'
     if s == f'Расписание для {group} в {day}:\n':
         return f'В {day} у {group} нет уроков'
     return s
-# TODO(Матвей): выдавать 'В <день> у <класс> нет уроков при отсутствии уроков'
-# TODO(Матвей): выдавать 'Расписание для <класс> в <день>'
 
 
 def get_teachers_day_schedule(surname: str, day: str, path_to_json: str) -> str:
@@ -35,7 +33,7 @@ def get_teachers_day_schedule(surname: str, day: str, path_to_json: str) -> str:
     for i in sorted(list(st.keys()), key=lambda x: int(x)):
         sst[i] = st[i]
     for key, value in sst.items():
-        s += f'На {key} уроке {value["teacher"]} в {value["cabinet"]}.\n'
+        s += f'На <b>{key}</b> уроке <b>{value["teacher"]}</b> в <b>{value["cabinet"]}</b>.\n'
     if c == 0:
         s = 'Учитель не найден'
     elif len(s) == len(day + ':\n'):

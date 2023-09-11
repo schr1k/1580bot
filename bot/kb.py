@@ -2,10 +2,15 @@ from aiogram.types import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
+# Назад ================================================================================================================
+to_main = InlineKeyboardButton(text='🔙 На Главную', callback_data='to_main')
+to_main_kb = InlineKeyboardBuilder().add(to_main)
+
+
 # Главная ==============================================================================================================
-get_schedule = InlineKeyboardButton(text='Получить расписание', callback_data='get_student_schedule')
-find_teacher = InlineKeyboardButton(text='Найти учителя', callback_data='get_teacher_schedule')
-main_kb = InlineKeyboardBuilder().add(get_schedule, find_teacher)
+get_schedule = InlineKeyboardButton(text='🗓 Получить расписание', callback_data='get_student_schedule')
+find_teacher = InlineKeyboardButton(text='🔍 Найти учителя', callback_data='get_teacher_schedule')
+main_kb = InlineKeyboardBuilder().row(get_schedule).row(find_teacher)
 
 
 # Дни Недели для учителей ==============================================================================================
