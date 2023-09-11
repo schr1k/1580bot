@@ -11,14 +11,14 @@ from aiogram.filters.command import Command
 import config
 import kb
 from states import *
-from bot.funcs import *
+from funcs import *
 
 bot = Bot(config.TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
 
 weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
 
-with open('../excel/schedule.json', encoding='utf-8') as f:
+with open('excel/schedule.json', encoding='utf-8') as f:
     schedule = json.load(f)
 
 logging.basicConfig(filename="all_log.log", level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
