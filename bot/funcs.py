@@ -14,6 +14,7 @@ def get_student_day_schedule(group: str, day: str, path_to_json: str) -> str:
             s += f'{key} урок - {value["lesson"]}, в {value["cabinet"]}.\n'
     return s
 # TODO(Матвей): выдавать 'В <день> у <класс> нет уроков при отсутствии уроков'
+# TODO(Матвей): выдавать 'Расписание для <класс> в <день>'
 
 
 def get_teachers_day_schedule(surname: str, day: str, path_to_json: str) -> str:
