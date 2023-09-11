@@ -15,4 +15,4 @@ wednesday = InlineKeyboardButton(text='Среда', callback_data='day-Сред�
 thursday = InlineKeyboardButton(text='Четверг', callback_data='day-Четверг')
 friday = InlineKeyboardButton(text='Пятница', callback_data='day-Пятница')
 saturday = InlineKeyboardButton(text='Суббота', callback_data='day-Суббота')
-week_kb = InlineKeyboardBuilder().adjust(3, 3).add(monday, tuesday, wednesday, thursday, friday, saturday)
+week_kb = InlineKeyboardBuilder().row(monday, tuesday, wednesday).row(thursday, friday, saturday)

@@ -7,3 +7,4 @@ class GetSchedule(StatesGroup):
 
 class GetTeachersSchedule(StatesGroup):
     teachers_name = State()
+    weekday = State()
