@@ -11,7 +11,7 @@ from aiogram.filters.command import Command
 import config
 import kb
 from states import *
-from bot.funcs import *
+from funcs import *
 
 bot = Bot(config.TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
@@ -66,7 +66,6 @@ async def get_student_schedule(call: CallbackQuery, state: FSMContext):
 @dp.message(GetStudentSchedule.group)
 async def set_student_group(message: Message, state: FSMContext):
     try:
-        print(message.text)
         if fullmatch(r'\d\d[а-яА-Я]\d', message.text):
             group = message.text[:2] + message.text[2].lower() + message.text[3]
             await state.update_data(group=group)
