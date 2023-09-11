@@ -8,10 +8,12 @@ def get_json(path_to_json):
 
 def get_student_day_schedule(group: str, day: str, path_to_json: str) -> str:
     day_schedule = get_json(path_to_json)[group][day]
-    s = f'{day}:\n'
+    s = f'Расписание для {group} в {day}:\n'
     for key, value in day_schedule.items():
         if type(value) is dict:
             s += f'{key} урок - {value["lesson"]}, в {value["cabinet"]}.\n'
+    if s == f'Расписание для {group} в {day}:\n':
+        return f'В {day} у {group} нет уроков'
     return s
 # TODO(Матвей): выдавать 'В <день> у <класс> нет уроков при отсутствии уроков'
 # TODO(Матвей): выдавать 'Расписание для <класс> в <день>'
