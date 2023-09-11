@@ -55,5 +55,11 @@ def make_schedule(building: int):
                     schedule[excel[column][i]][weekdays[c]] = {}
                     schedule[excel[column][i]][weekdays[c]] = day_schedule
 
-    with open(f'schedule{building}.json', 'w', encoding='utf-8') as f:
+    with open('../schedule.json', 'r', encoding='utf-8') as f:
+        all_schedule = json.load(f, indent=4, ensure_ascii=False)
+
+    for i, j in schedule:
+        all_schedule[i] = j
+
+    with open('../schedule.json', 'w', encoding='utf-8') as f:
         json.dump(schedule, f, indent=4, ensure_ascii=False)
