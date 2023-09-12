@@ -8,10 +8,13 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters.command import Command
 
+from db import DB
 import config
 import kb
 from states import *
 from funcs import *
+
+db = DB()
 
 bot = Bot(config.TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
@@ -34,6 +37,8 @@ warning_log.addHandler(fh)
 @dp.message(Command('start'))
 async def start(message: Message):
     try:
+        if not await db.user_exists(str(message.from_user.id)):
+            await db.new_user(str(message.from_user.id), message.from_user.username)
         name = message.from_user.username if message.from_user.username is not None else message.from_user.first_name
         await message.answer(f'👋 Привет, {name}.', reply_markup=kb.main_kb.as_markup())
     except Exception as e:
@@ -126,6 +131,7 @@ async def set_teacher_weekday(call: CallbackQuery, state: FSMContext):
 
 
 async def main():
+    await db.connect()
     await dp.start_polling(bot)
 
 
