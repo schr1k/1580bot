@@ -1,6 +1,8 @@
 import pandas as pd
 import simplejson as json
 
+from bot import config
+
 
 def load_schedule(building: int):
     df = pd.read_excel(f'https://lycu1580.mskobr.ru/files/attach_files/rasp{building}k.xlsx', sheet_name='Расписание').T.values.tolist()
@@ -54,12 +56,11 @@ def make_schedule(building: int):
                 else:
                     schedule[excel[column][i]][weekdays[c]] = {}
                     schedule[excel[column][i]][weekdays[c]] = day_schedule
+    with open(config.SCHEDULE_PATH, 'r', encoding='utf-8') as f:
+        all_schedule = json.load(f)
 
-    with open('../schedule.json', 'r', encoding='utf-8') as f:
-        all_schedule = json.load(f, indent=4, ensure_ascii=False)
-
-    for i, j in schedule:
+    for i, j in schedule.items():
         all_schedule[i] = j
 
-    with open('../schedule.json', 'w', encoding='utf-8') as f:
-        json.dump(schedule, f, indent=4, ensure_ascii=False)
+    with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
+        json.dump(all_schedule, f, indent=4, ensure_ascii=False)
