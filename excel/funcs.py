@@ -4,14 +4,14 @@ import simplejson as json
 from bot import config
 
 
-def load_schedule(building: int):
-    df = pd.read_excel(f'https://lycu1580.mskobr.ru/files/attach_files/rasp{building}k.xlsx', sheet_name='Расписание').T.values.tolist()
-    with open(f'excel{building}.json', 'w', encoding='utf-8') as f:
+def load_schedule(link: str):
+    df = pd.read_excel(link).T.values.tolist()
+    with open(f'excel.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
 
-def make_schedule(building: int):
-    with open(f'excel{building}.json', encoding='utf-8') as f:
+def make_schedule():
+    with open(f'excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
     excel = excel[2:46] + excel[48:-2]
@@ -26,7 +26,6 @@ def make_schedule(building: int):
 
     for column in range(len(excel))[::2]:
         for c, i in enumerate(range(0, len(excel[column]), 9)):
-            class_name = excel[column][0]
             lessons = list(zip(excel[column][i + 1: i + 9], excel[column + 1][i + 1: i + 9]))
             for j in range(len(lessons)):
                 if lessons[j] is not None and lessons[j][0] is not None:
