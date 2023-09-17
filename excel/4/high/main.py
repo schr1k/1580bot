@@ -1,11 +1,8 @@
-import pandas as pd
-import simplejson as json
-
-from bot import config
+from excel.funcs import *
 
 
 def main():
-    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/rasp2k_2.xlsx', header=None).T.values.tolist()
+    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/rasp_symbol_2.xlsx', header=None).T.values.tolist()
     with open(f'excel.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 

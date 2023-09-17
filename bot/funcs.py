@@ -1,6 +1,7 @@
 import json
 
 
+# TODO(Матвей): путь к json и так прописан в конфиге
 def get_json(path_to_json):
     with open(path_to_json, encoding='utf-8') as f:
         return json.load(f)
