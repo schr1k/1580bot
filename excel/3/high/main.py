@@ -1,15 +1,12 @@
-import pandas as pd
-import simplejson as json
-
-from bot import config
+from excel.funcs import *
 
 
 def main():
-    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/rasp2k_2.xlsx', header=None).T.values.tolist()
+    df = pd.read_excel('https://docs.google.com/spreadsheets/d/1-M70uv_a6ufQFZUh03MD8Wi_Fnx35AUB7yFAAF5Br5Q/export?format=xlsx', header=None).T.values.tolist()
     with open(f'excel.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
-    with open('excel.json', encoding='utf-8') as f:
+    with open(f'excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
     excel = excel[2:46] + excel[48:-2]
@@ -19,17 +16,17 @@ def main():
     schedule = {}
 
     for column in range(len(excel))[::2]:
-        for c, i in enumerate(range(0, len(excel[column]), 9)):
+        for c, i in enumerate(range(0, len(excel[column]), 10)):
             lessons = list(zip(excel[column][i + 1: i + 9], excel[column + 1][i + 1: i + 9]))
             for j in range(len(lessons)):
                 if lessons[j] is not None and lessons[j][0] is not None:
-                    sp = lessons[j][0].split('\n')
+                    sp = lessons[j][0].split('\n ')
                     sp.append(lessons[j][1])
                     if len(sp) == 3:
-                        sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': sp[2]}
+                        sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': str(sp[2]).replace('\n', '')}
                     else:
 
-                        sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': sp[1]}
+                        sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': str(sp[1])}
 
                     lessons[j] = sl
             day_schedule = {}
@@ -49,6 +46,7 @@ def main():
                 else:
                     schedule[excel[column][i]][weekdays[c]] = {}
                     schedule[excel[column][i]][weekdays[c]] = day_schedule
+
     with open(config.SCHEDULE_PATH, 'r', encoding='utf-8') as f:
         all_schedule = json.load(f)
 

@@ -9,3 +9,7 @@ class GetStudentSchedule(StatesGroup):
 class GetTeacherSchedule(StatesGroup):
     teacher_surname = State()
     weekday = State()
+
+
+class MessageAll(StatesGroup):
+    message = State()
