@@ -69,7 +69,7 @@ async def get_student_schedule(call: CallbackQuery, state: FSMContext):
 @dp.message(GetStudentSchedule.group)
 async def set_student_group(message: Message, state: FSMContext):
     try:
-        if fullmatch(r'\d?[а-яА-Я]\d', message.text):
+        if fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
             await state.update_data(group=message.text.lower())
             await message.answer('Выберите день недели.', reply_markup=kb.student_week_kb)
             await state.set_state(GetStudentSchedule.weekday)

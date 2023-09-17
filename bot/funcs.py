@@ -7,6 +7,7 @@ def get_json(path_to_json):
         return json.load(f)
 
 
+# TODO(Матвей): сделать обнаружение отсутствия номера кабинета для младших классов
 def get_student_day_schedule(group: str, day: str, path_to_json: str) -> str:
     day_schedule = get_json(path_to_json)[group][day]
     s = f'Расписание для {group} в {day}:\n'
@@ -40,4 +41,3 @@ def get_teachers_day_schedule(surname: str, day: str, path_to_json: str) -> str:
     elif len(s) == len(day + ':\n'):
         s = f'В этот день {surname} нет в школе'
     return s
-
