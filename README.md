@@ -14,7 +14,7 @@
 4. Change credentials in config.py.
 ```python
 TOKEN = 'Token from BotFather'
-
+ADMINS = ['Your telegram id']
 SCHEDULE_PATH = '<absolute path to>/schedule.json'
 
 POSTGRES_USER = 'postgres'
