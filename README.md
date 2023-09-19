@@ -1,15 +1,15 @@
 ## Setup:
 1. Create virtual enviroment.
 ```bash
- python -m venv venv
+python -m venv venv
 ```
 2. Activate it.
 ```bash
- venv/bin/activate
+venv/bin/activate
 ```
 3. Install requirements.
 ```bash
- pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 4. Change credentials in config.py.
 ```python
