@@ -1,5 +1,5 @@
 import json
-from config import SCHEDULE_PATH
+from bot.config import SCHEDULE_PATH
 
 
 def get_json():
@@ -7,13 +7,14 @@ def get_json():
         return json.load(f)
 
 
-# TODO(Матвей): сделать обнаружение отсутствия номера кабинета для младших классов
 def get_student_day_schedule(group: str, day: str) -> str:
     day_schedule = get_json()[group][day]
     s = f'Расписание для {group} в {day}:\n'
     for key, value in day_schedule.items():
-        if type(value) is dict:
+        if type(value) is dict and 'cabinet' in value.keys():
             s += f'<b>{key}</b> урок - <b>{value["lesson"]}</b>, в <b>{value["cabinet"]}</b>.\n'
+        elif type(value) is dict:
+            s += f'<b>{key}</b> урок - <b>{value["lesson"]}</b>\n'
     if s == f'Расписание для {group} в {day}:\n':
         return f'В {day} у {group} нет уроков'
     return s

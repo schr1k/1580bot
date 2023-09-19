@@ -1,7 +1,6 @@
 import asyncpg
-import asyncio
 
-import config
+from bot import config
 
 
 class DB:

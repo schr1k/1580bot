@@ -1,7 +1,7 @@
 from aiogram.types import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-import config
+from bot import config
 
 # Назад ================================================================================================================
 to_main = InlineKeyboardButton(text='🔙 На Главную', callback_data='to_main')
