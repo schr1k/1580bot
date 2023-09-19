@@ -1,15 +1,15 @@
 import json
+from config import SCHEDULE_PATH
 
 
-# TODO(Матвей): путь к json и так прописан в конфиге
-def get_json(path_to_json):
-    with open(path_to_json, encoding='utf-8') as f:
+def get_json():
+    with open(SCHEDULE_PATH, encoding='utf-8') as f:
         return json.load(f)
 
 
 # TODO(Матвей): сделать обнаружение отсутствия номера кабинета для младших классов
-def get_student_day_schedule(group: str, day: str, path_to_json: str) -> str:
-    day_schedule = get_json(path_to_json)[group][day]
+def get_student_day_schedule(group: str, day: str) -> str:
+    day_schedule = get_json()[group][day]
     s = f'Расписание для {group} в {day}:\n'
     for key, value in day_schedule.items():
         if type(value) is dict:
@@ -19,11 +19,11 @@ def get_student_day_schedule(group: str, day: str, path_to_json: str) -> str:
     return s
 
 
-def get_teachers_day_schedule(surname: str, day: str, path_to_json: str) -> str:
+def get_teachers_day_schedule(surname: str, day: str) -> str:
     s = f'{day}:\n'
     st = {}
     c = 0
-    for key, value in get_json(path_to_json).items():
+    for key, value in get_json().items():
         for k, v in value[day].items():
             if type(v) is dict:
                 if surname in v["teacher"]:
