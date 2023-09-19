@@ -1,5 +1,5 @@
 ## Setup:
-1. Create virtual enviroment.
+1. Create virtual environment.
 ```bash
 python -m venv venv
 ```
