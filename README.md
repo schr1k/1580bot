@@ -1,20 +1,20 @@
 ## Setup:
-1. Create virtual enviroment.
+1. Create virtual environment.
 ```bash
- python -m venv venv
+python -m venv venv
 ```
 2. Activate it.
 ```bash
- venv/bin/activate
+venv/bin/activate
 ```
 3. Install requirements.
 ```bash
- pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 4. Change credentials in config.py.
 ```python
 TOKEN = 'Token from BotFather'
-
+ADMINS = ['Your telegram id']
 SCHEDULE_PATH = '<absolute path to>/schedule.json'
 
 POSTGRES_USER = 'postgres'

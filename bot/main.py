@@ -9,7 +9,7 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters.command import Command
 
 from db import DB
-import config
+from bot import config
 import kb
 from states import *
 from funcs import *
@@ -69,7 +69,7 @@ async def get_student_schedule(call: CallbackQuery, state: FSMContext):
 @dp.message(GetStudentSchedule.group)
 async def set_student_group(message: Message, state: FSMContext):
     try:
-        if fullmatch(r'\d?[а-яА-Я]\d', message.text):
+        if fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
             await state.update_data(group=message.text.lower())
             await message.answer('Выберите день недели.', reply_markup=kb.student_week_kb)
             await state.set_state(GetStudentSchedule.weekday)
@@ -86,7 +86,7 @@ async def set_student_weekday(call: CallbackQuery, state: FSMContext):
         await call.answer()
         data = await state.get_data()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=get_student_day_schedule(data['group'], call.data.split('-')[1], config.SCHEDULE_PATH), parse_mode='HTML', reply_markup=kb.to_main_kb)
+                                    text=get_student_day_schedule(data['group'], call.data.split('-')[1]), parse_mode='HTML', reply_markup=kb.to_main_kb)
         await state.clear()
     except Exception as e:
         errors.error(e)
@@ -121,7 +121,7 @@ async def set_teacher_weekday(call: CallbackQuery, state: FSMContext):
         await call.answer()
         data = await state.get_data()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=get_teachers_day_schedule(data['teacher'].capitalize(), call.data.split('-')[1], config.SCHEDULE_PATH), parse_mode='HTML', reply_markup=kb.to_main_kb)
+                                    text=get_teachers_day_schedule(data['teacher'].capitalize(), call.data.split('-')[1]), parse_mode='HTML', reply_markup=kb.to_main_kb)
         await state.clear()
     except Exception as e:
         errors.error(e)
