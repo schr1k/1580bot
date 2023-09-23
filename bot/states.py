@@ -13,3 +13,8 @@ class GetTeacherSchedule(StatesGroup):
 
 class MessageAll(StatesGroup):
     message = State()
+
+
+class SuggestIdea(StatesGroup):
+    idea = State()
+
