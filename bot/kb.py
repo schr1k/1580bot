@@ -12,7 +12,8 @@ to_main_kb = InlineKeyboardBuilder().add(to_main).as_markup()
 def main_kb(tg: str):
     get_schedule = InlineKeyboardButton(text='🗓 Получить расписание', callback_data='get_student_schedule')
     find_teacher = InlineKeyboardButton(text='🔍 Найти учителя', callback_data='get_teacher_schedule')
-    kb = InlineKeyboardBuilder().row(get_schedule).row(find_teacher)
+    suggest_idea = InlineKeyboardButton(text='💡 Предложить идею', callback_data='suggest_idea')
+    kb = InlineKeyboardBuilder().row(get_schedule).row(find_teacher).row(suggest_idea)
     if tg in config.ADMINS:
         kb.row(InlineKeyboardButton(text='👨‍💻 Админ панель', callback_data='admin_panel'))
     return kb.as_markup()

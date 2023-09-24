@@ -60,7 +60,7 @@ async def get_student_schedule(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text='Введите название вашего класса (например 10а1).')
+                                    text='Введите название вашего класса (например 10а1).', reply_markup=kb.to_main_kb)
         await state.set_state(GetStudentSchedule.group)
     except Exception as e:
         errors.error(e)
@@ -98,7 +98,7 @@ async def get_teacher_schedule(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text='Введите фамилию учителя.')
+                                    text='Введите фамилию учителя.', reply_markup=kb.to_main_kb)
         await state.set_state(GetTeacherSchedule.teacher_surname)
     except Exception as e:
         errors.error(e)
@@ -122,6 +122,31 @@ async def set_teacher_weekday(call: CallbackQuery, state: FSMContext):
         data = await state.get_data()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
                                     text=get_teachers_day_schedule(data['teacher'].capitalize(), call.data.split('-')[1]), parse_mode='HTML', reply_markup=kb.to_main_kb)
+        await state.clear()
+    except Exception as e:
+        errors.error(e)
+
+
+# Предложить идею ======================================================================================================
+@dp.callback_query(F.data == 'suggest_idea')
+async def suggest_idea(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Отправьте свою идею и она будет рассмотрена специальной комиссией \(||нет||\)\.',
+                                    parse_mode='MarkdownV2', reply_markup=kb.to_main_kb)
+        await state.set_state(SuggestIdea.idea)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.message(SuggestIdea.idea)
+async def set_idea(message: Message, state: FSMContext):
+    try:
+        await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - @{message.from_user.username}\n'
+                                                                   f'Сообщение - {message.text}')
+        await message.answer(text='Спасибо за предложение\! Идея уже передана комиссии \(||нет||\)\.',
+                             parse_mode='MarkdownV2', reply_markup=kb.to_main_kb)
         await state.clear()
     except Exception as e:
         errors.error(e)
@@ -158,7 +183,7 @@ async def set_message(message: Message, state: FSMContext):
     try:
         for tg in await db.get_users():
             await bot.send_message(tg, message.text)
-        await message.answer('Сообщение отправлено.')
+        await message.answer('Сообщение отправлено.', reply_markup=kb.to_main_kb)
         await state.clear()
     except Exception as e:
         errors.error(e)
