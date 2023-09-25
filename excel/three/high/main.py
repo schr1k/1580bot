@@ -1,12 +1,15 @@
-from excel.funcs import *
+import pandas as pd
+import simplejson as json
+
+from bot import config
 
 
-def main():
+async def make_schedule_3h():
     df = pd.read_excel('https://docs.google.com/spreadsheets/d/1-M70uv_a6ufQFZUh03MD8Wi_Fnx35AUB7yFAAF5Br5Q/export?format=xlsx', header=None).T.values.tolist()
-    with open(f'excel.json', 'w', encoding='utf-8') as f:
+    with open(f'{config.PROJECT_PATH}excel/three/high/excel.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
-    with open(f'excel.json', encoding='utf-8') as f:
+    with open(f'{config.PROJECT_PATH}excel/three/high/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
     excel = excel[2:46] + excel[48:-2]
@@ -23,10 +26,10 @@ def main():
                     sp = lessons[j][0].split('\n ')
                     sp.append(lessons[j][1])
                     if len(sp) == 3:
-                        sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': str(sp[2]).replace('\n', '')}
+                        sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': str(sp[2]).replace('\n', ''), 'building': '3'}
                     else:
 
-                        sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': str(sp[1])}
+                        sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': str(sp[1]), 'building': '3'}
 
                     lessons[j] = sl
             day_schedule = {}
@@ -56,6 +59,3 @@ def main():
     with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
 
-
-if __name__ == '__main__':
-    main()
