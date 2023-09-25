@@ -86,7 +86,8 @@ async def set_student_weekday(call: CallbackQuery, state: FSMContext):
         await call.answer()
         data = await state.get_data()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=get_student_day_schedule(data['group'], call.data.split('-')[1]), parse_mode='HTML', reply_markup=kb.to_main_kb)
+                                    text=get_student_day_schedule(data['group'], call.data.split('-')[1]),
+                                    parse_mode='HTML', reply_markup=kb.to_main_kb)
         await state.clear()
     except Exception as e:
         errors.error(e)
@@ -121,7 +122,8 @@ async def set_teacher_weekday(call: CallbackQuery, state: FSMContext):
         await call.answer()
         data = await state.get_data()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=get_teachers_day_schedule(data['teacher'].capitalize(), call.data.split('-')[1]), parse_mode='HTML', reply_markup=kb.to_main_kb)
+                                    text=get_teachers_day_schedule(data['teacher'].capitalize(), call.data.split('-')[1]),
+                                    parse_mode='HTML', reply_markup=kb.to_main_kb)
         await state.clear()
     except Exception as e:
         errors.error(e)

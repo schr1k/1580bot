@@ -14,8 +14,11 @@ pip install -r requirements.txt
 4. Change credentials in config.py.
 ```python
 TOKEN = 'Token from BotFather'
+IDEAS_GROUP_ID = '-1001796292186'
 ADMINS = ['Your telegram id']
-SCHEDULE_PATH = '<absolute path to>/schedule.json'
+
+SCHEDULE_PATH = '<absolute path to schedule.json>'
+PROJECT_PATH = '<absolute path to project directory>'
 
 POSTGRES_USER = 'postgres'
 POSTGRES_PASSWORD = 'postgres'
