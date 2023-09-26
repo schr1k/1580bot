@@ -36,7 +36,10 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
     for i in sorted(list(st.keys()), key=lambda x: int(x)):
         sst[i] = st[i]
     for key, value in sst.items():
-        s += f'На <b>{key}</b> уроке <b>{value["teacher"]}</b> в <b>{value["cabinet"]}</b>.\n'
+        if 'cabinet' in value.keys():
+            s += f'На <b>{key}</b> уроке <b>{value["teacher"]}</b> в <b>{value["cabinet"]}</b>.\n'
+        else:
+            s += f'Не указан каб., в котором <b>{value["teacher"]}</b> на <b>{key}</b> уроке'
     if c == 0:
         s = 'Учитель не найден'
     elif len(s) == len(day + ':\n'):
