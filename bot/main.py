@@ -14,6 +14,8 @@ import kb
 from states import *
 from funcs import *
 
+from excel.main import main as scheduler
+
 db = DB()
 
 bot = Bot(config.TOKEN)
@@ -21,11 +23,12 @@ dp = Dispatcher(storage=MemoryStorage())
 
 weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
 
-logging.basicConfig(filename="all.log", level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s - (%(lineno)d)')
+logging.basicConfig(filename="all.log", level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
 errors = logging.getLogger("errors")
 errors.setLevel(logging.ERROR)
 fh = logging.FileHandler("errors.log")
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s - (%(lineno)d)')
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
 fh.setFormatter(formatter)
 errors.addHandler(fh)
 
@@ -212,6 +215,7 @@ async def gids(message: Message):
 async def main():
     await db.connect()
     await dp.start_polling(bot)
+    scheduler()
 
 
 if __name__ == "__main__":
