@@ -8,11 +8,10 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters.command import Command
 
-from db import DB
-from bot import config
-import kb
-from states import *
-from funcs import *
+from bot.db import DB
+from bot import config, kb
+from bot.states import *
+from bot.funcs import *
 
 from excel.main import main as scheduler
 
@@ -159,12 +158,12 @@ async def set_idea(message: Message, state: FSMContext):
 
 # Админ панель =========================================================================================================
 @dp.callback_query(lambda call: call.data == 'admin_panel')
-async def admin_panel(call: CallbackQuery):
+async def admin_panel(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
                                     text=f'Пользователей бота - {await db.count_users()}.', reply_markup=kb.admin_kb)
-        await MessageAll.message.set()
+        await state.set_state(MessageAll.message)
     except Exception as e:
         errors.error(e)
 
