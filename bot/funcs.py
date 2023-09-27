@@ -25,13 +25,14 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
     st = {}
     c = 0
     for key, value in get_json().items():
-        for k, v in value[day].items():
-            if type(v) is dict:
-                if surname in v["teacher"]:
-                    st[k] = {}
-                    st[k]["cabinet"] = v['cabinet']
-                    st[k]['teacher'] = v["teacher"]
-                    c += 1
+        if day in value.keys():
+            for k, v in value[day].items():
+                if type(v) is dict:
+                    if v is not None and v["teacher"] is not None and surname in v["teacher"]:
+                        st[k] = {}
+                        st[k]["cabinet"] = v['cabinet']
+                        st[k]['teacher'] = v["teacher"]
+                        c += 1
     sst = {}
     for i in sorted(list(st.keys()), key=lambda x: int(x)):
         sst[i] = st[i]
