@@ -18,3 +18,15 @@ class MessageAll(StatesGroup):
 class SuggestIdea(StatesGroup):
     idea = State()
 
+
+class Registration(StatesGroup):
+    building = State()
+    group = State()
+
+
+class ChangeGroup(StatesGroup):
+    group = State()
+
+
+class ChangeBuilding(StatesGroup):
+    building = State()
