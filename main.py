@@ -27,9 +27,13 @@ logging.basicConfig(filename="all.log", level=logging.INFO,
 errors = logging.getLogger("errors")
 errors.setLevel(logging.ERROR)
 fh = logging.FileHandler("errors.log")
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
+formatter = logging.Formatter(
+    '%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
 fh.setFormatter(formatter)
 errors.addHandler(fh)
+
+with open(config.SCHEDULE_PATH, encoding='utf-8') as f:
+    schedule = json.load(f)
 
 
 # Главная ==============================================================================================================
@@ -62,7 +66,7 @@ async def get_student_schedule(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text='Введите название вашего класса (например 10а1).', reply_markup=kb.to_main_kb)
+                                    text='Введите название вашего класса (например 11с1).', reply_markup=kb.to_main_kb)
         await state.set_state(GetStudentSchedule.group)
     except Exception as e:
         errors.error(e)
@@ -124,7 +128,8 @@ async def set_teacher_weekday(call: CallbackQuery, state: FSMContext):
         await call.answer()
         data = await state.get_data()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=get_teachers_day_schedule(data['teacher'].capitalize(), call.data.split('-')[1]),
+                                    text=get_teachers_day_schedule(data['teacher'].capitalize(),
+                                                                   call.data.split('-')[1]),
                                     parse_mode='HTML', reply_markup=kb.to_main_kb)
         await state.clear()
     except Exception as e:
@@ -151,6 +156,113 @@ async def set_idea(message: Message, state: FSMContext):
                                                                    f'Сообщение - {message.text}')
         await message.answer(text='Спасибо за предложение\! Идея уже передана комиссии \(||нет||\)\.',
                              parse_mode='MarkdownV2', reply_markup=kb.to_main_kb)
+        await state.clear()
+    except Exception as e:
+        errors.error(e)
+
+
+# Профиль ==============================================================================================================
+@dp.callback_query(F.data == 'profile')
+async def profile(call: CallbackQuery):
+    try:
+        await call.answer()
+        if await db.user_is_registered(str(call.from_user.id)):
+            text = (f'Ваш корпус - {await db.get_building(str(call.from_user.id))}.\n'
+                    f'Ваш класс - {await db.get_class(str(call.from_user.id))}.')
+            keyboard = kb.filled_profile_kb
+        else:
+            text = 'Если вы ученик школы № 1580, то вы можете пройти регистрацию, чтобы иметь возможность узнавать расписание на сегодня в один клик и получать новости вашего корпуса.'
+            keyboard = kb.unfilled_profile_kb
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text=text, reply_markup=keyboard)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data == 'registration')
+async def registration(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Выберите свой корпус.', reply_markup=kb.buildings_kb)
+        await state.set_state(Registration.building)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(Registration.building)
+async def set_registration_building(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        await state.update_data(building=call.data.split('-')[1])
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Введите название вашего класса (например 11с1).')
+        await state.set_state(Registration.group)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.message(Registration.group)
+async def set_registration_group(message: Message, state: FSMContext):
+    try:
+        await state.update_data(group=message.text)
+        data = await state.get_data()
+        if not fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
+            await message.answer('Неверный формат. Повторите ввод.')
+        elif schedule[data['group']]['Понедельник']['1']['building'] != data['building']:
+            await message.answer('Этот класс не найден в выбранном корпусе. Повторите ввод.')
+        else:
+            await message.answer('Спасибо за регистрацию. Теперь вы можете получить расписание вашего класса на сегодня в один клик.',
+                                 reply_markup=kb.to_main_kb)
+            await db.edit_group(str(message.from_user.id), data['group'])
+            await db.edit_building(str(message.from_user.id), data['building'])
+            await state.clear()
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data == 'change_group')
+async def change_group(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Введите название вашего класса (например 11с1).')
+        await state.set_state(ChangeGroup.group)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.message(ChangeGroup.group)
+async def set_group(message: Message, state: FSMContext):
+    try:
+        if not fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
+            await message.answer('Неверный формат. Повторите ввод.')
+        elif schedule[message.text]['Понедельник']['1']['building'] != await db.get_building(str(message.from_user.id)):
+            await message.answer('Этот класс не найден в выбранном корпусе. Повторите ввод.')
+        else:
+            await message.answer('Класс изменен.', reply_markup=kb.to_main_kb)
+            await db.edit_group(str(message.from_user.id), message.text)
+            await state.clear()
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data == 'change_building')
+async def change_building(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Выберите свой корпус.', reply_markup=kb.buildings_kb)
+        await state.set_state(ChangeBuilding.building)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(ChangeBuilding.building)
+async def set_building(call: CallbackQuery, state: FSMContext):
+    try:
+        await bot.send_message(call.from_user.id, 'Корпус изменен.', reply_markup=kb.to_main_kb)
+        await db.edit_building(str(call.from_user.id), call.data.split('-')[1])
         await state.clear()
     except Exception as e:
         errors.error(e)
