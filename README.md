@@ -28,12 +28,21 @@ POSTGRES_PORT = '5432'
 ```
 
 ## SQL:
-1. users table.
+1. #### Users:
 ```postgresql
 CREATE TABLE users (
     id SERIAL,
     tg VARCHAR,
     username VARCHAR,
-    class VARCHAR
+    class VARCHAR,
+    building VARCHAR
+)
+```
+2. #### Staff:
+```postgresql
+CREATE TABLE staff (
+    id SERIAL,
+    tg VARCHAR,
+    role VARCHAR,
 )
 ```
