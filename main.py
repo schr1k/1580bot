@@ -43,8 +43,8 @@ async def start(message: Message):
         if not await db.user_exists(str(message.from_user.id)):
             await db.new_user(str(message.from_user.id), message.from_user.username)
         name = message.from_user.username if message.from_user.username is not None else message.from_user.first_name
-        await message.answer(f'👋 Привет, {name}.', reply_markup=kb.main_kb(str(message.from_user.id)))
-
+        keyboard = kb.staff_main_kb if await db.staff_exists(str(message.from_user.id)) else kb.user_main_kb
+        await message.answer(f'👋 Привет, {name}.', reply_markup=keyboard)
     except Exception as e:
         errors.error(e)
 
@@ -54,8 +54,9 @@ async def call_start(call: CallbackQuery):
     try:
         await call.answer()
         name = call.from_user.username if call.from_user.username is not None else call.from_user.first_name
+        keyboard = kb.staff_main_kb if await db.staff_exists(str(call.from_user.id)) else kb.user_main_kb
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=f'👋 Привет, {name}.', reply_markup=kb.main_kb(str(call.from_user.id)))
+                                    text=f'👋 Привет, {name}.', reply_markup=keyboard)
     except Exception as e:
         errors.error(e)
 
@@ -179,6 +180,7 @@ async def profile(call: CallbackQuery):
         errors.error(e)
 
 
+# Регистрация ==========================================================================================================
 @dp.callback_query(F.data == 'registration')
 async def registration(call: CallbackQuery, state: FSMContext):
     try:
@@ -221,12 +223,13 @@ async def set_registration_group(message: Message, state: FSMContext):
         errors.error(e)
 
 
+# Изменение класса =====================================================================================================
 @dp.callback_query(F.data == 'change_group')
 async def change_group(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text='Введите название вашего класса (например 11с1).')
+                                    text='Введите название вашего класса (например 11с1).', reply_markup=kb.to_main_kb)
         await state.set_state(ChangeGroup.group)
     except Exception as e:
         errors.error(e)
@@ -247,6 +250,7 @@ async def set_group(message: Message, state: FSMContext):
         errors.error(e)
 
 
+# Изменение корпуса ====================================================================================================
 @dp.callback_query(F.data == 'change_building')
 async def change_building(call: CallbackQuery, state: FSMContext):
     try:
@@ -270,36 +274,110 @@ async def set_building(call: CallbackQuery, state: FSMContext):
 
 # Админ панель =========================================================================================================
 @dp.callback_query(lambda call: call.data == 'admin_panel')
-async def admin_panel(call: CallbackQuery, state: FSMContext):
+async def admin_panel(call: CallbackQuery):
     try:
         await call.answer()
+        keyboard = kb.admin_kb if await db.get_role(str(call.from_user.id)) == 'admin' else kb.newsman_kb
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
-                                    text=f'Пользователей бота - {await db.count_users()}.', reply_markup=kb.admin_kb)
-        await state.set_state(MessageAll.message)
+                                    text=f'Пользователей бота - {await db.count_users()}.', reply_markup=keyboard)
     except Exception as e:
         errors.error(e)
 
 
 # Рассылка =============================================================================================================
-@dp.callback_query(lambda call: call.data == 'message_all')
+@dp.callback_query(lambda call: call.data == 'news')
 async def message_all(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
-                                    text='Введите сообщение.\n'
-                                         '⚠️⚠️ Сообщение будет отправлено всем пользователям бота. ⚠️⚠️',
-                                    reply_markup=kb.to_main_kb)
-        await state.set_state(MessageAll.message)
+                                    text='Введите сообщение.', reply_markup=kb.to_admin_panel_kb)
+        await state.set_state(News.message)
     except Exception as e:
         errors.error(e)
 
 
-@dp.message(MessageAll.message)
+@dp.message(News.message)
 async def set_message(message: Message, state: FSMContext):
     try:
-        for tg in await db.get_users():
-            await bot.send_message(tg, message.text)
-        await message.answer('Сообщение отправлено.', reply_markup=kb.to_main_kb)
+        await state.update_data(message=message.text)
+        await message.answer('Выберите кому отправить сообщение.', reply_markup=kb.news_kb)
+        await state.set_state(News.target)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(News.target)
+async def set_target(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        data = await state.get_data()
+        await state.update_data(target=call.data.split('-')[1])
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
+                                    text=f'Подтвердите отправку сообщения:\n'
+                                         f'Текст - {data["message"]}.\n'
+                                         f'Корпуса - {data["target"] if data["target"].isnumeric() else "все"}.',
+                                    reply_markup=kb.submit_kb)
+        await state.set_state(News.submit)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(News.submit)
+async def set_submit(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        data = await state.get_data()
+        if data['target'].isnumeric():
+            message_list = await db.get_users_by_building(data['target'])
+        else:
+            message_list = await db.get_all_users()
+        for user in message_list:
+            await bot.send_message(user, data['message'])
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
+                                    text='Сообщение отправлено.', reply_markup=kb.to_admin_panel_kb)
+        await state.clear()
+    except Exception as e:
+        errors.error(e)
+
+
+# Выдача роли ==========================================================================================================
+@dp.callback_query(lambda call: call.data == 'give_role')
+async def give_role(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
+                                    text='Введите id человека которому хотите выдать роль',
+                                    reply_markup=kb.to_admin_panel_kb)
+        await state.set_state(GiveRole.id)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.message(GiveRole.id)
+async def set_id(message: Message, state: FSMContext):
+    try:
+        if message.text in await db.get_all_users():
+            await state.update_data(id=message.text)
+            await message.answer('Выберите роль.', reply_markup=kb.roles_kb)
+            await state.set_state(GiveRole.role)
+        else:
+            await message.answer('Пользователь не найден в боте. Введите id еще раз.', reply_markup=kb.to_admin_panel_kb)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(GiveRole.role)
+async def set_role(call: CallbackQuery, state: FSMContext):
+    try:
+        await state.update_data(role=call.data)
+        data = await state.get_data()
+        await call.answer()
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
+                                    text='Роль выдана.', reply_markup=kb.to_admin_panel_kb)
+        if await db.staff_exists(data['id']):
+            await db.edit_role(data['id'], data['role'])
+        else:
+            await db.new_staff(data['id'], data['role'])
         await state.clear()
     except Exception as e:
         errors.error(e)
@@ -329,6 +407,6 @@ async def main():
     scheduler()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     print('Работаем')
     asyncio.run(main())

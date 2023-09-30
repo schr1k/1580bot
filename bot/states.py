@@ -11,8 +11,10 @@ class GetTeacherSchedule(StatesGroup):
     weekday = State()
 
 
-class MessageAll(StatesGroup):
+class News(StatesGroup):
     message = State()
+    target = State()
+    submit = State()
 
 
 class SuggestIdea(StatesGroup):
@@ -30,3 +32,9 @@ class ChangeGroup(StatesGroup):
 
 class ChangeBuilding(StatesGroup):
     building = State()
+
+
+class GiveRole(StatesGroup):
+    id = State()
+    role = State()
+
