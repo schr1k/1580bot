@@ -19,15 +19,15 @@ class DB:
 # SELECT ===============================================================================================================
     async def user_exists(self, tg: str) -> bool:
         result = await self.connection.fetchrow('SELECT tg FROM users WHERE tg = $1', tg)
-        return False if dict(result)['tg'] is None else True
+        return False if result is None else True
 
     async def staff_exists(self, tg: str) -> bool:
         result = await self.connection.fetchrow('SELECT tg FROM staff WHERE tg = $1', tg)
-        return False if dict(result)['tg'] is None else True
+        return False if result is None else True
 
     async def user_is_registered(self, tg: str) -> bool:
         result = await self.connection.fetchrow('SELECT class FROM users WHERE tg = $1', tg)
-        return False if dict(result)['class'] is None else True
+        return False if result is None else True
 
     async def get_all_users(self) -> list:
         result = await self.connection.fetch('SELECT tg FROM users')
@@ -76,6 +76,6 @@ class DB:
 #
 # async def main():
 #     await db.connect()
-#     print(await db.get_users_by_building('1'))
+#     print(await db.user_exists('1'))
 #
 # asyncio.run(main())
