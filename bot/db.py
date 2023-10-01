@@ -27,7 +27,7 @@ class DB:
 
     async def user_is_registered(self, tg: str) -> bool:
         result = await self.connection.fetchrow('SELECT class FROM users WHERE tg = $1', tg)
-        return False if result is None else True
+        return False if dict(result)['class'] is None else True
 
     async def get_all_users(self) -> list:
         result = await self.connection.fetch('SELECT tg FROM users')
