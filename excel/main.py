@@ -1,11 +1,11 @@
 import asyncio
 import logging
-from excel.one.main import make_schedule_1
-from excel.two.main import make_schedule_2
-from excel.three.high.main import make_schedule_3h
-from excel.three.primary.main import make_schedule_3p
-from excel.four.high.main import make_schedule_4h
-from excel.four.primary.main import make_schedule_4p
+from one.main import make_schedule_1
+from two.main import make_schedule_2
+from three.high.main import make_schedule_3h
+from three.primary.main import make_schedule_3p
+from four.high.main import make_schedule_4h
+from four.primary.main import make_schedule_4p
 import schedule as sch
 import time
 from threading import Thread
