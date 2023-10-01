@@ -1,7 +1,6 @@
 from aiogram.types import InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
-from bot import config
 
 # Назад ================================================================================================================
 to_main = InlineKeyboardButton(text='🔙 На Главную', callback_data='to_main')
@@ -30,6 +29,13 @@ thursday = InlineKeyboardButton(text='Четверг', callback_data='teacher-Ч
 friday = InlineKeyboardButton(text='Пятница', callback_data='teacher-Пятница')
 saturday = InlineKeyboardButton(text='Суббота', callback_data='teacher-Суббота')
 teacher_week_kb = InlineKeyboardBuilder().row(monday, tuesday, wednesday).row(thursday, friday, saturday).as_markup()
+
+
+# Кнопка выбора класса для заполнивших профиль =========================================================================
+def group_button(group):
+    group = InlineKeyboardButton(text=group, callback_data=f'group-{group}')
+    keyboard = InlineKeyboardBuilder().row(group).row(to_main).as_markup()
+    return keyboard
 
 
 # Дни Недели для учеников ==============================================================================================
@@ -84,6 +90,6 @@ submit_kb = InlineKeyboardBuilder().row(submit).as_markup()
 
 # Выдача роли ==========================================================================================================
 admin = InlineKeyboardButton(text='👨‍💻 Админ', callback_data='admin')
-newsman = InlineKeyboardButton(text='👩‍🏫👩‍💼 Новостник', callback_data='newsman')
+newsman = InlineKeyboardButton(text='👩‍💼 Новостник', callback_data='newsman')
 roles_kb = InlineKeyboardBuilder().row(admin, newsman).as_markup()
 

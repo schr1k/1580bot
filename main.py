@@ -66,9 +66,21 @@ async def call_start(call: CallbackQuery):
 async def get_student_schedule(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
+        keyboard = kb.group_button(await db.get_class(str(call.from_user.id))) if await db.user_is_registered(str(call.from_user.id)) else kb.to_main_kb
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text='Введите название вашего класса (например 11с1).', reply_markup=kb.to_main_kb)
+                                    text='Введите название вашего класса (например 11с1).', reply_markup=keyboard)
         await state.set_state(GetStudentSchedule.group)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(GetStudentSchedule.group)
+async def set_student_group(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        await state.update_data(group=call.data.split('-')[1].lower())
+        await bot.send_message(call.from_user.id, 'Выберите день недели.', reply_markup=kb.student_week_kb)
+        await state.set_state(GetStudentSchedule.weekday)
     except Exception as e:
         errors.error(e)
 
@@ -172,7 +184,7 @@ async def profile(call: CallbackQuery):
                     f'Ваш класс - {await db.get_class(str(call.from_user.id))}.')
             keyboard = kb.filled_profile_kb
         else:
-            text = 'Если вы ученик школы № 1580, то вы можете пройти регистрацию, чтобы иметь возможность узнавать расписание на сегодня в один клик и получать новости вашего корпуса.'
+            text = 'Если вы ученик школы № 1580, то вы можете пройти регистрацию, чтобы не вводить каждый раз номер класса и получать новости вашего корпуса.'
             keyboard = kb.unfilled_profile_kb
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
                                     text=text, reply_markup=keyboard)
