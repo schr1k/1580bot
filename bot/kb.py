@@ -31,13 +31,6 @@ saturday = InlineKeyboardButton(text='Суббота', callback_data='teacher-С
 teacher_week_kb = InlineKeyboardBuilder().row(monday, tuesday, wednesday).row(thursday, friday, saturday).as_markup()
 
 
-# Кнопка выбора класса для заполнивших профиль =========================================================================
-def group_button(group):
-    group = InlineKeyboardButton(text=group, callback_data=f'group-{group}')
-    keyboard = InlineKeyboardBuilder().row(group).row(to_main).as_markup()
-    return keyboard
-
-
 # Дни Недели для учеников ==============================================================================================
 monday = InlineKeyboardButton(text='Понедельник', callback_data='student-Понедельник')
 tuesday = InlineKeyboardButton(text='Вторник', callback_data='student-Вторник')
