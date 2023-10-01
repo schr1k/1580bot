@@ -4,7 +4,7 @@ import simplejson as json
 from bot import config
 
 
-async def make_schedule_4h():
+def make_schedule_4h():
     df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/rasp_symbol_2.xlsx', header=None).T.values.tolist()
     with open(f'{config.PROJECT_PATH}excel/four/high/excel.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)

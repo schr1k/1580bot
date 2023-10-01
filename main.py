@@ -13,8 +13,6 @@ from bot import config, kb
 from bot.states import *
 from bot.funcs import *
 
-from excel.main import main as scheduler
-
 db = DB()
 
 bot = Bot(config.TOKEN)
@@ -416,7 +414,6 @@ async def gids(message: Message):
 async def main():
     await db.connect()
     await dp.start_polling(bot)
-    scheduler()
 
 
 if __name__ == '__main__':
