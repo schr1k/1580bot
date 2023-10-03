@@ -1,4 +1,3 @@
-import asyncio
 import logging
 from excel.one.main import make_schedule_1
 from excel.two.main import make_schedule_2
@@ -42,12 +41,9 @@ def run_tasks():
 
 
 def start_scheduler():
-    sch.every().day.at('22:00').do(run_tasks)
+    sch.every().day.at('18:50:30').do(run_tasks)
     logging.info('Started scheduler')
     while True:
         sch.run_pending()
         time.sleep(1)
 
-
-if __name__ == "__main__":
-    start_scheduler()
