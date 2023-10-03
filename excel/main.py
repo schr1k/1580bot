@@ -4,7 +4,7 @@ from excel.two.main import make_schedule_2
 from excel.three.high.main import make_schedule_3h
 from excel.three.primary.main import make_schedule_3p
 from excel.four.high.main import make_schedule_4h
-from excel. four.primary.main import make_schedule_4p
+from excel.four.primary.main import make_schedule_4p
 import schedule as sch
 import time
 from threading import Thread
