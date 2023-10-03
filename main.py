@@ -1,4 +1,5 @@
 import asyncio
+from threading import Thread
 import logging
 from re import fullmatch
 
@@ -12,6 +13,8 @@ from bot.db import DB
 from bot import config, kb
 from bot.states import *
 from bot.funcs import *
+
+from excel.main import start_scheduler
 
 db = DB()
 
@@ -413,6 +416,7 @@ async def gids(message: Message):
 
 async def main():
     await db.connect()
+    Thread(target=start_scheduler).start()
     await dp.start_polling(bot)
 
 
