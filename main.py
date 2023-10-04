@@ -63,12 +63,26 @@ async def call_start(call: CallbackQuery):
         errors.error(e)
 
 
+# Помощь ==============================================================================================================
+@dp.message(Command('help'))
+async def help(message: Message, state: FSMContext):
+    try:
+        await state.clear()
+        await message.answer(f'/start - На главную.\n\n'
+                             f'Контакты:\n'
+                             f'@schr1k - <b>CEO, CTO, CIO, Founder, TeamLead, Главный Разработчик</b>.\n'
+                             f'@hxllmvdx - <i>разработчик</i>.', reply_markup=kb.to_main_kb, parse_mode='HTML')
+    except Exception as e:
+        errors.error(e)
+
+
 # Получить расписание ==================================================================================================
 @dp.callback_query(F.data == 'get_student_schedule')
 async def get_student_schedule(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
-        keyboard = kb.group_button(await db.get_class(str(call.from_user.id))) if await db.user_is_registered(str(call.from_user.id)) else kb.to_main_kb
+        keyboard = kb.group_button(await db.get_class(str(call.from_user.id))) if await db.user_is_registered(
+            str(call.from_user.id)) else kb.to_main_kb
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
                                     text='Введите название вашего класса (например 11с1).', reply_markup=keyboard)
         await state.set_state(GetStudentSchedule.group)
@@ -228,8 +242,9 @@ async def set_registration_group(message: Message, state: FSMContext):
         elif schedule[data['group']]['Понедельник']['1']['building'] != data['building']:
             await message.answer('Этот класс не найден в выбранном корпусе. Повторите ввод.')
         else:
-            await message.answer('Спасибо за регистрацию. Теперь вы можете получить расписание вашего класса на сегодня в один клик.',
-                                 reply_markup=kb.to_main_kb)
+            await message.answer(
+                'Спасибо за регистрацию. Теперь вы можете получить расписание вашего класса на сегодня в один клик.',
+                reply_markup=kb.to_main_kb)
             await db.edit_group(str(message.from_user.id), data['group'])
             await db.edit_building(str(message.from_user.id), data['building'])
             await state.clear()
@@ -375,7 +390,8 @@ async def set_id(message: Message, state: FSMContext):
             await message.answer('Выберите роль.', reply_markup=kb.roles_kb)
             await state.set_state(GiveRole.role)
         else:
-            await message.answer('Пользователь не найден в боте. Введите id еще раз.', reply_markup=kb.to_admin_panel_kb)
+            await message.answer('Пользователь не найден в боте. Введите id еще раз.',
+                                 reply_markup=kb.to_admin_panel_kb)
     except Exception as e:
         errors.error(e)
 
