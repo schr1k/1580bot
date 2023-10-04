@@ -12,7 +12,7 @@ def make_schedule_4h():
     with open(f'{config.PROJECT_PATH}/excel/four/high/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
-    with open(config.TEACHERS_PATH) as f:
+    with open(config.TEACHERS_PATH, encoding='utf-8') as f:
         teachers = json.load(f)
 
     excel = excel[2:46] + excel[48:-2]
