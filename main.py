@@ -39,8 +39,9 @@ with open(config.SCHEDULE_PATH, encoding='utf-8') as f:
 
 # Главная ==============================================================================================================
 @dp.message(Command('start'))
-async def start(message: Message):
+async def start(message: Message, state: FSMContext):
     try:
+        await state.clear()
         if not await db.user_exists(str(message.from_user.id)):
             await db.new_user(str(message.from_user.id), message.from_user.username)
         name = message.from_user.username if message.from_user.username is not None else message.from_user.first_name
