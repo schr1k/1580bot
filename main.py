@@ -1,7 +1,9 @@
 import asyncio
-from threading import Thread
 import logging
+import locale
+from threading import Thread
 from re import fullmatch
+from datetime import datetime
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.fsm.context import FSMContext
@@ -15,6 +17,8 @@ from bot.states import *
 from bot.funcs import *
 
 from excel.main import start_scheduler
+
+locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
 db = DB()
 
@@ -46,7 +50,10 @@ async def start(message: Message, state: FSMContext):
             await db.new_user(str(message.from_user.id), message.from_user.username)
         name = message.from_user.username if message.from_user.username is not None else message.from_user.first_name
         keyboard = kb.staff_main_kb if await db.staff_exists(str(message.from_user.id)) else kb.user_main_kb
-        await message.answer(f'👋 Привет, {name}.', reply_markup=keyboard)
+        now = datetime.now()
+        await message.answer(f'👋 Привет, {name}.\n'
+                             f'📆 Сегодня <b>{now.strftime("%A")}</b>, {now.strftime("%d")} {now.strftime("%b")}.\n',
+                             reply_markup=keyboard, parse_mode='HTML')
     except Exception as e:
         errors.error(e)
 
@@ -413,6 +420,71 @@ async def set_role(call: CallbackQuery, state: FSMContext):
         errors.error(e)
 
 
+# Кубик ================================================================================================================
+@dp.message(Command('dice'))
+async def dice(message: Message):
+    try:
+        data = await message.answer_dice(emoji='🎲')
+        await asyncio.sleep(4)
+        await bot.send_message(message.from_user.id, str(data.dice.value))
+    except Exception as e:
+        errors.error(e)
+
+
+# Слот =================================================================================================================
+@dp.message(Command('slot'))
+async def slot(message: Message):
+    try:
+        await message.answer_dice(emoji='🎰')
+    except Exception as e:
+        errors.error(e)
+
+
+# Футбол ================================================================================================================
+@dp.message(Command('football'))
+async def football(message: Message):
+    try:
+        await message.answer_dice(emoji='⚽️')
+    except Exception as e:
+        errors.error(e)
+
+
+# Баскетбол ================================================================================================================
+@dp.message(Command('basketball'))
+async def basketball(message: Message):
+    try:
+        await message.answer_dice(emoji='🏀')
+    except Exception as e:
+        errors.error(e)
+
+
+# Боулинг ================================================================================================================
+@dp.message(Command('bowling'))
+async def bowling(message: Message):
+    try:
+        await message.answer_dice(emoji='🎳')
+    except Exception as e:
+        errors.error(e)
+
+
+# Дартс ================================================================================================================
+@dp.message(Command('dart'))
+async def dart(message: Message):
+    try:
+        await message.answer_dice(emoji='🎯')
+    except Exception as e:
+        errors.error(e)
+
+
+# Обезьяна =============================================================================================================
+@dp.message(Command('monkey'))
+async def monkey(message: Message):
+    try:
+        await message.answer_sticker('CAACAgIAAxkBAAEKc5dlHbxb-RpsaSAfgBqoQ9RE7NECXQACLA4AAns60UqyOUfKre3y0zAE')
+    except Exception as e:
+        errors.error(e)
+
+
 # id ===================================================================================================================
 @dp.message(Command('id'))
 async def ids(message: Message):
@@ -427,6 +499,15 @@ async def ids(message: Message):
 async def gids(message: Message):
     try:
         await message.answer(str(message.chat.id))
+    except Exception as e:
+        errors.error(e)
+
+
+# all ==================================================================================================================
+@dp.message()
+async def all(message: Message):
+    try:
+        await message.answer('Команда не распознана. Отправьте /start для выхода в главное меню.')
     except Exception as e:
         errors.error(e)
 
