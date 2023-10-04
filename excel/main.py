@@ -41,7 +41,7 @@ def run_tasks():
 
 
 def start_scheduler():
-    sch.every().day.at('22:00').do(run_tasks)
+    sch.every().day.at('20:00').do(run_tasks)
     logging.info('Started scheduler')
     while True:
         sch.run_pending()

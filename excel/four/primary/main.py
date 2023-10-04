@@ -12,6 +12,9 @@ def make_schedule_4p():
     with open(f'{config.PROJECT_PATH}/excel/four/primary/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
+    with open(config.TEACHERS_PATH, encoding='utf-8') as f:
+        teachers = json.load(f)
+
     excel = excel[2:]
 
     weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
@@ -26,6 +29,8 @@ def make_schedule_4p():
                     sp = lessons[j].split('\n')
                     if len(sp) == 2:
                         sl = {'lesson': sp[0], 'teacher': sp[1], 'building': '4'}
+                        if sp[1] not in teachers:
+                            teachers.append(sp[1])
                     else:
                         sl = {'lesson': sp[0], 'teacher': None, 'building': '4'}
                     lessons[j] = sl
@@ -54,4 +59,7 @@ def make_schedule_4p():
 
     with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
+
+    with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
+        json.dump(teachers, f, indent=4, ensure_ascii=False)
 

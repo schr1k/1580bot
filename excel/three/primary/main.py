@@ -12,6 +12,9 @@ def make_schedule_3p():
     with open(f'{config.PROJECT_PATH}/excel/three/primary/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
+    with open(config.TEACHERS_PATH, encoding='utf-8') as f:
+        teachers = json.load(f)
+
     excel = excel[2:]
 
     weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
@@ -27,20 +30,32 @@ def make_schedule_3p():
                     sp = lessons[j].split('\n')
                     if len(sp) == 2:
                         sl = {'lesson': sp[0].strip(), 'teacher': sp[1].strip(), 'building': '3'}
+                        if sp[1].strip() not in teachers:
+                            teachers.append(sp[1].strip())
                     elif len(sp) == 3:
                         sl = {'lesson': ' '.join(sp[:2]).strip(), 'teacher': sp[2].strip(), 'building': '3'}
+                        if sp[2].strip() not in teachers:
+                            teachers.append(sp[2].strip())
                     else:
                         st = sp[0]
                         if st == 'Русский язык Петковская В.Н.':
                             sl = {'lesson': 'Русский язык', 'teacher': 'Петковская В.Н.', 'building': '3'}
+                            if 'Петковская В.Н.' not in teachers:
+                                teachers.append('Петковская В.Н.')
                         elif st == 'Математика Петковская В.Н.':
                             sl = {'lesson': 'Математика', 'teacher': 'Петковская В.Н.', 'building': '3'}
+                            if 'Петковская В.Н.' not in teachers:
+                                teachers.append('Петковская В.Н.')
                         elif st == 'Хочу всё знать Котлярова Я.Ю ДО':
                             sl = {'lesson': 'Хочу всё знать', 'teacher': 'Котлярова Я.Ю', 'building': '3'}
+                            if 'Котлярова Я.Ю' not in teachers:
+                                teachers.append('Котлярова Я.Ю')
                         elif st == 'Физическая культура':
                             sl = {'lesson': 'Физическая культура', 'teacher': 'Неизвестно', 'building': '3'}
                         elif st == 'Музыка Котлярова Я.Ю.':
                             sl = {'lesson': 'Музыка', 'teacher': 'Котлярова Я.Ю.', 'building': '3'}
+                            if 'Котлярова Я.Ю' not in teachers:
+                                teachers.append('Котлярова Я.Ю')
                         elif st == 'расписание':
                             sl = {'lesson': 'расписание', 'teacher': 'Неизвестно', 'building': '3'}
                         else:
@@ -73,3 +88,5 @@ def make_schedule_3p():
     with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
 
+    with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
+        json.dump(teachers, f, indent=4, ensure_ascii=False)
