@@ -6,10 +6,10 @@ from bot import config
 
 def make_schedule_4p():
     df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/rasp_symbol_ns_3.xlsx', header=None).T.values.tolist()
-    with open(f'{config.PROJECT_PATH}excel/four/primary/excel.json', 'w', encoding='utf-8') as f:
+    with open(f'{config.PROJECT_PATH}/excel/four/primary/excel.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
-    with open(f'{config.PROJECT_PATH}excel/four/primary/excel.json', encoding='utf-8') as f:
+    with open(f'{config.PROJECT_PATH}/excel/four/primary/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
     with open(config.TEACHERS_PATH) as f:

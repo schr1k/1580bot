@@ -6,10 +6,10 @@ from bot import config
 
 def make_schedule_3h():
     df = pd.read_excel('https://docs.google.com/spreadsheets/d/1-M70uv_a6ufQFZUh03MD8Wi_Fnx35AUB7yFAAF5Br5Q/export?format=xlsx', header=None).T.values.tolist()
-    with open(f'{config.PROJECT_PATH}excel/three/high/excel.json', 'w', encoding='utf-8') as f:
+    with open(f'{config.PROJECT_PATH}/excel/three/high/excel.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
-    with open(f'{config.PROJECT_PATH}excel/three/high/excel.json', encoding='utf-8') as f:
+    with open(f'{config.PROJECT_PATH}/excel/three/high/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
     with open(config.TEACHERS_PATH) as f:
