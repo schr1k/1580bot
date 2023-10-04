@@ -12,6 +12,9 @@ def make_schedule_3h():
     with open(f'{config.PROJECT_PATH}excel/three/high/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
+    with open(config.TEACHERS_PATH) as f:
+        teachers = json.load(f)
+
     excel = excel[2:46] + excel[48:-2]
 
     weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
@@ -27,9 +30,13 @@ def make_schedule_3h():
                     sp.append(lessons[j][1])
                     if len(sp) == 3:
                         sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': str(sp[2]).replace('\n', ''), 'building': '3'}
+                        if sp[1] not in teachers:
+                            teachers.append(sp[1])
                     else:
 
                         sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': str(sp[1]), 'building': '3'}
+                        if sp[0][37:] not in teachers:
+                            teachers.append(sp[0][37:])
 
                     lessons[j] = sl
             day_schedule = {}
@@ -58,4 +65,7 @@ def make_schedule_3h():
 
     with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
+
+    with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
+        json.dump(teachers, f, indent=4, ensure_ascii=False)
 

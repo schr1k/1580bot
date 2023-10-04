@@ -1,10 +1,14 @@
 import json
-from bot.config import SCHEDULE_PATH
+from bot.config import SCHEDULE_PATH, TEACHERS_PATH
 
 
 def get_json():
     with open(SCHEDULE_PATH, encoding='utf-8') as f:
         return json.load(f)
+
+def get_teachers():
+    with open(TEACHERS_PATH, encoding='utf-8') as f:
+        return  json.load(f)
 
 
 def get_student_day_schedule(group: str, day: str) -> str:
@@ -24,6 +28,12 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
     s = f'{day}:\n'
     st = {}
     c = 0
+    for i in get_teachers():
+        if surname in i:
+            c = 1
+            break
+    if c != 1:
+        return 'Учитель не найден'
     for key, value in get_json().items():
         if day in value.keys():
             for k, v in value[day].items():
@@ -33,7 +43,6 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
                         st[k]["cabinet"] = v['cabinet']
                         st[k]['teacher'] = v["teacher"]
                         st[k]["building"] = v["building"]
-                        c += 1
     sst = {}
     for i in sorted(list(st.keys()), key=lambda x: int(x)):
         sst[i] = st[i]
@@ -42,8 +51,7 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
             s += f'На <b>{key}</b> уроке <b>{value["teacher"]}</b> в <b>{value["cabinet"]}(в {value["building"]} корпусе)</b>.\n'
         else:
             s += f'Не указан каб., в котором <b>{value["teacher"]}</b> на <b>{key}</b> уроке'
-    if c == 0:
-        s = 'Учитель не найден'
-    elif len(s) == len(day + ':\n'):
-        s = f'В этот день {surname} нет в школе'
+    if len(s) == len(day + ':\n'):
+        s = f'В {day} у этого учителя нет уроков'
     return s
+
