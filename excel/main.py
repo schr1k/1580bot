@@ -1,13 +1,16 @@
 import logging
+import schedule as sch
+import time
+from threading import Thread
+from datetime import datetime
+
 from excel.one.main import make_schedule_1
 from excel.two.main import make_schedule_2
 from excel.three.high.main import make_schedule_3h
 from excel.three.primary.main import make_schedule_3p
 from excel.four.high.main import make_schedule_4h
 from excel.four.primary.main import make_schedule_4p
-import schedule as sch
-import time
-from threading import Thread
+
 
 logging.basicConfig(filename="all.log", level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
@@ -36,13 +39,12 @@ def tasks():
 
 def run_tasks():
     tasks()
-    logging.info('Successfully updated schedule')
+    logging.info(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %m.%d.%Y")}).')
     return sch.CancelJob
 
 
 def start_scheduler():
     sch.every().day.at('20:00').do(run_tasks)
-    logging.info('Started scheduler')
     while True:
         sch.run_pending()
         time.sleep(1)

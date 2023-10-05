@@ -599,5 +599,5 @@ async def main():
 
 
 if __name__ == '__main__':
-    print('Работаем')
+    print('Работаем 👌')
     asyncio.run(main())
