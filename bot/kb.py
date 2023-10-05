@@ -1,4 +1,4 @@
-from aiogram.types import InlineKeyboardButton
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
@@ -32,7 +32,7 @@ teacher_week_kb = InlineKeyboardBuilder().row(monday, tuesday, wednesday).row(th
 
 
 # Кнопка выбора класса для заполнивших профиль =========================================================================
-def group_button(group):
+def group_button(group: str):
     group = InlineKeyboardButton(text=group, callback_data=f'group-{group}')
     keyboard = InlineKeyboardBuilder().row(group).row(to_main).as_markup()
     return keyboard
@@ -93,3 +93,7 @@ admin = InlineKeyboardButton(text='👨‍💻 Админ', callback_data='admin
 newsman = InlineKeyboardButton(text='👩‍💼 Новостник', callback_data='newsman')
 roles_kb = InlineKeyboardBuilder().row(admin, newsman).as_markup()
 
+
+# Подтверждение идеи ===================================================================================================
+approve_idea = InlineKeyboardButton(text='✅ Одобрить', callback_data='approve_idea')
+idea_kb = InlineKeyboardBuilder().row(approve_idea).as_markup()
