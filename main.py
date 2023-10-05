@@ -8,7 +8,7 @@ from datetime import datetime
 from aiogram import Bot, Dispatcher, F
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.memory import MemoryStorage
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import FSInputFile, Message, CallbackQuery
 from aiogram.filters.command import Command
 
 from bot.db import DB
@@ -51,21 +51,27 @@ async def start(message: Message, state: FSMContext):
         name = message.from_user.username if message.from_user.username is not None else message.from_user.first_name
         keyboard = kb.staff_main_kb if await db.staff_exists(str(message.from_user.id)) else kb.user_main_kb
         now = datetime.now()
+        month_day = now.strftime("%d")[1] if now.strftime("%d")[0] == '0' else now.strftime("%d")
         await message.answer(f'👋 Привет, {name}.\n'
-                             f'📆 Сегодня <b>{now.strftime("%A")}</b>, {now.strftime("%d")} {now.strftime("%b")}.\n',
+                             f'📆 Сегодня <b>{now.strftime("%A")}</b>, {month_day} {now.strftime("%b")}.\n',
                              reply_markup=keyboard, parse_mode='HTML')
     except Exception as e:
         errors.error(e)
 
 
 @dp.callback_query(F.data == 'to_main')
-async def call_start(call: CallbackQuery):
+async def call_start(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
+        await state.clear()
         name = call.from_user.username if call.from_user.username is not None else call.from_user.first_name
         keyboard = kb.staff_main_kb if await db.staff_exists(str(call.from_user.id)) else kb.user_main_kb
+        now = datetime.now()
+        month_day = now.strftime("%d")[1] if now.strftime("%d")[0] == '0' else now.strftime("%d")
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=f'👋 Привет, {name}.', reply_markup=keyboard)
+                                    text=f'👋 Привет, {name}.\n'
+                                         f'📆 Сегодня <b>{now.strftime("%A")}</b>, {month_day} {now.strftime("%b")}.\n',
+                                    reply_markup=keyboard, parse_mode='HTML')
     except Exception as e:
         errors.error(e)
 
@@ -76,6 +82,13 @@ async def help(message: Message, state: FSMContext):
     try:
         await state.clear()
         await message.answer(f'/start - На главную.\n\n'
+                             f'Приколы:\n'
+                             f'/dice - кубик.\n'
+                             f'/slot - слоты.\n'
+                             f'/football - футбол.\n'
+                             f'/basketball - баскетбол.\n'
+                             f'/bowling - боулинг.\n'
+                             f'/darts - дартс.\n\n'
                              f'Контакты:\n'
                              f'@schr1k - <b>CEO, CTO, CIO, Founder, TeamLead, Главный Разработчик</b>.\n'
                              f'@hxllmvdx - <i>разработчик</i>.', reply_markup=kb.to_main_kb, parse_mode='HTML')
@@ -178,8 +191,8 @@ async def suggest_idea(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text='Отправьте свою идею и она будет рассмотрена специальной комиссией \(||нет||\)\.',
-                                    parse_mode='MarkdownV2', reply_markup=kb.to_main_kb)
+                                    text='Если у вас есть идея по улучшению бота или школы, отправьте ее сюда (пока что поддерживаются <b>только текст и фото</b>).',
+                                    parse_mode='HTML', reply_markup=kb.to_main_kb)
         await state.set_state(SuggestIdea.idea)
     except Exception as e:
         errors.error(e)
@@ -188,11 +201,40 @@ async def suggest_idea(call: CallbackQuery, state: FSMContext):
 @dp.message(SuggestIdea.idea)
 async def set_idea(message: Message, state: FSMContext):
     try:
-        await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - @{message.from_user.username}\n'
-                                                                   f'Сообщение - {message.text}')
-        await message.answer(text='Спасибо за предложение\! Идея уже передана комиссии \(||нет||\)\.',
-                             parse_mode='MarkdownV2', reply_markup=kb.to_main_kb)
-        await state.clear()
+        if message.photo is not None:
+            await bot.send_photo(chat_id=config.IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
+                                 caption=f'Отправитель - @{message.from_user.username}\n'
+                                         f'Сообщение - {message.caption}',
+                                 reply_markup=kb.idea_kb)
+            await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
+            await state.clear()
+        elif message.text is not None:
+            await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - @{message.from_user.username}\n'
+                                                                       f'Сообщение - {message.text}',
+                                   reply_markup=kb.idea_kb)
+            await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
+            await state.clear()
+        else:
+            await message.answer(text='Этот тип контента не поддерживается. Отправьте что-нибудь другое.')
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data.split('-')[0] == 'approve_idea')
+async def approve_idea(call: CallbackQuery):
+    try:
+        await call.answer()
+        if call.message.photo is not None:
+            await bot.send_photo(chat_id=config.APPROVED_IDEAS_GROUP_ID, photo=call.message.photo[-1].file_id,
+                                 caption=f'{call.message.caption}')
+            await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.IDEAS_GROUP_ID,
+                                           caption='Идея одобрена.')
+        elif call.message.text is not None:
+            await bot.send_message(chat_id=config.APPROVED_IDEAS_GROUP_ID, text=f'{call.message.text}')
+            await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.IDEAS_GROUP_ID,
+                                        text='Идея одобрена.')
+        else:
+            await bot.send_message(chat_id=call.from_user.id, text='Произошла ошибка')
     except Exception as e:
         errors.error(e)
 
@@ -424,9 +466,7 @@ async def set_role(call: CallbackQuery, state: FSMContext):
 @dp.message(Command('dice'))
 async def dice(message: Message):
     try:
-        data = await message.answer_dice(emoji='🎲')
-        await asyncio.sleep(4)
-        await bot.send_message(message.from_user.id, str(data.dice.value))
+        await message.answer_dice(emoji='🎲')
     except Exception as e:
         errors.error(e)
 
@@ -468,7 +508,7 @@ async def bowling(message: Message):
 
 
 # Дартс ================================================================================================================
-@dp.message(Command('dart'))
+@dp.message(Command('darts'))
 async def dart(message: Message):
     try:
         await message.answer_dice(emoji='🎯')
@@ -481,6 +521,45 @@ async def dart(message: Message):
 async def monkey(message: Message):
     try:
         await message.answer_sticker('CAACAgIAAxkBAAEKc5dlHbxb-RpsaSAfgBqoQ9RE7NECXQACLA4AAns60UqyOUfKre3y0zAE')
+    except Exception as e:
+        errors.error(e)
+
+
+# Петрикова ============================================================================================================
+@dp.message(Command('petrikova'))
+async def petrikova(message: Message):
+    try:
+        await message.answer_sticker('CAACAgIAAxkBAAEKdgxlHv4_ah2jwxqOVFWLghHRluQw4QAC0ygAArOsIEoJKU_WVCW3gTAE')
+    except Exception as e:
+        errors.error(e)
+
+
+# 52 ===================================================================================================================
+@dp.message(Command('52'))
+async def fiftytwo(message: Message):
+    try:
+        photo = FSInputFile(f'mems/52.jpg')
+        await message.answer_photo(photo=photo, caption='Yeei')
+    except Exception as e:
+        errors.error(e)
+
+
+# Инвалид =============================================================================================================
+@dp.message(Command('invalid'))
+async def invalid(message: Message):
+    try:
+        photo = FSInputFile(f'mems/invalid.jpg')
+        await message.answer_photo(photo=photo)
+    except Exception as e:
+        errors.error(e)
+
+
+# Чупа-чупс ============================================================================================================
+@dp.message(Command('chupachups'))
+async def chupachups(message: Message):
+    try:
+        photo = FSInputFile(f'mems/chupachups.jpg')
+        await message.answer_photo(photo=photo)
     except Exception as e:
         errors.error(e)
 
@@ -507,7 +586,8 @@ async def gids(message: Message):
 @dp.message()
 async def all(message: Message):
     try:
-        await message.answer('Команда не распознана. Отправьте /start для выхода в главное меню.')
+        if str(message.chat.id) not in [config.IDEAS_GROUP_ID, config.APPROVED_IDEAS_GROUP_ID]:
+            await message.answer('Команда не распознана. Отправьте /start для выхода в главное меню.')
     except Exception as e:
         errors.error(e)
 

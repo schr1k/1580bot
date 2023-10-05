@@ -15,6 +15,7 @@ pip install -r requirements.txt
 ```python
 TOKEN = 'Token from BotFather'
 IDEAS_GROUP_ID = '-1001796292186'
+APPROVED_IDEAS_GROUP_ID = '-1001930546995'
 
 SCHEDULE_PATH = '<absolute path to schedule.json>'
 TEACHERS_PATH = '<absolute path to teachers.json>'
