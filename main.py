@@ -364,7 +364,7 @@ async def admin_panel(call: CallbackQuery):
             role = 'новостник'
         text += f'Ваша роль - <b>{role}</b>.'
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
-                                    text=text, reply_markup=keyboard)
+                                    text=text, reply_markup=keyboard, parse_mode='HTML')
     except Exception as e:
         errors.error(e)
 
