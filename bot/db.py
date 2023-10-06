@@ -53,12 +53,16 @@ class DB:
         result = await self.connection.fetchrow('SELECT role FROM staff WHERE tg = $1', tg)
         return dict(result)['role']
 
+    async def get_username_by_tg(self, tg: str) -> str:
+        result = await self.connection.fetchrow('SELECT username FROM users WHERE tg = $1', tg)
+        return dict(result)['username']
+
 # INSERT ===============================================================================================================
     async def new_user(self, tg: str, username: str):
         await self.connection.execute('INSERT INTO users (tg, username) VALUES ($1, $2)', tg, username)
 
-    async def new_staff(self, tg: str, role: str):
-        await self.connection.execute('INSERT INTO staff (tg, role) VALUES ($1, $2)', tg, role)
+    async def new_staff(self, tg: str, role: str, username: str):
+        await self.connection.execute('INSERT INTO staff (tg, role, username) VALUES ($1, $2)', tg, role, username)
 
 # UPDATE ===============================================================================================================
     async def edit_group(self, tg: str, group: str) -> None:
@@ -67,8 +71,8 @@ class DB:
     async def edit_building(self, tg: str, building: str) -> None:
         await self.connection.execute('UPDATE users set building = $1 WHERE tg = $2', building, tg)
 
-    async def edit_role(self, tg: str, role: str) -> None:
-        await self.connection.execute('UPDATE staff set role = $1 WHERE tg = $2', role, tg)
+    async def edit_role(self, tg: str, role: str, username: str) -> None:
+        await self.connection.execute('UPDATE staff set role = $1, username = $2 WHERE tg = $3', role, username, tg)
 
 
 # db = DB()
@@ -76,6 +80,6 @@ class DB:
 #
 # async def main():
 #     await db.connect()
-#     print(await db.user_exists('1'))
+#     print(await db.staff_has_username('886971306'))
 #
 # asyncio.run(main())

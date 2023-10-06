@@ -356,8 +356,15 @@ async def admin_panel(call: CallbackQuery):
     try:
         await call.answer()
         keyboard = kb.admin_kb if await db.get_role(str(call.from_user.id)) == 'admin' else kb.newsman_kb
+        text = ''
+        if await db.get_role(str(call.from_user.id)) == 'admin':
+            role = 'админ'
+            text += f'Пользователей бота - <b>{await db.count_users()}</b>.\n'
+        else:
+            role = 'новостник'
+        text += f'Ваша роль - <b>{role}</b>.'
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
-                                    text=f'Пользователей бота - {await db.count_users()}.', reply_markup=keyboard)
+                                    text=text, reply_markup=keyboard)
     except Exception as e:
         errors.error(e)
 
@@ -448,15 +455,15 @@ async def set_id(message: Message, state: FSMContext):
 @dp.callback_query(GiveRole.role)
 async def set_role(call: CallbackQuery, state: FSMContext):
     try:
+        await call.answer()
         await state.update_data(role=call.data)
         data = await state.get_data()
-        await call.answer()
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
                                     text='Роль выдана.', reply_markup=kb.to_admin_panel_kb)
         if await db.staff_exists(data['id']):
-            await db.edit_role(data['id'], data['role'])
+            await db.edit_role(data['id'], data['role'], await db.get_username_by_tg(data['id']))
         else:
-            await db.new_staff(data['id'], data['role'])
+            await db.new_staff(data['id'], data['role'], await db.get_username_by_tg(data['id']))
         await state.clear()
     except Exception as e:
         errors.error(e)
@@ -554,11 +561,11 @@ async def invalid(message: Message):
         errors.error(e)
 
 
-# Чупа-чупс ============================================================================================================
-@dp.message(Command('chupachups'))
-async def chupachups(message: Message):
+# Джакузи ==============================================================================================================
+@dp.message(Command('jacuzzi'))
+async def jacuzzi(message: Message):
     try:
-        photo = FSInputFile(f'mems/chupachups.jpg')
+        photo = FSInputFile(f'mems/jacuzzi.jpg')
         await message.answer_photo(photo=photo)
     except Exception as e:
         errors.error(e)
