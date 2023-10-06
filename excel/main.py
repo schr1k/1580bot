@@ -39,12 +39,12 @@ def tasks():
 
 def run_tasks():
     tasks()
-    logging.info(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %m.%d.%Y")}).')
+    print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %m.%d.%Y")}).')
     return sch.CancelJob
 
 
 def start_scheduler():
-    sch.every().day.at('20:00').do(run_tasks)
+    sch.every().day.at('20:00:00').do(run_tasks)
     while True:
         sch.run_pending()
         time.sleep(1)
