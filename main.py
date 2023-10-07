@@ -228,11 +228,13 @@ async def approve_idea(call: CallbackQuery):
             await bot.send_photo(chat_id=config.APPROVED_IDEAS_GROUP_ID, photo=call.message.photo[-1].file_id,
                                  caption=f'{call.message.caption}')
             await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.IDEAS_GROUP_ID,
-                                           caption='Идея одобрена.')
+                                           caption=f'{call.message.text}.\n'
+                                                   f'Идея одобрена.')
         elif call.message.text is not None:
             await bot.send_message(chat_id=config.APPROVED_IDEAS_GROUP_ID, text=f'{call.message.text}')
             await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.IDEAS_GROUP_ID,
-                                        text='Идея одобрена.')
+                                        text=f'{call.message.text}.\n'
+                                             f'Идея одобрена.')
         else:
             await bot.send_message(chat_id=call.from_user.id, text='Произошла ошибка')
     except Exception as e:
@@ -545,7 +547,7 @@ async def petrikova(message: Message):
 @dp.message(Command('52'))
 async def fiftytwo(message: Message):
     try:
-        photo = FSInputFile(f'mems/52.jpg')
+        photo = FSInputFile('mems/52.jpg')
         await message.answer_photo(photo=photo, caption='Yeei')
     except Exception as e:
         errors.error(e)
@@ -555,7 +557,7 @@ async def fiftytwo(message: Message):
 @dp.message(Command('invalid'))
 async def invalid(message: Message):
     try:
-        photo = FSInputFile(f'mems/invalid.jpg')
+        photo = FSInputFile('mems/invalid.jpg')
         await message.answer_photo(photo=photo)
     except Exception as e:
         errors.error(e)
@@ -565,7 +567,17 @@ async def invalid(message: Message):
 @dp.message(Command('jacuzzi'))
 async def jacuzzi(message: Message):
     try:
-        photo = FSInputFile(f'mems/jacuzzi.jpg')
+        photo = FSInputFile('mems/jacuzzi.jpg')
+        await message.answer_photo(photo=photo)
+    except Exception as e:
+        errors.error(e)
+
+
+# Шрэк =================================================================================================================
+@dp.message(Command('shrek'))
+async def shrek(message: Message):
+    try:
+        photo = FSInputFile('mems/shrek.jpg')
         await message.answer_photo(photo=photo)
     except Exception as e:
         errors.error(e)
