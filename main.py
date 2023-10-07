@@ -163,9 +163,17 @@ async def get_teacher_schedule(call: CallbackQuery, state: FSMContext):
 @dp.message(GetTeacherSchedule.teacher_surname)
 async def set_teacher_surname(message: Message, state: FSMContext):
     try:
-        await state.update_data(teacher=message.text)
-        await message.answer('Выберите день недели.', reply_markup=kb.teacher_week_kb)
-        await state.set_state(GetTeacherSchedule.weekday)
+        flag = False
+        for i in get_teachers():
+            if message.text.lower() in i.lower():
+                flag = True
+                break
+        if flag:
+            await state.update_data(teacher=message.text)
+            await message.answer('Выберите день недели.', reply_markup=kb.teacher_week_kb)
+            await state.set_state(GetTeacherSchedule.weekday)
+        else:
+            await message.answer('Учитель с такой фамилией не найден. Повторите ввод.')
     except Exception as e:
         errors.error(e)
 
