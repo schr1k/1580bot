@@ -57,6 +57,8 @@ def make_schedule_3h():
                     schedule[excel[column][i]][weekdays[c]] = {}
                     schedule[excel[column][i]][weekdays[c]] = day_schedule
 
+    teachers = [i.strip() for i in list(set(filter(lambda x: '.' in x, teachers)))]
+
     with open(config.SCHEDULE_PATH, 'r', encoding='utf-8') as f:
         all_schedule = json.load(f)
 

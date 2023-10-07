@@ -79,6 +79,8 @@ def make_schedule_3p():
                     schedule[group][weekdays[c]] = {}
                     schedule[group][weekdays[c]] = day_schedule
 
+    teachers = [i.strip() for i in list(set(filter(lambda x: '.' in x, teachers)))]
+
     with open(config.SCHEDULE_PATH, 'r', encoding='utf-8') as f:
         all_schedule = json.load(f)
 
