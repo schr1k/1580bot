@@ -44,6 +44,7 @@ CREATE TABLE users (
 CREATE TABLE staff (
     id SERIAL,
     tg VARCHAR,
+    username VARCHAR,
     role VARCHAR
 )
 ```
