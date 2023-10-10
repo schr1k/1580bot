@@ -642,5 +642,5 @@ async def main():
 
 
 if __name__ == '__main__':
-    print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %m.%d.%Y")}).')
+    print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
     asyncio.run(main())
