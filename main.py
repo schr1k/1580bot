@@ -141,7 +141,7 @@ async def set_student_weekday(call: CallbackQuery, state: FSMContext):
         await call.answer()
         data = await state.get_data()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=get_student_day_schedule(data['group'], call.data.split('-')[1]),
+                                    text=get_students_day_schedule(data['group'], call.data.split('-')[1]),
                                     parse_mode='HTML', reply_markup=kb.to_main_kb)
         await state.clear()
     except Exception as e:
@@ -149,46 +149,62 @@ async def set_student_weekday(call: CallbackQuery, state: FSMContext):
 
 
 # Найти учителя ========================================================================================================
-@dp.callback_query(F.data == 'get_teacher_schedule')
-async def get_teacher_schedule(call: CallbackQuery, state: FSMContext):
+@dp.callback_query(F.data == 'find_teacher')
+async def find_teacher(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
                                     text='Введите фамилию учителя.', reply_markup=kb.to_main_kb)
-        await state.set_state(GetTeacherSchedule.teacher_surname)
+        await state.set_state(FindTeacher.teacher)
     except Exception as e:
         errors.error(e)
 
 
-@dp.message(GetTeacherSchedule.teacher_surname)
-async def set_teacher_surname(message: Message, state: FSMContext):
+@dp.message(FindTeacher.teacher)
+async def teacher_info(message: Message, state: FSMContext):
     try:
         flag = False
-        for i in get_teachers():
-            if message.text.lower() in i.lower():
+        teachers = get_teachers()
+        for i, j in teachers.items():
+            if message.text.lower() == j['surname'].lower():
                 flag = True
+                n = i
                 break
         if flag:
-            await state.update_data(teacher=message.text)
-            await message.answer('Выберите день недели.', reply_markup=kb.teacher_week_kb)
-            await state.set_state(GetTeacherSchedule.weekday)
+            text = f'<b>{teachers[n]["surname"]} {teachers[n]["name"]} {teachers[n]["patronymic"]}</b>\n\n<i>Почта:</i> {teachers[n]["email"]}.\n'
+            if teachers[n]['subject'] is not None:
+                text += f'<i>Занимаемая должность:</i> {teachers[n]["subject"]}.'
+            if teachers[n]["photo"]:
+                photo = FSInputFile(f'excel/teachers/photo/{n}.jpg')
+                await message.answer_photo(photo=photo, caption=text, parse_mode='HTML',
+                                           reply_markup=kb.teacher_schedule_kb(message.text.capitalize()))
+            else:
+                await message.answer(text=text, parse_mode='HTML',
+                                     reply_markup=kb.teacher_schedule_kb(message.text.capitalize()))
+            await state.clear()
         else:
             await message.answer('Учитель с такой фамилией не найден. Повторите ввод.')
     except Exception as e:
         errors.error(e)
 
 
-@dp.callback_query(GetTeacherSchedule.weekday)
-@dp.callback_query(F.data.split('-')[0] == 'teacher')
-async def set_teacher_weekday(call: CallbackQuery, state: FSMContext):
+@dp.callback_query(F.data.split('-')[0] == 'teacher_schedule')
+async def teacher_weekdays(call: CallbackQuery):
     try:
         await call.answer()
-        data = await state.get_data()
+        await call.message.delete()
+        await call.message.answer(text='Выберите день недели.', reply_markup=kb.teacher_week_kb(call.data.split('-')[1]))
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data.split('-')[0] == 'teacher')
+async def get_teacher_schedule(call: CallbackQuery):
+    try:
+        await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=get_teachers_day_schedule(data['teacher'].capitalize(),
-                                                                   call.data.split('-')[1]),
-                                    parse_mode='HTML', reply_markup=kb.to_main_kb)
-        await state.clear()
+                                    text=get_teachers_day_schedule(call.data.split('-')[2], call.data.split('-')[1]),
+                                    parse_mode='HTML', reply_markup=kb.to_teacher_schedule_kb(call.data.split('-')[2]))
     except Exception as e:
         errors.error(e)
 
@@ -626,5 +642,5 @@ async def main():
 
 
 if __name__ == '__main__':
-    print('Работаем 👌')
+    print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %m.%d.%Y")}).')
     asyncio.run(main())

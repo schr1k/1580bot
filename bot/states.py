@@ -6,9 +6,8 @@ class GetStudentSchedule(StatesGroup):
     weekday = State()
 
 
-class GetTeacherSchedule(StatesGroup):
-    teacher_surname = State()
-    weekday = State()
+class FindTeacher(StatesGroup):
+    teacher = State()
 
 
 class News(StatesGroup):

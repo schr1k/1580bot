@@ -12,7 +12,7 @@ def get_teachers():
         return json.load(f)
 
 
-def get_student_day_schedule(group: str, day: str) -> str:
+def get_students_day_schedule(group: str, day: str) -> str:
     day_schedule = get_json()[group][day]
     s = f'Расписание для {group} на {day}:\n'
     for key, value in day_schedule.items():
@@ -28,13 +28,6 @@ def get_student_day_schedule(group: str, day: str) -> str:
 def get_teachers_day_schedule(surname: str, day: str) -> str:
     s = f'{day}:\n'
     st = {}
-    c = 0
-    for i in get_teachers():
-        if surname in i:
-            c = 1
-            break
-    if c != 1:
-        return 'Учитель не найден.'
     for key, value in get_json().items():
         if day in value.keys():
             for k, v in value[day].items():
@@ -55,4 +48,3 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
     if len(s) == len(day + ':\n'):
         s = f'В {day} у выбранного учителя нет уроков.'
     return s
-

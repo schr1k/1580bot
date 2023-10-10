@@ -9,10 +9,9 @@ to_main_kb = InlineKeyboardBuilder().add(to_main).as_markup()
 to_admin_panel = InlineKeyboardButton(text='🔙 Админ-панель', callback_data='admin_panel')
 to_admin_panel_kb = InlineKeyboardBuilder().add(to_admin_panel).as_markup()
 
-
 # Главная ==============================================================================================================
 get_schedule = InlineKeyboardButton(text='🗓 Получить расписание', callback_data='get_student_schedule')
-find_teacher = InlineKeyboardButton(text='🔍 Найти учителя', callback_data='get_teacher_schedule')
+find_teacher = InlineKeyboardButton(text='🔍 Найти учителя', callback_data='find_teacher')
 suggest_idea = InlineKeyboardButton(text='💡 Предложить идею', callback_data='suggest_idea')
 profile = InlineKeyboardButton(text='👤 Профиль', callback_data='profile')
 user_main_kb = InlineKeyboardBuilder().row(get_schedule).row(find_teacher).row(suggest_idea).row(profile).as_markup()
@@ -21,14 +20,29 @@ admin_panel = InlineKeyboardButton(text='👨‍💻 Админ панель', c
 staff_main_kb = InlineKeyboardBuilder().row(get_schedule).row(find_teacher).row(suggest_idea).row(profile).row(admin_panel).as_markup()
 
 
+# Расписание учителя ===================================================================================================
+def teacher_schedule_kb(teacher: str):
+    teacher_schedule = InlineKeyboardButton(text='📅 Узнать расписание', callback_data=f'teacher_schedule-{teacher}')
+    keyboard = InlineKeyboardBuilder().row(teacher_schedule).row(to_main).as_markup()
+    return keyboard
+
+
+def to_teacher_schedule_kb(teacher: str):
+    teacher_schedule = InlineKeyboardButton(text='🔙 Назад', callback_data=f'teacher_schedule-{teacher}')
+    keyboard = InlineKeyboardBuilder().row(teacher_schedule).as_markup()
+    return keyboard
+
+
 # Дни Недели для учителей ==============================================================================================
-monday = InlineKeyboardButton(text='Понедельник', callback_data='teacher-Понедельник')
-tuesday = InlineKeyboardButton(text='Вторник', callback_data='teacher-Вторник')
-wednesday = InlineKeyboardButton(text='Среда', callback_data='teacher-Среда')
-thursday = InlineKeyboardButton(text='Четверг', callback_data='teacher-Четверг')
-friday = InlineKeyboardButton(text='Пятница', callback_data='teacher-Пятница')
-saturday = InlineKeyboardButton(text='Суббота', callback_data='teacher-Суббота')
-teacher_week_kb = InlineKeyboardBuilder().row(monday, tuesday, wednesday).row(thursday, friday, saturday).as_markup()
+def teacher_week_kb(teacher: str):
+    monday = InlineKeyboardButton(text='Понедельник', callback_data=f'teacher-Понедельник-{teacher}')
+    tuesday = InlineKeyboardButton(text='Вторник', callback_data=f'teacher-Вторник-{teacher}')
+    wednesday = InlineKeyboardButton(text='Среда', callback_data=f'teacher-Среда-{teacher}')
+    thursday = InlineKeyboardButton(text='Четверг', callback_data=f'teacher-Четверг-{teacher}')
+    friday = InlineKeyboardButton(text='Пятница', callback_data=f'teacher-Пятница-{teacher}')
+    saturday = InlineKeyboardButton(text='Суббота', callback_data=f'teacher-Суббота-{teacher}')
+    keyboard = InlineKeyboardBuilder().row(monday, tuesday, wednesday).row(thursday, friday, saturday).as_markup()
+    return keyboard
 
 
 # Кнопка выбора класса для заполнивших профиль =========================================================================
