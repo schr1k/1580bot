@@ -39,7 +39,7 @@ def tasks():
 
 def run_tasks():
     tasks()
-    print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %m.%d.%Y")}).')
+    print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
     return sch.CancelJob
 
 
