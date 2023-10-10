@@ -1,270 +1,2202 @@
-[
-    "Королева Н.Л.",
-    "Сергеева И.Б.",
-    "Котлярова Я.Ю. ДО",
-    "Ульяненков Д.А.",
-    "Вдовина О.П.",
-    "Галинская М.А.",
-    "Оноприенко Е.А.",
-    "Абрамова Т.В.",
-    "Ткач Л.И.",
-    "Кривых Н.В.",
-    "Кулеба Н.С.",
-    "Демидова Н.М.",
-    "Чернышева Т.А.",
-    "Михайлова Е.В.",
-    "Демьяненко Н.А.",
-    "Вишнякова О.В.",
-    "Зверева Г.И.",
-    "Туголукова А.К.",
-    "Киселева И.М.",
-    "Богатин А.А.",
-    "Губкина З.В.",
-    "Фокина В.А.",
-    "Ботвинова Е.В.",
-    "Манько О.В.",
-    "Волошина З.Л.",
-    "Безенков Ю.В.",
-    "Кулинич Н.В.",
-    "Ардат М.Б.",
-    "Тимошина И.Ю.",
-    "Набиева С.С.",
-    "Шестова К.С.",
-    "Калмыков Ю.В.",
-    "Яшникова А.Ю.",
-    "Коршунова Ю.В.",
-    "Митяшова Г.П.",
-    "Гребенкин В.И.",
-    "Шаров Р.А.",
-    "Крицкая Е.Н.",
-    "Титятин А.Г.",
-    "Котлярова Я.Ю",
-    "Шабалина Е.С.",
-    "Борзунова С.В.",
-    "Якшина Т.С.",
-    "Ларина М.В.",
-    "Козьмин Е.В.",
-    "Миканева О.Г.",
-    "Ковтун А.М.",
-    "Тихов В.В.",
-    "Привалова Е.В",
-    "Вайс В.Б.",
-    "Чупахина О.Н.",
-    "Руднева Д.К.",
-    "Костромина М.С.",
-    "Казакова Ю.В.",
-    "Мудрук В.И.",
-    "Хамидуллина И.В.",
-    "Гульманова О.В.",
-    "Коротова И.А.",
-    "Шейкина А.В.",
-    "Фандюшина В.Н.",
-    "Евстигнеев А.М.",
-    "Камкина М.А.",
-    "Петрикова Ю.Д.",
-    "Власова О.В.",
-    "Русинова Л.В.",
-    "Ефимова Н.В.",
-    "Чабан Н..С.",
-    "Ахмедова Э. К.",
-    "Щепочкин И.М.",
-    "Сидоров В.А.",
-    "Гришкина М.П.",
-    "Тимошина И.Ю.",
-    "Пшеничнов В.А.",
-    "Дудникова Ю.А",
-    "Курбатова Н.А.",
-    "Штраус И.М.",
-    "Кривобокова А.М.",
-    "Дудко В.В.",
-    "Литвинова А.В.",
-    "Денисенко П.Л.",
-    "Колосова А.В.",
-    "Бучнева Л.В.",
-    "Иванова Е.А.",
-    "Бочков М.О.",
-    "Подпорина О.А.",
-    "Доронина Д.С.",
-    "Анисимова Ю.С.",
-    "Бочков М.О.",
-    "Калужских М.В.",
-    "Пахомова М.А.",
-    "Сельденкова О.Г.",
-    "Калашникова А.А.",
-    "Герасимов А.В.",
-    "Мельникова А.А.",
-    "Татаринова Е.О.",
-    "Мамай О.Г.",
-    "Соловьева Н.Ю.",
-    "Трофимиова Е.В.",
-    "Виноградова И.Г.",
-    "Зайцева М.А.",
-    "Курбатова Е.Г.",
-    "Стреколовская В.М.",
-    "Пантелеев Л.В.",
-    "Сафонов А.О.",
-    "Р Пантюхова Г.П.",
-    "Бочарникова Н.К.",
-    "Афанасьева А.В.",
-    "Хлебинская Г.Ф.",
-    "Бортничук М.В.",
-    "Воронов Р.В.",
-    "Мишанова Р.А.",
-    "Аманатова О.Л.",
-    "Бурджаева В.В.",
-    "Одинцова А.А.",
-    "Евстропова Е.В.",
-    "Рыжкова В.Е.",
-    "Носова Е.П.",
-    "Ильина И.И.",
-    "Измайлов И.В.",
-    "Савельева Д.А.",
-    "Самсонова Т.Н.",
-    "Грачева И.Н.",
-    "Никитина А. А.",
-    "Степанян Н.А.",
-    "Бубнова Е.В.",
-    "Свиридова О.В.",
-    "Елистратова М.В.",
-    "Аликин А.С.",
-    "Геворкян С.Г.",
-    "Калмыкова Е.Е.",
-    "Равло А.В.",
-    "Бурджаева В.В.",
-    "Чабан Н.С.",
-    "Петковская В.Н.",
-    "Демидов А.В.",
-    "Кудрин М.В.",
-    "Бибикова Т.В.",
-    "Артемова А.И.",
-    "Лунева И.В.",
-    "Поварова П.А.",
-    "Загоруйко Е.Н.",
-    "Плетнев А.Л.",
-    "Собченко В.Н.",
-    "Пшеничный В.А.",
-    "Попова И.А.",
-    "Рудюк И.Л.",
-    "Сыч Е.С.",
-    "Измайлов И.В.",
-    "Маркова Е.Л.",
-    "Михеев Д.Н.",
-    "Горелова Т.В.",
-    "Привалова Н.С.",
-    "Васина Л.А.",
-    "Кежаева А.А.",
-    "Николотова Н.А.",
-    "Вакансия 1 инф.",
-    "Белянова Э.Н.",
-    "Котлярова Я.Ю.",
-    "Семенов И.Б.",
-    "Волков Е.О.",
-    "Арзуманин В.В.",
-    "Сианосян Л.А.",
-    "Завазальская Е.",
-    "Котлярова Я.Ю ДО",
-    "Порфирьева И.А.",
-    "Мазурова Р.С.",
-    "Дегтярева И.Г.",
-    "Долгих Е.А.",
-    "Бугрова М.И.",
-    "Ахмедова Э.К.",
-    "Ходак О.И.",
-    "Кулешов Е.А.",
-    "Пантюхова Г.П.",
-    "Евтропова Е.В.",
-    "Клепикова Л.В.",
-    "Нестеров А.Н.",
-    "Ваняшкина М.О.",
-    "Мельник В.П.",
-    "Рыжкова В.Е.",
-    "Калистратова Н.П.",
-    "Хащинина С.В.",
-    "Белолипецкий С.Н.",
-    "Лодыгина А.В.",
-    "Колесникова К.Г.",
-    "Игуменов А.А.",
-    "Ворошилова Т.Н.",
-    "Павлов М.А.",
-    "Тихонов А.М.",
-    "Митрофанов М.С.",
-    "Старостина А.Л.",
-    "Петрова А.П.",
-    "Чернега Н.В.",
-    "Преображенский С.А.",
-    "Воскресенский Л.В.",
-    "Шавгулидзе И.В.",
-    "Мишанов И.Б.",
-    "Кушнир Э.А.",
-    "Завазальская Е.А.",
-    "Зверева Г.Н.",
-    "Иванников С.В.",
-    "Члингарян А.Л.",
-    "Аликин А.С",
-    "Онучак Е.А.",
-    "Смородинова В.А.",
-    "Богачева Е.А.",
-    "Фролова Е.А.",
-    "Канунникова Т.А.",
-    "Рыжкова В.Е.",
-    "Чернецкая М.С.",
-    "Комаровский К.О.",
-    "Науменко Н.И.",
-    "Булдыгина С.В.",
-    "Чиркова О.А.",
-    "Чикирова Е.С.",
-    "Огонькова Е.В.",
-    "Мелешко Е.В.",
-    "Денисова А.М.",
-    "Дудникова Ю.А.",
-    "Дарьина С.Н.",
-    "Бессонова А.В.",
-    "Алямкина К.С.",
-    "Гордеев Н.А.",
-    "Никитина А.А.",
-    "Шишкина Л.А.",
-    "Якимова И.А.",
-    "Лобачев А.А.",
-    "Смалева Е.В.",
-    "Барабанова С.М.",
-    "Привалова Е.В.",
-    "Бурмистрова Е.В.",
-    "Шевцова Г.Ю.",
-    "Калмыков Ю.А.",
-    "Смирнов И.А.",
-    "Грицай И.А.",
-    "Ржевский А.В.",
-    "Вакансия 2 инф.",
-    "Сахапова М.А.",
-    "Лебедев Д.А.",
-    "Непомнящая И.Ю.",
-    "Юрманова М.Г.",
-    "Антоненко О.И.",
-    "Австрийская Н.Р.",
-    "Лабазов Ю.А.",
-    "Хинчина Н.И.",
-    "Алямкина К.С.",
-    "Лазарев И.П.",
-    "Погорелов Е.А.",
-    "Морозов Н.Я.",
-    "Ефимова Н.В.",
-    "Овчинников В.В.",
-    "Карпец Ф.В.",
-    "Зимина Е.А.",
-    "Гулина Н.И.",
-    "Кушнир Э.А.",
-    "Зубкова Е.Ю.",
-    "Прокопцев А.А.",
-    "Кузмичева Е.А.",
-    "Гаврилова Е.А.",
-    "Петковская В.Н..",
-    "Барыбина О.И.",
-    "Козлова И.В.",
-    "Иванова Е.И.",
-    "Котлярова Я.Ю.ДО",
-    "Грачева К.А.",
-    "Туркова Е.С.",
-    "Романова Н.А.",
-    "Будняк А.Н.",
-    "Голодняк М.М."
-]
+{
+    "1": {
+        "surname": "Абрамова",
+        "name": "Татьяна",
+        "patronymic": "Владимировна",
+        "email": "ms.tatiana903@mail.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "2": {
+        "surname": "Австрийская",
+        "name": "Наталия",
+        "patronymic": "Ринатовна",
+        "email": "natali2006-71@mail.ru",
+        "photo": true,
+        "subject": "Учитель физической культуры"
+    },
+    "3": {
+        "surname": "Аликин",
+        "name": "Александр",
+        "patronymic": "Сергеевич",
+        "email": "spikeal@mail.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "4": {
+        "surname": "Алямкина",
+        "name": "Ксения",
+        "patronymic": "Сергеевна",
+        "email": "xenicienta@mail.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "5": {
+        "surname": "Аманатова",
+        "name": "Ольга",
+        "patronymic": "Леонардовна",
+        "email": "olgaleonard2000@gmail.com",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "6": {
+        "surname": "Анисимова",
+        "name": "Юлия",
+        "patronymic": "Сергеевна",
+        "email": "sch.juliaas@gmail.com",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "7": {
+        "surname": "Анкушева",
+        "name": "Ольга",
+        "patronymic": "Вячеславовна",
+        "email": "aova@yandex.ru",
+        "photo": true,
+        "subject": "Тьютор"
+    },
+    "8": {
+        "surname": "Антоненко",
+        "name": "Ольга",
+        "patronymic": "Игоревна",
+        "email": "132olusa6@rambler.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "9": {
+        "surname": "Ардат",
+        "name": "Максим",
+        "patronymic": "Бассамович",
+        "email": "ardat.maxim@gmail.com",
+        "photo": false,
+        "subject": "Учитель математики"
+    },
+    "10": {
+        "surname": "Арзуманин",
+        "name": "Вячеслав",
+        "patronymic": "Вячеславович",
+        "email": "slavons500@yandex.ru",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "11": {
+        "surname": "Артемова",
+        "name": "Александра",
+        "patronymic": "Игоревна",
+        "email": "Alexandra.0906@mail.ru",
+        "photo": true,
+        "subject": "Специалист по кадрам"
+    },
+    "12": {
+        "surname": "Афанасьева",
+        "name": "Анна",
+        "patronymic": "Владимировна",
+        "email": "afaanjuta@mail.ru",
+        "photo": true,
+        "subject": "Доцент кафедры СУНЦ-1, учитель математики"
+    },
+    "13": {
+        "surname": "Афонченко",
+        "name": "Татьяна",
+        "patronymic": "Викторовна",
+        "email": "sunnysheep@yandex.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "14": {
+        "surname": "Ахмедова",
+        "name": "Эльмира",
+        "patronymic": "Калкамановна",
+        "email": "VIP-Laura@mail.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "15": {
+        "surname": "Балашова",
+        "name": "Ольга",
+        "patronymic": "Васильевна",
+        "email": "ovbalashova1580@mail.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-2, учитель физики"
+    },
+    "16": {
+        "surname": "Барабанова",
+        "name": "Снежанна",
+        "patronymic": "Маирбековна",
+        "email": "snezhana.barabanova79@yandex.ru",
+        "photo": true,
+        "subject": "Методист"
+    },
+    "17": {
+        "surname": "Барыбина",
+        "name": "Ольга",
+        "patronymic": "Ивановна",
+        "email": "baribina2007@ya.ru",
+        "photo": true,
+        "subject": "Учитель химии"
+    },
+    "18": {
+        "surname": "Безенков",
+        "name": "Юрий",
+        "patronymic": "Владимирович",
+        "email": "bezenkov@list.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-2, учитель физики"
+    },
+    "19": {
+        "surname": "Белолипецкий",
+        "name": "Сергей",
+        "patronymic": "Николаевич",
+        "email": "belols@mail.ru",
+        "photo": true,
+        "subject": "Доцент кафедры СУНЦ-2, учитель физики"
+    },
+    "20": {
+        "surname": "Белянова",
+        "name": "Эльвира",
+        "patronymic": "Николаевна",
+        "email": "elv-bel@mail.ru",
+        "photo": true,
+        "subject": "Доцент кафедры СУНЦ-1, учитель математики"
+    },
+    "21": {
+        "surname": "Бессонова",
+        "name": "Алёна",
+        "patronymic": "Владимировна",
+        "email": "Alena_bessonova6@mail.ru",
+        "photo": true,
+        "subject": "Учитель биологии"
+    },
+    "22": {
+        "surname": "Бибикова",
+        "name": "Татьяна",
+        "patronymic": "Васильевна",
+        "email": "tvbibikova@mail.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "23": {
+        "surname": "Бобрышев",
+        "name": "Евгений",
+        "patronymic": "Юрьевич",
+        "email": "eugene.bobryshev@gmail.com",
+        "photo": true,
+        "subject": "Социальный педагог"
+    },
+    "24": {
+        "surname": "Богатин",
+        "name": "Андрей",
+        "patronymic": "Аркадьевич",
+        "email": "duces@yandex.ru",
+        "photo": true,
+        "subject": "Учитель истории"
+    },
+    "25": {
+        "surname": "Богачева",
+        "name": "Елизавета",
+        "patronymic": "Андреевна",
+        "email": "lizik143@mail.ru",
+        "photo": true,
+        "subject": "Тьютор"
+    },
+    "26": {
+        "surname": "Борзунова",
+        "name": "София",
+        "patronymic": "Васильевна",
+        "email": "borzunova2003@mail.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "27": {
+        "surname": "Бортничук",
+        "name": "Марина",
+        "patronymic": "Васильевна",
+        "email": "bortnichukm@mail.ru",
+        "photo": false,
+        "subject": "Учитель начальных классов"
+    },
+    "28": {
+        "surname": "Борцова",
+        "name": "Светлана",
+        "patronymic": "Николаевна",
+        "email": "bibbor@yandex.ru",
+        "photo": false,
+        "subject": "Педагог-библиотекарь"
+    },
+    "29": {
+        "surname": "Ботвинова",
+        "name": "Елена",
+        "patronymic": "Викторовна",
+        "email": "botvinova_ev@mail.ru",
+        "photo": true,
+        "subject": "Учитель биологии"
+    },
+    "30": {
+        "surname": "Бочарникова",
+        "name": "Наталья",
+        "patronymic": "Константиновна",
+        "email": "nat141208@yandex.ru",
+        "photo": true,
+        "subject": "Ст. методист, учитель английского языка"
+    },
+    "31": {
+        "surname": "Бочков",
+        "name": "Максим",
+        "patronymic": "Олегович",
+        "email": "maksim.bochkov92@mail.ru",
+        "photo": true,
+        "subject": "Учитель физической культуры"
+    },
+    "32": {
+        "surname": "Бубнова",
+        "name": "Екатерина",
+        "patronymic": "Вячеславовна",
+        "email": "katrin_b@inbox.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "33": {
+        "surname": "Бугрова",
+        "name": "Мария",
+        "patronymic": "Ивановна",
+        "email": "marybugrova@yandex.ru",
+        "photo": true,
+        "subject": "Доцент кафедры СУНЦ-1, учитель математики"
+    },
+    "34": {
+        "surname": "Будняк",
+        "name": "Андрей",
+        "patronymic": "Назарович",
+        "email": "budda888@gmail.com",
+        "photo": true,
+        "subject": "Педагог дополнительного образования"
+    },
+    "35": {
+        "surname": "Булдыгина",
+        "name": "Светлана",
+        "patronymic": "Викторовна",
+        "email": "svb68@bk.ru",
+        "photo": true,
+        "subject": "Учитель биологии"
+    },
+    "36": {
+        "surname": "Бурджаева",
+        "name": "Владислава",
+        "patronymic": "Владимировна",
+        "email": "spaisy1989@gmail.com",
+        "photo": true,
+        "subject": "Учитель музыки"
+    },
+    "37": {
+        "surname": "Бурмистрова",
+        "name": "Екатерина",
+        "patronymic": "Валерьевна",
+        "email": "evburmistrova16@gmail.com",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "38": {
+        "surname": "Бучнева",
+        "name": "Лидия",
+        "patronymic": "Викторовна",
+        "email": "lbuchneva@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "39": {
+        "surname": "Ваганова",
+        "name": "Анастасия",
+        "patronymic": "Михайловна",
+        "email": "Pohodilova.Anastasiya@gmail.com",
+        "photo": false,
+        "subject": null
+    },
+    "40": {
+        "surname": "Вайс",
+        "name": "Валерия",
+        "patronymic": "Борисовна",
+        "email": "valeriya.vays@yandex.ru",
+        "photo": true,
+        "subject": "Учитель биологии"
+    },
+    "41": {
+        "surname": "Ваняшкина",
+        "name": "Мария",
+        "patronymic": "Олеговна",
+        "email": "sorokinamarija@yandex.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "42": {
+        "surname": "Васина",
+        "name": "Людмила",
+        "patronymic": "Алексеевна",
+        "email": "jvivivludmila@mail.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "43": {
+        "surname": "Вахтинская",
+        "name": "Екатерина",
+        "patronymic": "Романовна",
+        "email": "katyamagnitskaya@gmail.ru",
+        "photo": false,
+        "subject": "Учитель-логопед"
+    },
+    "44": {
+        "surname": "Вдовина",
+        "name": "Оксана",
+        "patronymic": "Павловна",
+        "email": "oxy.vdovina@gmail.com",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "45": {
+        "surname": "Виноградова",
+        "name": "Ирина",
+        "patronymic": "Геннадьевна",
+        "email": "s_irina98@mail.ru",
+        "photo": true,
+        "subject": "Учитель истории"
+    },
+    "46": {
+        "surname": "Вишнякова",
+        "name": "Ольга",
+        "patronymic": "Викторовна",
+        "email": "vishnya1580@rambler.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "47": {
+        "surname": "Власова",
+        "name": "Ольга",
+        "patronymic": "Владимировна",
+        "email": "ovch11101965@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "48": {
+        "surname": "Волков",
+        "name": "Евгений",
+        "patronymic": "Олегович",
+        "email": "eovolkov@yandex.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "49": {
+        "surname": "Волошина",
+        "name": "Зинаида",
+        "patronymic": "Леонидовна",
+        "email": "voloshinazl@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "50": {
+        "surname": "Воронов",
+        "name": "Роман",
+        "patronymic": "Владимирович",
+        "email": "voronovrv27@gmail.com",
+        "photo": true,
+        "subject": "Учитель географии"
+    },
+    "51": {
+        "surname": "Ворошилова",
+        "name": "Татьяна",
+        "patronymic": "Николаевна",
+        "email": "voroshilova@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "52": {
+        "surname": "Воскресенский",
+        "name": "Леонид",
+        "patronymic": "Всеволодович",
+        "email": "l.v.voskresenskiy@gmail.com",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "53": {
+        "surname": "Вязовец",
+        "name": "Наталия",
+        "patronymic": "Валентиновна",
+        "email": "nat1580@rambler.ru",
+        "photo": true,
+        "subject": "Педагог-психолог"
+    },
+    "54": {
+        "surname": "Гаврилова",
+        "name": "Елена",
+        "patronymic": "Алексеевна",
+        "email": "gavrilovaea1965@mail.ru",
+        "photo": true,
+        "subject": "Учитель географии"
+    },
+    "55": {
+        "surname": "Галинская",
+        "name": "Марина",
+        "patronymic": "Александровна",
+        "email": "mga@mga96.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "56": {
+        "surname": "Геворкян",
+        "name": "Сона",
+        "patronymic": "Гагиковна",
+        "email": "gevsona@yandex.ru",
+        "photo": true,
+        "subject": "Руководитель секции \"Иностранные языки\", учитель английского языка"
+    },
+    "57": {
+        "surname": "Герасимов",
+        "name": "Андрей",
+        "patronymic": "Валерьевич",
+        "email": "gerand88@yandex.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "58": {
+        "surname": "Голодняк",
+        "name": "Михаил",
+        "patronymic": "Михайлович",
+        "email": "mishko70@mail.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-2, учитель физики"
+    },
+    "59": {
+        "surname": "Гордеев",
+        "name": "Николай",
+        "patronymic": "Алексеевич",
+        "email": "vip.nik.gordeev@mail.ru",
+        "photo": true,
+        "subject": "Учитель физической культуры"
+    },
+    "60": {
+        "surname": "Горелова",
+        "name": "Татьяна",
+        "patronymic": "Всемовна",
+        "email": "bitan.72@mail.ru",
+        "photo": true,
+        "subject": "Учитель физической культуры"
+    },
+    "61": {
+        "surname": "Грачева",
+        "name": "Ирина",
+        "patronymic": "Николаевна",
+        "email": "grachevain1580@gmail.com",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "62": {
+        "surname": "Грачева",
+        "name": "Ксения",
+        "patronymic": "Андреевна",
+        "email": "senya_gracheva@mail.ru",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "63": {
+        "surname": "Гребенкин",
+        "name": "Владимир",
+        "patronymic": "Иванович",
+        "email": "grebenkin.vi@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "64": {
+        "surname": "Грицай",
+        "name": "Ирина",
+        "patronymic": "Анатольевна",
+        "email": "saxofone@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "65": {
+        "surname": "Гришкина",
+        "name": "Мария",
+        "patronymic": "Петровна",
+        "email": "Grishkina_mari@mail.ru",
+        "photo": true,
+        "subject": "Доцент кафедры СУНЦ-1, учитель информатики"
+    },
+    "66": {
+        "surname": "Губкина",
+        "name": "Зоя",
+        "patronymic": "Владимировна",
+        "email": "zayka2910@mail.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "67": {
+        "surname": "Гулина",
+        "name": "Наталия",
+        "patronymic": "Ивановна",
+        "email": "natgulina@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель черчения"
+    },
+    "68": {
+        "surname": "Гульманова",
+        "name": "Ольга",
+        "patronymic": "Викторовна",
+        "email": "gulik.olik2011@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "69": {
+        "surname": "Дарьина",
+        "name": "Светлана",
+        "patronymic": "Николаевна",
+        "email": "daryina@1580.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "70": {
+        "surname": "Дегтярева",
+        "name": "Ирина",
+        "patronymic": "Григорьевна",
+        "email": "igd.09@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "71": {
+        "surname": "Демидов",
+        "name": "Андрей",
+        "patronymic": "Владимирович",
+        "email": "dem.av@mail.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "72": {
+        "surname": "Демидова",
+        "name": "Наталья",
+        "patronymic": "Михайловна",
+        "email": "demidovanm@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель информатики"
+    },
+    "73": {
+        "surname": "Демьяненко",
+        "name": "Наталья",
+        "patronymic": "Анатольевна",
+        "email": "n5492482@gmail.com",
+        "photo": true,
+        "subject": "Учитель технологии"
+    },
+    "74": {
+        "surname": "Денега",
+        "name": "Михаил",
+        "patronymic": "Васильевич",
+        "email": "mihaildenega@gmail.com",
+        "photo": true,
+        "subject": "Советник директора по воспитанию и взаимодействию с детскими общественными объединениями"
+    },
+    "75": {
+        "surname": "Денисенко",
+        "name": "Петр",
+        "patronymic": "Леонидович",
+        "email": "petr.dl@mail.ru",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "76": {
+        "surname": "Долгих",
+        "name": "Елена",
+        "patronymic": "Александровна",
+        "email": "panova5513@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "77": {
+        "surname": "Доронина",
+        "name": "Дарья",
+        "patronymic": "Сергеевна",
+        "email": "d-d21@mail.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "78": {
+        "surname": "Дудко",
+        "name": "Владимир",
+        "patronymic": "Владимирович",
+        "email": "vladimi2000@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "79": {
+        "surname": "Дудникова",
+        "name": "Юлия",
+        "patronymic": "Андреевна",
+        "email": "j.a.dudnikova@ya.ru",
+        "photo": true,
+        "subject": "Педагог дополнительного образования"
+    },
+    "80": {
+        "surname": "Евстигнеев",
+        "name": "Алексей",
+        "patronymic": "Михайлович",
+        "email": "evstigneev.a.m@yandex.ru",
+        "photo": true,
+        "subject": "Учитель ОБЖ"
+    },
+    "81": {
+        "surname": "Евстропова",
+        "name": "Евгения",
+        "patronymic": "Валерьевна",
+        "email": "evsev@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "82": {
+        "surname": "Елистратова",
+        "name": "Марина",
+        "patronymic": "Вячеславовна",
+        "email": "elistratova.marina.63@gmail.com",
+        "photo": false,
+        "subject": null
+    },
+    "83": {
+        "surname": "Ефимова",
+        "name": "Наталья",
+        "patronymic": "Викторовна",
+        "email": "nv.efimova@mail.ru",
+        "photo": false,
+        "subject": "Учитель английского языка"
+    },
+    "84": {
+        "surname": "Завазальская",
+        "name": "Екатерина",
+        "patronymic": "Александровна",
+        "email": "ezavmoscow@mail.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "85": {
+        "surname": "Загоруйко",
+        "name": "Елена",
+        "patronymic": "Никлаевна",
+        "email": "pigik_vas@mail.ru",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "86": {
+        "surname": "Займидорога",
+        "name": "Алла",
+        "patronymic": "Викторовна",
+        "email": "allaviktor555@gmail.com",
+        "photo": true,
+        "subject": "Заведующий лабораторией, учитель физики"
+    },
+    "87": {
+        "surname": "Зайцева",
+        "name": "Марина",
+        "patronymic": "Александровна",
+        "email": "marina35@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель информатики"
+    },
+    "88": {
+        "surname": "Зверева",
+        "name": "Галина",
+        "patronymic": "Николаевна",
+        "email": "galina.zvereva7@gmail.com",
+        "photo": true,
+        "subject": "Учитель химии"
+    },
+    "89": {
+        "surname": "Зимина",
+        "name": "Елена",
+        "patronymic": "Анатольевна",
+        "email": "Lyaminaea76@mail.ru",
+        "photo": true,
+        "subject": "Учитель географии"
+    },
+    "90": {
+        "surname": "Зубкова",
+        "name": "Елена",
+        "patronymic": "Юрьевна",
+        "email": "eukrutikova@rambler.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "91": {
+        "surname": "Иванников",
+        "name": "Сергей",
+        "patronymic": "Васильевич",
+        "email": "sergey.ivannikov.59@mail.ru",
+        "photo": true,
+        "subject": "Доцент кафедры СУНЦ-2, учитель физики"
+    },
+    "92": {
+        "surname": "Иванова",
+        "name": "Елена",
+        "patronymic": "Алексеевна",
+        "email": "alena-yanson@yandex.ru",
+        "photo": true,
+        "subject": "Специалист по закупкам"
+    },
+    "93": {
+        "surname": "Иванова",
+        "name": "Елена",
+        "patronymic": "Ивановна",
+        "email": "Lena1580@mail.ru",
+        "photo": true,
+        "subject": "Специалист по закупкам"
+    },
+    "94": {
+        "surname": "Игуменов",
+        "name": "Андрей",
+        "patronymic": "Андреевич",
+        "email": "andreyandreevich1580@yandex.ru",
+        "photo": true,
+        "subject": "Учитель физической культуры"
+    },
+    "95": {
+        "surname": "Измайлов",
+        "name": "Игорь",
+        "patronymic": "Васильевич",
+        "email": "izmailoviv@mail.ru",
+        "photo": false,
+        "subject": "Учитель физической культуры"
+    },
+    "96": {
+        "surname": "Ильина",
+        "name": "Ирина",
+        "patronymic": "Игоревна",
+        "email": "ir_rus@mail.ru",
+        "photo": true,
+        "subject": "Доцент кафедры СУНЦ-1, учитель математик"
+    },
+    "97": {
+        "surname": "Казакова",
+        "name": "Юлия",
+        "patronymic": "Владимировна",
+        "email": "kazakova546@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "98": {
+        "surname": "Калашникова",
+        "name": "Анна",
+        "patronymic": "Андреевна",
+        "email": "kania@bk.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-2, учитель физики"
+    },
+    "99": {
+        "surname": "Калистратова",
+        "name": "Наталья",
+        "patronymic": "Павловна",
+        "email": "kalisnat@mail.ru",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "100": {
+        "surname": "Калмыков",
+        "name": "Юрий",
+        "patronymic": "Владимирович",
+        "email": "yvk@aha.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель информатики"
+    },
+    "101": {
+        "surname": "Калмыкова",
+        "name": "Елена",
+        "patronymic": "Евгеньевна",
+        "email": "tufelka@zmail.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "102": {
+        "surname": "Калужских",
+        "name": "Мария",
+        "patronymic": "Владимировна",
+        "email": "kaluzhskikh.maria@yandex.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "103": {
+        "surname": "Камкина",
+        "name": "Марина",
+        "patronymic": "Андреевна",
+        "email": "65marina65@mail.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "104": {
+        "surname": "Канунникова",
+        "name": "Татьяна",
+        "patronymic": "Александровна",
+        "email": "earlfantasy@gmail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "105": {
+        "surname": "Карева",
+        "name": "Людмила",
+        "patronymic": "Валентиновна",
+        "email": "kareva-l-v@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "106": {
+        "surname": "Карпец",
+        "name": "Федор",
+        "patronymic": "Владимирович",
+        "email": "irminsul@mail.ru",
+        "photo": true,
+        "subject": "Учитель истории"
+    },
+    "107": {
+        "surname": "Кежаева",
+        "name": "Анастасия",
+        "patronymic": "Александровна",
+        "email": "nastya_kezhaeva@mail.ru",
+        "photo": false,
+        "subject": "Учитель английского языка"
+    },
+    "108": {
+        "surname": "Киселева",
+        "name": "Вера",
+        "patronymic": "Георгиевна",
+        "email": "vera0727@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "109": {
+        "surname": "Киселёва",
+        "name": "Ирина",
+        "patronymic": "Михайловна",
+        "email": "im_kiseleva@mail.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "110": {
+        "surname": "Клепикова",
+        "name": "Людмила",
+        "patronymic": "Владимировна",
+        "email": "lklepikova74@mail.ru",
+        "photo": true,
+        "subject": "Учитель технологии"
+    },
+    "111": {
+        "surname": "Клюткина",
+        "name": "Лариса",
+        "patronymic": "Ивановна",
+        "email": "klyutkina.li@gmail.com",
+        "photo": true,
+        "subject": "Социальный педагог"
+    },
+    "112": {
+        "surname": "Ковтун",
+        "name": "Анастасия",
+        "patronymic": "Михайловна",
+        "email": "nastyakov2008@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "113": {
+        "surname": "Козлова",
+        "name": "Ирина",
+        "patronymic": "Вадимовна",
+        "email": "shtrih3@yandex.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "114": {
+        "surname": "Козьмин",
+        "name": "Евгений",
+        "patronymic": "Владимирович",
+        "email": "phizik45@mail.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-2, учитель физики"
+    },
+    "115": {
+        "surname": "Колесникова",
+        "name": "Ксения",
+        "patronymic": "Геннадьевна",
+        "email": "kolesnikova_kg@rambler.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "116": {
+        "surname": "Колосова",
+        "name": "Анна",
+        "patronymic": "Валентиновна",
+        "email": "kolossova@hotmail.com",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "117": {
+        "surname": "Комаровский",
+        "name": "Кирилл",
+        "patronymic": "Олегович",
+        "email": "kirill_komarovsky_1998@mail.ru",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "118": {
+        "surname": "Королева",
+        "name": "Наталья",
+        "patronymic": "Львовна",
+        "email": "natalykorol@mail.ru",
+        "photo": true,
+        "subject": "Учитель иностранного языка"
+    },
+    "119": {
+        "surname": "Коротова",
+        "name": "Ирина",
+        "patronymic": "Алексеевна",
+        "email": "irinakorotowa@rambler.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "120": {
+        "surname": "Коршунова",
+        "name": "Юлия",
+        "patronymic": "Вячеславовна",
+        "email": "korshunova-4791@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "121": {
+        "surname": "Корянов",
+        "name": "Всеволод",
+        "patronymic": "Владимирович",
+        "email": "vkoryanov@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "122": {
+        "surname": "Костромина",
+        "name": "Марианна",
+        "patronymic": "Сергеевна",
+        "email": "Kostrominams25@gmail.com",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "123": {
+        "surname": "Котлярова",
+        "name": "Яна",
+        "patronymic": "Юрьевна",
+        "email": "ms.kot96@mail.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "124": {
+        "surname": "Кривобокова",
+        "name": "Анастасия",
+        "patronymic": "Михайловна",
+        "email": "ncrivobokova@yandex.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "125": {
+        "surname": "Кривых",
+        "name": "Наталья",
+        "patronymic": "Викторовна",
+        "email": "sevnatalia@ya.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "126": {
+        "surname": "Крицкая",
+        "name": "Елена",
+        "patronymic": "Николаевна",
+        "email": "ekri@rambler.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-1, учитель математики"
+    },
+    "127": {
+        "surname": "Кубышев",
+        "name": "Сергей",
+        "patronymic": "Сергеевич",
+        "email": "kubyc@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "128": {
+        "surname": "Кувшинова",
+        "name": "Наталья",
+        "patronymic": "Николаевна",
+        "email": "kuvshinovan1973@mail.ru",
+        "photo": true,
+        "subject": "Воспитатель"
+    },
+    "129": {
+        "surname": "Кудрин",
+        "name": "Максим",
+        "patronymic": "Владимирович",
+        "email": "mkudrin@1580.ru",
+        "photo": true,
+        "subject": "Системный администратор"
+    },
+    "130": {
+        "surname": "Кузмичева",
+        "name": "Екатерина",
+        "patronymic": "Андреевна",
+        "email": "kati2137@yandex.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "131": {
+        "surname": "Кулеба",
+        "name": "Наталия",
+        "patronymic": "Сергеевна",
+        "email": "cverik@rambler.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "132": {
+        "surname": "Кулешов",
+        "name": "Евгений",
+        "patronymic": "Андреевич",
+        "email": "evgeniy_kuleshov@mail.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-2, учитель физики"
+    },
+    "133": {
+        "surname": "Кулинич",
+        "name": "Наталья",
+        "patronymic": "Валерьевна",
+        "email": "koulinich_nv@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "134": {
+        "surname": "Купцова",
+        "name": "Анна",
+        "patronymic": "Олеговна",
+        "email": "ao.kuptsova@yandex.ru",
+        "photo": true,
+        "subject": "Советник директора по воспитанию и взаимодействию с детскими общественными объединениями"
+    },
+    "135": {
+        "surname": "Куранов",
+        "name": "Вячеслав",
+        "patronymic": "Анисимович",
+        "email": "kuranov1580@ya.ru",
+        "photo": true,
+        "subject": "Инструктор по физической культуре"
+    },
+    "136": {
+        "surname": "Курбатова",
+        "name": "Елена",
+        "patronymic": "Григорьевна",
+        "email": "ekurbatova2016@yandex.ru",
+        "photo": true,
+        "subject": "Учитель географии"
+    },
+    "137": {
+        "surname": "Курбатова",
+        "name": "Наталия",
+        "patronymic": "Анатольевна",
+        "email": "natkurb@yandex.ru",
+        "photo": true,
+        "subject": "Учитель географии"
+    },
+    "138": {
+        "surname": "Курганова",
+        "name": "Александра",
+        "patronymic": "Евгеньевна",
+        "email": "forka@inbox.ru",
+        "photo": false,
+        "subject": "Социальный педагог"
+    },
+    "139": {
+        "surname": "Кушнир",
+        "name": "Эдвард",
+        "patronymic": "Анатольевич",
+        "email": "an.edvard@gmail.com",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "140": {
+        "surname": "Лабазов",
+        "name": "Юрий",
+        "patronymic": "Александрович",
+        "email": "labazov82@mail.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "141": {
+        "surname": "Лабутина",
+        "name": "Анастасия",
+        "patronymic": "Владимировна",
+        "email": "nastyaeag@gmail.com",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "142": {
+        "surname": "Лазарев",
+        "name": "Игорь",
+        "patronymic": "Петрович",
+        "email": "Igorlazarev1982@mail.ru",
+        "photo": true,
+        "subject": "Учитель физической культуры"
+    },
+    "143": {
+        "surname": "Ларина",
+        "name": "Марина",
+        "patronymic": "Валентиновна",
+        "email": "larina1580@yandex.ru",
+        "photo": true,
+        "subject": "Учитель истории"
+    },
+    "144": {
+        "surname": "Лебедев",
+        "name": "Дмитрий",
+        "patronymic": "Алексеевич",
+        "email": "vampire-bat@mail.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "145": {
+        "surname": "Леонова",
+        "name": "Елена",
+        "patronymic": "Геннадьевна",
+        "email": "burkelen@gmail.com",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "146": {
+        "surname": "Литвинова",
+        "name": "Анастасия",
+        "patronymic": "Вячеславовна",
+        "email": "anastasya.litvinova-nastya@yandex.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "147": {
+        "surname": "Лобачев",
+        "name": "Александр",
+        "patronymic": "Александрович",
+        "email": "ss_di@mail.ru",
+        "photo": true,
+        "subject": "Председатель методического объединения учителей информатики, старший преподаватель кафедры СУНЦ-1, учитель информатики"
+    },
+    "148": {
+        "surname": "Лодыгина",
+        "name": "Алла",
+        "patronymic": "Васильевна",
+        "email": "lodygina21@mail.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "149": {
+        "surname": "Лунева",
+        "name": "Ирэна",
+        "patronymic": ".",
+        "email": "mon24@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "150": {
+        "surname": "Мазурова",
+        "name": "Раисия",
+        "patronymic": "Сергеевна",
+        "email": "mazurovaraisiya@list.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "151": {
+        "surname": "Мамай",
+        "name": "Оксана",
+        "patronymic": "Георгиевна",
+        "email": "privateox@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "152": {
+        "surname": "Манько",
+        "name": "Ольга",
+        "patronymic": "Владимировна",
+        "email": "olga47508@gmail.com",
+        "photo": true,
+        "subject": "Профессор кафедры СУНЦ-2, учитель физики"
+    },
+    "153": {
+        "surname": "Маркова",
+        "name": "Евгения",
+        "patronymic": "Львовна",
+        "email": "mel7861@mail.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-1, учитель математики"
+    },
+    "154": {
+        "surname": "Масалов",
+        "name": "Владимир",
+        "patronymic": "Козьмич",
+        "email": "kozmich@bk.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "155": {
+        "surname": "Матвеева",
+        "name": "Анастасия",
+        "patronymic": "Геннадьевна",
+        "email": "nastena.matveeva.83@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "156": {
+        "surname": "Мелешко",
+        "name": "Елизавета",
+        "patronymic": "Ввалерьевна",
+        "email": "Meleshko_Lisa@list.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "157": {
+        "surname": "Мельник",
+        "name": "Вадим",
+        "patronymic": "Павлович",
+        "email": "vadimmelnik977@gmail.com",
+        "photo": true,
+        "subject": "Педагог-психолог"
+    },
+    "158": {
+        "surname": "Мельникова",
+        "name": "Алина",
+        "patronymic": "Андреевна",
+        "email": "alina.melnikova-alinka@yandex.ru",
+        "photo": false,
+        "subject": "Учитель математики"
+    },
+    "159": {
+        "surname": "Миканева",
+        "name": "Ольга",
+        "patronymic": "Геннадьевна",
+        "email": "mikaneva@yandex.ru",
+        "photo": false,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "160": {
+        "surname": "Митрофанов",
+        "name": "Михаил",
+        "patronymic": "Сергеевич",
+        "email": "mitrofanov_mephi@mail.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-1, учитель информатики"
+    },
+    "161": {
+        "surname": "Митяшова",
+        "name": "Галина",
+        "patronymic": "Павловна",
+        "email": "galmityashova@yandex.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "162": {
+        "surname": "Михайлова",
+        "name": "Екатерина",
+        "patronymic": "Владимировна",
+        "email": "ek.v.kokoreva@mail.ru",
+        "photo": false,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "163": {
+        "surname": "Мишанов",
+        "name": "Иван",
+        "patronymic": "Борисович",
+        "email": "imishanov@inbox.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "164": {
+        "surname": "Мишанова",
+        "name": "Руслана",
+        "patronymic": "Анатольевна",
+        "email": "rusmi1580@gmail.com",
+        "photo": true,
+        "subject": "Руководитель кафедры гуманитарных дисциплин, руководитель секции \"Филология\", учитель русского языка и литературы"
+    },
+    "165": {
+        "surname": "Морозов",
+        "name": "Николай",
+        "patronymic": "Яковлевич",
+        "email": "nim2005@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "166": {
+        "surname": "Мудрук",
+        "name": "Владимир",
+        "patronymic": "Иванович",
+        "email": "mudruk1580@mail.ru",
+        "photo": true,
+        "subject": "Доцент кафедры СУНЦ-2, учитель физики"
+    },
+    "167": {
+        "surname": "Набиева",
+        "name": "Ситора",
+        "patronymic": "Сабировна",
+        "email": "nabieva.s@mail.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "168": {
+        "surname": "Науменко",
+        "name": "Наталья",
+        "patronymic": "Ивановна",
+        "email": "natalynaumenk@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "169": {
+        "surname": "Некипелова",
+        "name": "Александра",
+        "patronymic": "Михайловна",
+        "email": "denisova.sa98@mail.ru",
+        "photo": false,
+        "subject": "Учитель русского языка и литература"
+    },
+    "170": {
+        "surname": "Непомнящая",
+        "name": "Ирина",
+        "patronymic": "Юрьевна",
+        "email": "supersport07@rambler.ru",
+        "photo": true,
+        "subject": "Учитель физической культуры"
+    },
+    "171": {
+        "surname": "Нестеров",
+        "name": "Артем",
+        "patronymic": "Николаевич",
+        "email": "NESTEROV2205@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "172": {
+        "surname": "Никитина",
+        "name": "Анастасия",
+        "patronymic": "Александровна",
+        "email": "dty-@mail.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "173": {
+        "surname": "Николотова",
+        "name": "Наталья",
+        "patronymic": "Александровна",
+        "email": "nikolotova@list.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-1, учитель математики"
+    },
+    "174": {
+        "surname": "Новикова",
+        "name": "Валентина",
+        "patronymic": "Владимировна",
+        "email": "valentina.novikova.1969@mail.ru",
+        "photo": true,
+        "subject": "Социальный педагог"
+    },
+    "175": {
+        "surname": "Носова",
+        "name": "Елена",
+        "patronymic": "Павловна",
+        "email": "nosova.aliona@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "176": {
+        "surname": "Овчинников",
+        "name": "Валерий",
+        "patronymic": "Валерьевич",
+        "email": "vvovchinnikov@bk.ru",
+        "photo": true,
+        "subject": "Заведующий кафедрой СУНЦ-2 \"Основы физики\", доктор технических наук, профессор, учитель физики"
+    },
+    "177": {
+        "surname": "Огонькова",
+        "name": "Елена",
+        "patronymic": "Вячеславовна",
+        "email": "ignis_elena@mail.ru",
+        "photo": true,
+        "subject": "Председатель методического объединения, учитель биологии"
+    },
+    "178": {
+        "surname": "Одинцова",
+        "name": "Алина",
+        "patronymic": "Алексеевна",
+        "email": "alinaodintsova@bk.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "179": {
+        "surname": "Оноприенко",
+        "name": "Екатерина",
+        "patronymic": "Андреевна",
+        "email": "katrinonoprienko@mail.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "180": {
+        "surname": "Оноприенко",
+        "name": "Ирина",
+        "patronymic": "Александровна",
+        "email": "iraneh@mail.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "181": {
+        "surname": "Онучак",
+        "name": "Елена",
+        "patronymic": "Алексеевна",
+        "email": "elena_onuchak@mail.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "182": {
+        "surname": "Павлов",
+        "name": "Михаил",
+        "patronymic": "Александрвоич",
+        "email": "pavel.kgkes@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "183": {
+        "surname": "Пантелеев",
+        "name": "Леонид",
+        "patronymic": "Викторович",
+        "email": "plv1990@gmail.com",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "184": {
+        "surname": "Пантюхова",
+        "name": "Галина",
+        "patronymic": "Петровна",
+        "email": "g-bahmut2@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "185": {
+        "surname": "Пахомова",
+        "name": "Мария",
+        "patronymic": "Андреевна",
+        "email": "pahomova_ma@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "186": {
+        "surname": "Перевозникова",
+        "name": "Надежда",
+        "patronymic": "Вячеславовна",
+        "email": "p.n1580@bk.ru",
+        "photo": true,
+        "subject": "Педагог-организатор"
+    },
+    "187": {
+        "surname": "Петковская",
+        "name": "Виктория",
+        "patronymic": "Николаевна",
+        "email": "vika072207@mail.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "188": {
+        "surname": "Петрикова",
+        "name": "Юлия",
+        "patronymic": "Дмитриевна",
+        "email": "udpe@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель информатики"
+    },
+    "189": {
+        "surname": "Петрова",
+        "name": "Алла",
+        "patronymic": "Петровна",
+        "email": "petrova305@rambler.ru",
+        "photo": true,
+        "subject": "Ведущий экономист"
+    },
+    "190": {
+        "surname": "Плетнев",
+        "name": "Андрей",
+        "patronymic": "Леонидович",
+        "email": "alpxy@rambler.ru",
+        "photo": true,
+        "subject": "Доцент кафедры СУНЦ-1, учитель математики"
+    },
+    "191": {
+        "surname": "Поварова",
+        "name": "Палина",
+        "patronymic": "Алексеевна",
+        "email": "lksevna@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "192": {
+        "surname": "Погорелов",
+        "name": "Егор",
+        "patronymic": "Андреевич",
+        "email": "pogoregor@yandex.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "193": {
+        "surname": "Подпорина",
+        "name": "Ольга",
+        "patronymic": "Алексеевна",
+        "email": "capa2@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "194": {
+        "surname": "Попова",
+        "name": "Ирина",
+        "patronymic": "Александровна",
+        "email": "h2o.72@mail.ru",
+        "photo": true,
+        "subject": "Учитель химии"
+    },
+    "195": {
+        "surname": "Порфирьева",
+        "name": "Ирина",
+        "patronymic": "Анатольевна",
+        "email": "pia675@mail.ru",
+        "photo": true,
+        "subject": "Учитель истории"
+    },
+    "196": {
+        "surname": "Преображенский",
+        "name": "Сергей",
+        "patronymic": "Антонович",
+        "email": "begunok2007@mail.ru",
+        "photo": true,
+        "subject": "Учитель истории"
+    },
+    "197": {
+        "surname": "Привалова",
+        "name": "Надежда",
+        "patronymic": "Сергеевна",
+        "email": "nadejda.buivolova@yandex.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "198": {
+        "surname": "Привалова",
+        "name": "Екатерина",
+        "patronymic": "Вячеславовна",
+        "email": "katerina.english42@mail.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "199": {
+        "surname": "Прокопцев",
+        "name": "Алексей",
+        "patronymic": "Александрович",
+        "email": "a.aleksey3@mail.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "200": {
+        "surname": "Пшеничнов",
+        "name": "Владислава",
+        "patronymic": "Александрович",
+        "email": "vlad.pshen.Xx@gmail.com",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "201": {
+        "surname": "Равло",
+        "name": "Анастасия",
+        "patronymic": "Валерьевна",
+        "email": "nastasya.ravlo@yandex.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "202": {
+        "surname": "Ржевский",
+        "name": "Александр",
+        "patronymic": "Владимирович",
+        "email": "rzhevskiy@outlook.com",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-2, учитель физики"
+    },
+    "203": {
+        "surname": "Романова",
+        "name": "Надежда",
+        "patronymic": "Александровна",
+        "email": "nroma6@mail.ru",
+        "photo": true,
+        "subject": "Председатель методического объединения, учитель физической культуры"
+    },
+    "204": {
+        "surname": "Руднева",
+        "name": "Диана",
+        "patronymic": "Константиновна",
+        "email": "dianarudneva5690@yandex.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "205": {
+        "surname": "Рудюк",
+        "name": "Ирина",
+        "patronymic": "Львовна",
+        "email": "savelka71@yandex.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-1, учитель математики"
+    },
+    "206": {
+        "surname": "Русинова",
+        "name": "Лада",
+        "patronymic": "Валериевна",
+        "email": "rusinovalada@yandex.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "207": {
+        "surname": "Рыжкова",
+        "name": "Виктория",
+        "patronymic": "Евгеньевна",
+        "email": "vryzhkova02@mail.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "208": {
+        "surname": "Сазанович",
+        "name": "Наталья",
+        "patronymic": "Анатольевна",
+        "email": "natalyasazanovich@mail.ru",
+        "photo": true,
+        "subject": "Педагог-библиотекарь"
+    },
+    "209": {
+        "surname": "Самарцев",
+        "name": "Николай",
+        "patronymic": "Борисович",
+        "email": "samartsev@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "210": {
+        "surname": "Самсонова",
+        "name": "Тамара",
+        "patronymic": "Николаевна",
+        "email": "tsamsonova55@yandex.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "211": {
+        "surname": "Сафонов",
+        "name": "Алексей",
+        "patronymic": "Олегович",
+        "email": "alexey.jay.1994@gmail.com",
+        "photo": true,
+        "subject": "Учитель физической культуры"
+    },
+    "212": {
+        "surname": "Сахапова",
+        "name": "Мария",
+        "patronymic": "Александровна",
+        "email": "lesoleil1202@mail.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "213": {
+        "surname": "Свиридова",
+        "name": "Ольга",
+        "patronymic": "Владимировна",
+        "email": "89778331491@mail.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "214": {
+        "surname": "Сельденкова",
+        "name": "Ольга",
+        "patronymic": "Геннадьевна",
+        "email": "oseldenkova@inbox.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "215": {
+        "surname": "Семенов",
+        "name": "Игорь",
+        "patronymic": "Борисович",
+        "email": "teach.semenov@gmail.com",
+        "photo": false,
+        "subject": null
+    },
+    "216": {
+        "surname": "Сергеева",
+        "name": "Ирина",
+        "patronymic": "Борисовна",
+        "email": "qq270111@yandex.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "217": {
+        "surname": "Сианосян",
+        "name": "Лиана",
+        "patronymic": "Аслановна",
+        "email": "lianas@bk.ru",
+        "photo": true,
+        "subject": "Учитель физики"
+    },
+    "218": {
+        "surname": "Сидоров",
+        "name": "Владимир",
+        "patronymic": "Алексеевич",
+        "email": "Saintsrow2010@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "219": {
+        "surname": "Сидоров",
+        "name": "Владимир",
+        "patronymic": "Алексеевич",
+        "email": "Saintsrow2010@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "220": {
+        "surname": "Смалева",
+        "name": "Елена",
+        "patronymic": "Владимировна",
+        "email": "smaleva-elena@yandex.ru",
+        "photo": true,
+        "subject": "Учитель математики"
+    },
+    "221": {
+        "surname": "Смирнов",
+        "name": "Илья",
+        "patronymic": "Анатольевич",
+        "email": "smirnov.i.a@mail.ru",
+        "photo": true,
+        "subject": "Инженер-электроник"
+    },
+    "222": {
+        "surname": "Смирнова",
+        "name": "Елена",
+        "patronymic": "Владимировна",
+        "email": "Leorlova@yandex.ru",
+        "photo": true,
+        "subject": "Педагог-психолог"
+    },
+    "223": {
+        "surname": "Смородинова",
+        "name": "Виктория",
+        "patronymic": "Александровна",
+        "email": "smorodinova@bk.ru",
+        "photo": false,
+        "subject": null
+    },
+    "224": {
+        "surname": "Собченко",
+        "name": "Виктория",
+        "patronymic": "Николаевна",
+        "email": "sobchencko.vika@yandex.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "225": {
+        "surname": "Соловьева",
+        "name": "Наталия",
+        "patronymic": "Юрьевна",
+        "email": "solo1580@yandex.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "226": {
+        "surname": "Старостина",
+        "name": "Аннета",
+        "patronymic": "Леонидовна",
+        "email": "als1580@mail.ru",
+        "photo": true,
+        "subject": "Учитель истории"
+    },
+    "227": {
+        "surname": "Степанян",
+        "name": "Нинель",
+        "patronymic": "Арамовна",
+        "email": "ninel-93@mail.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "228": {
+        "surname": "Стрекаловская",
+        "name": "Вера",
+        "patronymic": "Максимовна",
+        "email": "veramoskva@icloud.com",
+        "photo": false,
+        "subject": null
+    },
+    "229": {
+        "surname": "Строганова",
+        "name": "Анна",
+        "patronymic": "Андреевна",
+        "email": "Freedom700@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "230": {
+        "surname": "Сыч",
+        "name": "Елена",
+        "patronymic": "Сергеевна",
+        "email": "elenssych@gmail.com",
+        "photo": false,
+        "subject": null
+    },
+    "231": {
+        "surname": "Татаринова",
+        "name": "Екатерина",
+        "patronymic": "Олеговна",
+        "email": "tatarinova_e@mail.ru",
+        "photo": false,
+        "subject": "Учитель физики"
+    },
+    "232": {
+        "surname": "Тимошина",
+        "name": "Ирина",
+        "patronymic": "Юрьевна",
+        "email": "irkys.5@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "233": {
+        "surname": "Титянин",
+        "name": "Алексей",
+        "patronymic": "Глебович",
+        "email": "alexei.tityanin@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "234": {
+        "surname": "Тихов",
+        "name": "Валерий",
+        "patronymic": "Валерьевич",
+        "email": "tixov_valerii@mail.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "235": {
+        "surname": "Тихомирова",
+        "name": "Анна",
+        "patronymic": "Ивановна",
+        "email": "aivtich@gmail.com",
+        "photo": false,
+        "subject": null
+    },
+    "236": {
+        "surname": "Ткач",
+        "name": "Леонид",
+        "patronymic": "Иванович",
+        "email": "tkach_leonid@mail.ru",
+        "photo": false,
+        "subject": "Доцент кафедры СУНЦ-1, учитель математики"
+    },
+    "237": {
+        "surname": "Трофимова",
+        "name": "Елена",
+        "patronymic": "Викторовна",
+        "email": "trofimovaev@yandex.ru",
+        "photo": true,
+        "subject": "Учитель химии"
+    },
+    "238": {
+        "surname": "Туголукова",
+        "name": "Анна",
+        "patronymic": "Кирилловна",
+        "email": "annatugolukova24@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "239": {
+        "surname": "Туманова",
+        "name": "Елена",
+        "patronymic": "Николаевна",
+        "email": "elenatuman92@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "240": {
+        "surname": "Туркова",
+        "name": "Екатерина",
+        "patronymic": "Сергеевна",
+        "email": "gamazinaes@yandex.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "241": {
+        "surname": "Удод",
+        "name": "Наталья",
+        "patronymic": "Ивановна",
+        "email": "natalyjob2005@yandex.ru",
+        "photo": false,
+        "subject": "Социальный педагог"
+    },
+    "242": {
+        "surname": "Ульяненков",
+        "name": "Денис",
+        "patronymic": "Александрович",
+        "email": "d_u@list.ru",
+        "photo": true,
+        "subject": "Учитель информатики"
+    },
+    "243": {
+        "surname": "Фандюшина",
+        "name": "Вера",
+        "patronymic": "Николаевна",
+        "email": "verunchik_f87@mail.ru",
+        "photo": true,
+        "subject": "Социальный педагог"
+    },
+    "244": {
+        "surname": "Фокина",
+        "name": "Виктория",
+        "patronymic": "Александровна",
+        "email": "viktori-foki@yandex.ru",
+        "photo": true,
+        "subject": "Учитель английского языка"
+    },
+    "245": {
+        "surname": "Фролова",
+        "name": "Екатерина",
+        "patronymic": "Анатольевна",
+        "email": "katya243@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "246": {
+        "surname": "Фролова",
+        "name": "Екатерина",
+        "patronymic": "Сергеевна",
+        "email": "kurtfrolov@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "247": {
+        "surname": "Хамидуллина",
+        "name": "Инна",
+        "patronymic": "Вадимовна",
+        "email": "khamidullina_iv@mail.ru",
+        "photo": true,
+        "subject": "Учитель химии"
+    },
+    "248": {
+        "surname": "Хащинина",
+        "name": "Светлана",
+        "patronymic": "Владимировна",
+        "email": "svethas@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "249": {
+        "surname": "Хинчина",
+        "name": "Наталия",
+        "patronymic": "Исаевна",
+        "email": "hinchina@mail.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель информатики"
+    },
+    "250": {
+        "surname": "Хлебинская",
+        "name": "Галина",
+        "patronymic": "Федоровна",
+        "email": "khlebinskaya@bk.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "251": {
+        "surname": "Ходак",
+        "name": "Оксана",
+        "patronymic": "Игоревна",
+        "email": "okhodakok@gmail.com",
+        "photo": false,
+        "subject": null
+    },
+    "252": {
+        "surname": "Хорошавина",
+        "name": "Екатерина",
+        "patronymic": "Владимировна",
+        "email": "khoroshavina@bk.ru",
+        "photo": false,
+        "subject": "Учитель-логопед"
+    },
+    "253": {
+        "surname": "Храмкин",
+        "name": "Александр",
+        "patronymic": "Павлович",
+        "email": "khram-kin@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель информатики"
+    },
+    "254": {
+        "surname": "Хрусталева",
+        "name": "Валерия",
+        "patronymic": "Владимировна",
+        "email": "hrustaleva1580@gmail.com",
+        "photo": false,
+        "subject": "Педагог-психолог"
+    },
+    "255": {
+        "surname": "Чабан",
+        "name": "Наталия",
+        "patronymic": "Сергеевна",
+        "email": "natashka077@mail.ru",
+        "photo": true,
+        "subject": "Учитель начальных классов"
+    },
+    "256": {
+        "surname": "Чернега",
+        "name": "Николай",
+        "patronymic": "Владимирович",
+        "email": "olga47508@gmail.com",
+        "photo": true,
+        "subject": "Профессор кафедры СУНЦ-2, учитель физики"
+    },
+    "257": {
+        "surname": "Чернецкая",
+        "name": "Майя",
+        "patronymic": "Николаевна",
+        "email": "majy-c@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "258": {
+        "surname": "Чернышева",
+        "name": "Татьяна",
+        "patronymic": "Анатольевна",
+        "email": "foxi-13@mail.ru",
+        "photo": true,
+        "subject": "Учитель физической культуры"
+    },
+    "259": {
+        "surname": "Чикирова",
+        "name": "Елена",
+        "patronymic": "Сергеевна",
+        "email": "lenacikirova47066@gmail.com",
+        "photo": false,
+        "subject": null
+    },
+    "260": {
+        "surname": "Чиркова",
+        "name": "Ольга",
+        "patronymic": "Алексеевна",
+        "email": "marguerite87.87@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "261": {
+        "surname": "Чупахина",
+        "name": "Ольга",
+        "patronymic": "Николаевна",
+        "email": "chupaxinaon@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "262": {
+        "surname": "Шабалина",
+        "name": "Елена",
+        "patronymic": "Сергеевна",
+        "email": "e.s.shabalina@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "263": {
+        "surname": "Шавгулидзе",
+        "name": "Ирина",
+        "patronymic": "Викторовна",
+        "email": "shavgulidze_irina.v@mail.ru",
+        "photo": false,
+        "subject": "Ассистент кафедры СУНЦ-2, учитель физики"
+    },
+    "264": {
+        "surname": "Шаров",
+        "name": "Родион",
+        "patronymic": "Андреевич",
+        "email": "rodion_sharov@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "265": {
+        "surname": "Шевцова",
+        "name": "Галина",
+        "patronymic": "Юрьевна",
+        "email": "gal.shevtzova@yandex.ru",
+        "photo": true,
+        "subject": "Ассистент кафедры СУНЦ-2, учитель физики"
+    },
+    "266": {
+        "surname": "Шейкина",
+        "name": "Анастасия",
+        "patronymic": "Валерьевна",
+        "email": "nastya.sheykina@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "267": {
+        "surname": "Шестова",
+        "name": "Ксения",
+        "patronymic": "Сергеевна",
+        "email": "shestova.ksenia@yandex.ru",
+        "photo": false,
+        "subject": null
+    },
+    "268": {
+        "surname": "Шишкина",
+        "name": "Людмила",
+        "patronymic": "Алексеевна",
+        "email": "shishkina_1580@mail.ru",
+        "photo": true,
+        "subject": "документовед"
+    },
+    "269": {
+        "surname": "Штраус",
+        "name": "Ирина",
+        "patronymic": "Михайловна",
+        "email": "ishtraus@list.ru",
+        "photo": true,
+        "subject": "Старший методист, старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "270": {
+        "surname": "Щепочкин",
+        "name": "Илья",
+        "patronymic": "Михайлович",
+        "email": "shepoch@yandex.ru",
+        "photo": true,
+        "subject": "Старший преподаватель кафедры СУНЦ-1, учитель математики"
+    },
+    "271": {
+        "surname": "Юрманова",
+        "name": "Мария",
+        "patronymic": "Геннадьевна",
+        "email": "yurmanova85@list.ru",
+        "photo": false,
+        "subject": "Учитель английского языка"
+    },
+    "272": {
+        "surname": "Якимова",
+        "name": "Ирина",
+        "patronymic": "Анатольевна",
+        "email": "yakimovaira@mail.ru",
+        "photo": false,
+        "subject": null
+    },
+    "273": {
+        "surname": "Яковенко",
+        "name": "Людмила",
+        "patronymic": "Николаевна",
+        "email": "Yakovenko-LN@yandex.ru",
+        "photo": false,
+        "subject": "Педагог-организатор"
+    },
+    "274": {
+        "surname": "Якшина",
+        "name": "Татьяна",
+        "patronymic": "Станиславовна",
+        "email": "tanyastanya@mail.ru",
+        "photo": true,
+        "subject": "Учитель русского языка и литературы"
+    },
+    "275": {
+        "surname": "Яшникова",
+        "name": "Анастасия",
+        "patronymic": "Юрьевна",
+        "email": "nastushka.23@mail.ru",
+        "photo": false,
+        "subject": null
+    }
+}
