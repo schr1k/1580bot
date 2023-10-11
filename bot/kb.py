@@ -23,7 +23,7 @@ staff_main_kb = InlineKeyboardBuilder().row(get_schedule).row(find_teacher).row(
 # Расписание учителя ===================================================================================================
 def teacher_schedule_kb(teacher: str):
     teacher_schedule = InlineKeyboardButton(text='📅 Узнать расписание', callback_data=f'teacher_schedule-{teacher}')
-    keyboard = InlineKeyboardBuilder().row(teacher_schedule).row(to_main).as_markup()
+    keyboard = InlineKeyboardBuilder().row(teacher_schedule).as_markup()
     return keyboard
 
 
