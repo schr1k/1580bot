@@ -154,7 +154,12 @@ async def find_teacher(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text='Введите фамилию учителя.', reply_markup=kb.to_main_kb)
+                                    text='Сейчас доступно 3 режима поиска:\n'
+                                         '1) Полное ФИО (Иванов Иван Иванович).\n'
+                                         '2) Фамилия и имя (Иванов Иван).\n'
+                                         '3) Фамилия (Иванов).\n'
+                                         '<b>Регистр при вводе не учитывается</b>.',
+                                    parse_mode='HTML', reply_markup=kb.to_main_kb)
         await state.set_state(FindTeacher.teacher)
     except Exception as e:
         errors.error(e)
@@ -165,11 +170,30 @@ async def teacher_info(message: Message, state: FSMContext):
     try:
         flag = False
         teachers = get_teachers()
-        for i, j in teachers.items():
-            if message.text.lower() == j['surname'].lower():
-                flag = True
-                n = i
-                break
+        if len(message.text.split()) == 3:
+            surname, name, patronymic = message.text.split()
+            for i, j in teachers.items():
+                if surname.lower() == j['surname'].lower() and name.lower() == j['name'].lower() and patronymic.lower() == j['patronymic'].lower():
+                    flag = True
+                    n = i
+                    break
+        elif len(message.text.split()) == 2:
+            surname, name = message.text.split()
+            for i, j in teachers.items():
+                if surname.lower() == j['surname'].lower() and name.lower() == j['name'].lower():
+                    flag = True
+                    n = i
+                    break
+        elif len(message.text.split()) == 1:
+            surname = message.text
+            for i, j in teachers.items():
+                if surname.lower() == j['surname'].lower():
+                    flag = True
+                    n = i
+                    break
+        else:
+            await message.answer('Неверный формат. Повторите ввод.')
+            return
         if flag:
             text = f'<b>{teachers[n]["surname"]} {teachers[n]["name"]} {teachers[n]["patronymic"]}</b>\n\n<i>Почта:</i> {teachers[n]["email"]}.\n'
             if teachers[n]['subject'] is not None:
@@ -177,13 +201,13 @@ async def teacher_info(message: Message, state: FSMContext):
             if teachers[n]["photo"]:
                 photo = FSInputFile(f'excel/teachers/photo/{n}.jpg')
                 await message.answer_photo(photo=photo, caption=text, parse_mode='HTML',
-                                           reply_markup=kb.teacher_schedule_kb(message.text.capitalize()))
+                                           reply_markup=kb.teacher_schedule_kb(message.text.split()[0].capitalize()))
             else:
                 await message.answer(text=text, parse_mode='HTML',
-                                     reply_markup=kb.teacher_schedule_kb(message.text.capitalize()))
+                                     reply_markup=kb.teacher_schedule_kb(message.text.split()[0].capitalize()))
             await state.clear()
         else:
-            await message.answer('Учитель с такой фамилией не найден. Повторите ввод.')
+            await message.answer('Учитель не найден. Повторите ввод.')
     except Exception as e:
         errors.error(e)
 
