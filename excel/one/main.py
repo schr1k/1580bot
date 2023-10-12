@@ -18,8 +18,6 @@ def make_schedule_1():
 
     schedule = {}
 
-    teachers = []
-
     for column in range(len(excel))[::2]:
         for c, i in enumerate(range(0, len(excel[column]), 9)):
             lessons = list(zip(excel[column][i + 1: i + 9], excel[column + 1][i + 1: i + 9]))
@@ -56,8 +54,6 @@ def make_schedule_1():
                     schedule[excel[column][i]][weekdays[c]] = {}
                     schedule[excel[column][i]][weekdays[c]] = day_schedule
 
-    teachers = [i.strip() for i in list(set(filter(lambda x: '.' in x, teachers)))]
-
     with open(config.SCHEDULE_PATH, 'r', encoding='utf-8') as f:
         all_schedule = json.load(f)
 
@@ -66,6 +62,3 @@ def make_schedule_1():
 
     with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
-
-    with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
-        json.dump(teachers, f, indent=4, ensure_ascii=False)
