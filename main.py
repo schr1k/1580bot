@@ -7,9 +7,10 @@ from datetime import datetime
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.fsm.context import FSMContext
-from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import FSInputFile, Message, CallbackQuery
 from aiogram.filters.command import Command
+from redis.asyncio import Redis
 
 from bot.db import DB
 from bot import config, kb
@@ -22,8 +23,11 @@ locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
 db = DB()
 
+redis = Redis.from_url('redis://localhost/0')
+storage = RedisStorage(redis)
+
 bot = Bot(config.TOKEN)
-dp = Dispatcher(storage=MemoryStorage())
+dp = Dispatcher(storage=storage)
 
 weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
 
