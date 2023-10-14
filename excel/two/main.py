@@ -27,13 +27,9 @@ def make_schedule_2():
                     sp.append(lessons[j][1])
                     if len(sp) == 3:
                         sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': sp[2], 'building': '2'}
-                        if sp[1] not in teachers:
-                            teachers.append(sp[1])
                     else:
 
                         sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': sp[1], 'building': '2'}
-                        if sp[0][37:] not in teachers:
-                            teachers.append(sp[0][37:])
 
                     lessons[j] = sl
             day_schedule = {}
