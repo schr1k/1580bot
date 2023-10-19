@@ -26,8 +26,6 @@ def make_schedule_4p():
                     sp = lessons[j].split('\n')
                     if len(sp) == 2:
                         sl = {'lesson': sp[0], 'teacher': sp[1], 'building': '4'}
-                        if sp[1] not in teachers:
-                            teachers.append(sp[1])
                     else:
                         sl = {'lesson': sp[0], 'teacher': None, 'building': '4'}
                     lessons[j] = sl
