@@ -221,7 +221,8 @@ async def teacher_weekdays(call: CallbackQuery):
     try:
         await call.answer()
         await call.message.delete()
-        await call.message.answer(text='Выберите день недели.', reply_markup=kb.teacher_week_kb(call.data.split('-')[1]))
+        await call.message.answer(text='Выберите день недели.',
+                                  reply_markup=kb.teacher_week_kb(call.data.split('-')[1]))
     except Exception as e:
         errors.error(e)
 
@@ -254,16 +255,34 @@ async def suggest_idea(call: CallbackQuery, state: FSMContext):
 async def set_idea(message: Message, state: FSMContext):
     try:
         if message.photo is not None:
-            await bot.send_photo(chat_id=config.IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
-                                 caption=f'Отправитель - @{message.from_user.username}\n'
-                                         f'Сообщение - {message.caption}',
-                                 reply_markup=kb.idea_kb)
+            if await db.user_is_registered(str(message.from_user.id)):
+                await bot.send_photo(chat_id=config.IDEAS_GROUP_ID,
+                                     photo=message.photo[-1].file_id,
+                                     caption=f'Отправитель - @{message.from_user.username}.\n'
+                                             f'Сообщение - {message.caption}.\n'
+                                             f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
+                                             f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                                     reply_markup=kb.idea_kb)
+            else:
+                await bot.send_photo(chat_id=config.IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
+                                     caption=f'Отправитель - @{message.from_user.username}.\n'
+                                             f'Сообщение - {message.caption}.',
+                                     reply_markup=kb.idea_kb)
             await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
             await state.clear()
         elif message.text is not None:
-            await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - @{message.from_user.username}\n'
-                                                                       f'Сообщение - {message.text}',
-                                   reply_markup=kb.idea_kb)
+            if await db.user_is_registered(str(message.from_user.id)):
+                await bot.send_message(chat_id=config.IDEAS_GROUP_ID,
+                                       text=f'Отправитель - @{message.from_user.username}.\n'
+                                            f'Сообщение - {message.text}.\n'
+                                            f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
+                                            f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                                       reply_markup=kb.idea_kb)
+            else:
+                await bot.send_message(chat_id=config.IDEAS_GROUP_ID,
+                                       text=f'Отправитель - @{message.from_user.username}.\n'
+                                            f'Сообщение - {message.text}.',
+                                       reply_markup=kb.idea_kb)
             await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
             await state.clear()
         else:
@@ -280,12 +299,12 @@ async def approve_idea(call: CallbackQuery):
             await bot.send_photo(chat_id=config.APPROVED_IDEAS_GROUP_ID, photo=call.message.photo[-1].file_id,
                                  caption=f'{call.message.caption}')
             await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.IDEAS_GROUP_ID,
-                                           caption=f'{call.message.text}.\n'
+                                           caption=f'{call.message.caption}\n'
                                                    f'Идея одобрена.')
         elif call.message.text is not None:
             await bot.send_message(chat_id=config.APPROVED_IDEAS_GROUP_ID, text=f'{call.message.text}')
             await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.IDEAS_GROUP_ID,
-                                        text=f'{call.message.text}.\n'
+                                        text=f'{call.message.text}\n'
                                              f'Идея одобрена.')
         else:
             await bot.send_message(chat_id=call.from_user.id, text='Произошла ошибка')
