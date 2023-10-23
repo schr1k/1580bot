@@ -58,7 +58,7 @@ async def start(message: Message, state: FSMContext):
         month_day = now.strftime("%d")[1] if now.strftime("%d")[0] == '0' else now.strftime("%d")
         await message.answer(f'👋 Привет, {name}.\n'
                              f'📆 Сегодня <b>{now.strftime("%A")}</b>, {month_day} {now.strftime("%b")}.\n',
-                             reply_markup=keyboard, parse_mode='HTML')
+                             reply_markup44=keyboard, parse_mode='HTML')
     except Exception as e:
         errors.error(e)
 
@@ -220,7 +220,6 @@ async def teacher_info(message: Message, state: FSMContext):
 async def teacher_weekdays(call: CallbackQuery):
     try:
         await call.answer()
-        await call.message.delete()
         await call.message.answer(text='Выберите день недели.', reply_markup=kb.teacher_week_kb(call.data.split('-')[1]))
     except Exception as e:
         errors.error(e)
