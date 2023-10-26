@@ -12,7 +12,7 @@ def make_schedule_2():
     with open(f'{config.PROJECT_PATH}/excel/two/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
-    excel = excel[2:27] + excel[29:57] + excel[59:74] + excel[76:-2]
+    excel = excel[2:26] + excel[28:56] + excel[58:73] + excel[75:-2]
 
     weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
 

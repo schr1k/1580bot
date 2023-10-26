@@ -55,3 +55,5 @@ def make_schedule_4p():
 
     with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
+
+make_schedule_4p()
