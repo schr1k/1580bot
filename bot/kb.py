@@ -41,7 +41,7 @@ def teacher_week_kb(teacher: str):
     thursday = InlineKeyboardButton(text='Четверг', callback_data=f'teacher-Четверг-{teacher}')
     friday = InlineKeyboardButton(text='Пятница', callback_data=f'teacher-Пятница-{teacher}')
     saturday = InlineKeyboardButton(text='Суббота', callback_data=f'teacher-Суббота-{teacher}')
-    keyboard = InlineKeyboardBuilder().row(monday, tuesday, wednesday).row(thursday, friday, saturday).as_markup()
+    keyboard = InlineKeyboardBuilder().row(monday, thursday).row(tuesday, friday).row(wednesday, saturday).row(to_main).as_markup()
     return keyboard
 
 
@@ -53,13 +53,21 @@ def group_button(group: str):
 
 
 # Дни Недели для учеников ==============================================================================================
-monday = InlineKeyboardButton(text='Понедельник', callback_data='student-Понедельник')
-tuesday = InlineKeyboardButton(text='Вторник', callback_data='student-Вторник')
-wednesday = InlineKeyboardButton(text='Среда', callback_data='student-Среда')
-thursday = InlineKeyboardButton(text='Четверг', callback_data='student-Четверг')
-friday = InlineKeyboardButton(text='Пятница', callback_data='student-Пятница')
-saturday = InlineKeyboardButton(text='Суббота', callback_data='student-Суббота')
-student_week_kb = InlineKeyboardBuilder().row(monday, tuesday, wednesday).row(thursday, friday, saturday).as_markup()
+def student_week_kb(group: str):
+    monday = InlineKeyboardButton(text='Понедельник', callback_data=f'student-Понедельник-{group}')
+    tuesday = InlineKeyboardButton(text='Вторник', callback_data=f'student-Вторник-{group}')
+    wednesday = InlineKeyboardButton(text='Среда', callback_data=f'student-Среда-{group}')
+    thursday = InlineKeyboardButton(text='Четверг', callback_data=f'student-Четверг-{group}')
+    friday = InlineKeyboardButton(text='Пятница', callback_data=f'student-Пятница-{group}')
+    saturday = InlineKeyboardButton(text='Суббота', callback_data=f'student-Суббота-{group}')
+    keyboard = InlineKeyboardBuilder().row(monday, thursday).row(tuesday, friday).row(wednesday, saturday).row(to_main).as_markup()
+    return keyboard
+
+
+def to_student_schedule_kb(group: str):
+    student_schedule = InlineKeyboardButton(text='🔙 Назад', callback_data=f'student_schedule-{group}')
+    keyboard = InlineKeyboardBuilder().row(student_schedule).as_markup()
+    return keyboard
 
 
 # Профиль (заполненный) ================================================================================================

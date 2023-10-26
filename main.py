@@ -115,12 +115,24 @@ async def get_student_schedule(call: CallbackQuery, state: FSMContext):
 
 
 @dp.callback_query(GetStudentSchedule.group)
-async def set_student_group(call: CallbackQuery, state: FSMContext):
+async def call_student_weekday(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
-        await state.update_data(group=call.data.split('-')[1].lower())
-        await bot.send_message(call.from_user.id, 'Выберите день недели.', reply_markup=kb.student_week_kb)
-        await state.set_state(GetStudentSchedule.weekday)
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Выберите день недели.',
+                                    reply_markup=kb.student_week_kb(call.data.split('-')[1].lower()))
+        await state.clear()
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data.split('-')[0] == 'student_schedule')
+async def student_weekday(call: CallbackQuery):
+    try:
+        await call.answer()
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Выберите день недели.',
+                                    reply_markup=kb.student_week_kb(call.data.split('-')[1].lower()))
     except Exception as e:
         errors.error(e)
 
@@ -129,25 +141,22 @@ async def set_student_group(call: CallbackQuery, state: FSMContext):
 async def set_student_group(message: Message, state: FSMContext):
     try:
         if fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
-            await state.update_data(group=message.text.lower())
-            await message.answer('Выберите день недели.', reply_markup=kb.student_week_kb)
-            await state.set_state(GetStudentSchedule.weekday)
+            await message.answer('Выберите день недели.', reply_markup=kb.student_week_kb(message.text.lower()))
+            await state.clear()
         else:
             await message.answer('Неверный формат. Повторите ввод.')
     except Exception as e:
         errors.error(e)
 
 
-@dp.callback_query(GetStudentSchedule.weekday)
 @dp.callback_query(F.data.split('-')[0] == 'student')
-async def set_student_weekday(call: CallbackQuery, state: FSMContext):
+async def set_student_weekday(call: CallbackQuery):
     try:
         await call.answer()
-        data = await state.get_data()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=get_students_day_schedule(data['group'], call.data.split('-')[1]),
-                                    parse_mode='HTML', reply_markup=kb.to_main_kb)
-        await state.clear()
+                                    text=get_students_day_schedule(call.data.split('-')[2].lower(),
+                                                                   call.data.split('-')[1]), parse_mode='HTML',
+                                    reply_markup=kb.to_student_schedule_kb(call.data.split('-')[2].lower()))
     except Exception as e:
         errors.error(e)
 
@@ -177,7 +186,8 @@ async def teacher_info(message: Message, state: FSMContext):
         if len(message.text.split()) == 3:
             surname, name, patronymic = message.text.split()
             for i, j in teachers.items():
-                if surname.lower() == j['surname'].lower() and name.lower() == j['name'].lower() and patronymic.lower() == j['patronymic'].lower():
+                if surname.lower() == j['surname'].lower() and name.lower() == j[
+                    'name'].lower() and patronymic.lower() == j['patronymic'].lower():
                     flag = True
                     n = i
                     break
@@ -432,7 +442,9 @@ async def admin_panel(call: CallbackQuery):
         text = ''
         if await db.get_role(str(call.from_user.id)) == 'admin':
             role = 'админ'
-            text += f'Пользователей бота - <b>{await db.count_users()}</b>.\n'
+            text += (f'Всего пользователей бота - <b>{await db.count_users()}</b>.\n'
+                     f'Зарегистрировано - <b>{await db.count_registered_users()}</b>.\n'
+                     f'Работников - <b>{await db.count_staff()}</b>.\n')
         else:
             role = 'новостник'
         text += f'Ваша роль - <b>{role}</b>.'

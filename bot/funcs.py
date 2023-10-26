@@ -2,12 +2,12 @@ import json
 from bot.config import SCHEDULE_PATH, TEACHERS_PATH
 
 
-def get_json():
+def get_json() -> dict:
     with open(SCHEDULE_PATH, encoding='utf-8') as f:
         return json.load(f)
 
 
-def get_teachers():
+def get_teachers() -> dict:
     with open(TEACHERS_PATH, encoding='utf-8') as f:
         return json.load(f)
 
