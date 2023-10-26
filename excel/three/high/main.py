@@ -12,7 +12,7 @@ def make_schedule_3h():
     with open(f'{config.PROJECT_PATH}/excel/three/high/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
-    excel = excel[2:46] + excel[48:-2]
+    excel = excel[2:18] + excel[20:40] + excel[42:66] + excel[68:83] + excel[85:98]
 
     weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
 
@@ -58,3 +58,5 @@ def make_schedule_3h():
 
     with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
+
+make_schedule_3h()

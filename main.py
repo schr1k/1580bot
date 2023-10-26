@@ -114,7 +114,19 @@ async def get_student_schedule(call: CallbackQuery, state: FSMContext):
         errors.error(e)
 
 
-@dp.callback_query(GetStudentSchedule.group)
+@dp.message(GetStudentSchedule.group)
+async def student_weekday(message: Message, state: FSMContext):
+    try:
+        if fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
+            await message.answer('Выберите день недели.', reply_markup=kb.student_week_kb(message.text.lower()))
+            await state.clear()
+        else:
+            await message.answer('Неверный формат. Повторите ввод.')
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data.split('-')[0] == 'group')
 async def call_student_weekday(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
@@ -126,31 +138,8 @@ async def call_student_weekday(call: CallbackQuery, state: FSMContext):
         errors.error(e)
 
 
-@dp.callback_query(F.data.split('-')[0] == 'student_schedule')
-async def student_weekday(call: CallbackQuery):
-    try:
-        await call.answer()
-        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text='Выберите день недели.',
-                                    reply_markup=kb.student_week_kb(call.data.split('-')[1].lower()))
-    except Exception as e:
-        errors.error(e)
-
-
-@dp.message(GetStudentSchedule.group)
-async def set_student_group(message: Message, state: FSMContext):
-    try:
-        if fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
-            await message.answer('Выберите день недели.', reply_markup=kb.student_week_kb(message.text.lower()))
-            await state.clear()
-        else:
-            await message.answer('Неверный формат. Повторите ввод.')
-    except Exception as e:
-        errors.error(e)
-
-
 @dp.callback_query(F.data.split('-')[0] == 'student')
-async def set_student_weekday(call: CallbackQuery):
+async def get_student_weekday_schedule(call: CallbackQuery):
     try:
         await call.answer()
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
@@ -230,7 +219,6 @@ async def teacher_info(message: Message, state: FSMContext):
 async def teacher_weekdays(call: CallbackQuery):
     try:
         await call.answer()
-        await call.message.delete()
         await call.message.answer(text='Выберите день недели.',
                                   reply_markup=kb.teacher_week_kb(call.data.split('-')[1]))
     except Exception as e:
