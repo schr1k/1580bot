@@ -19,6 +19,10 @@ class SuggestIdea(StatesGroup):
     idea = State()
 
 
+class ReportBug(StatesGroup):
+    bug = State()
+
+
 class Registration(StatesGroup):
     building = State()
     group = State()
