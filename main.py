@@ -118,8 +118,9 @@ async def get_student_schedule(call: CallbackQuery, state: FSMContext):
 async def call_student_weekday(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
-        await bot.send_message(call.from_user.id, 'Выберите день недели.',
-                               reply_markup=kb.student_week_kb(call.data.split('-')[1].lower()))
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Выберите день недели.',
+                                    reply_markup=kb.student_week_kb(call.data.split('-')[1].lower()))
         await state.clear()
     except Exception as e:
         errors.error(e)
@@ -441,7 +442,9 @@ async def admin_panel(call: CallbackQuery):
         text = ''
         if await db.get_role(str(call.from_user.id)) == 'admin':
             role = 'админ'
-            text += f'Пользователей бота - <b>{await db.count_users()}</b>.\n'
+            text += (f'Всего пользователей бота - <b>{await db.count_users()}</b>.\n'
+                     f'Зарегистрировано - <b>{await db.count_registered_users()}</b>.\n'
+                     f'Работников - <b>{await db.count_staff()}</b>.\n')
         else:
             role = 'новостник'
         text += f'Ваша роль - <b>{role}</b>.'

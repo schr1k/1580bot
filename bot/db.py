@@ -49,6 +49,14 @@ class DB:
         result = await self.connection.fetchval('SELECT COUNT(tg) FROM users')
         return result
 
+    async def count_registered_users(self) -> int:
+        result = await self.connection.fetchval("SELECT COUNT(tg) FROM users WHERE class <> ''")
+        return result
+
+    async def count_staff(self) -> int:
+        result = await self.connection.fetchval('SELECT COUNT(tg) FROM staff')
+        return result
+
     async def get_role(self, tg: str) -> str:
         result = await self.connection.fetchrow('SELECT role FROM staff WHERE tg = $1', tg)
         return dict(result)['role']

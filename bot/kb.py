@@ -41,7 +41,7 @@ def teacher_week_kb(teacher: str):
     thursday = InlineKeyboardButton(text='Четверг', callback_data=f'teacher-Четверг-{teacher}')
     friday = InlineKeyboardButton(text='Пятница', callback_data=f'teacher-Пятница-{teacher}')
     saturday = InlineKeyboardButton(text='Суббота', callback_data=f'teacher-Суббота-{teacher}')
-    keyboard = InlineKeyboardBuilder().row(monday, tuesday, wednesday).row(thursday, friday, saturday).as_markup()
+    keyboard = InlineKeyboardBuilder().row(monday, thursday).row(tuesday, friday).row(wednesday, saturday).row(to_main).as_markup()
     return keyboard
 
 
@@ -60,7 +60,7 @@ def student_week_kb(group: str):
     thursday = InlineKeyboardButton(text='Четверг', callback_data=f'student-Четверг-{group}')
     friday = InlineKeyboardButton(text='Пятница', callback_data=f'student-Пятница-{group}')
     saturday = InlineKeyboardButton(text='Суббота', callback_data=f'student-Суббота-{group}')
-    keyboard = InlineKeyboardBuilder().row(monday, tuesday).row(wednesday, thursday).row(friday, saturday).as_markup()
+    keyboard = InlineKeyboardBuilder().row(monday, thursday).row(tuesday, friday).row(wednesday, saturday).row(to_main).as_markup()
     return keyboard
 
 
