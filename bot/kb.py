@@ -118,9 +118,9 @@ approve_idea = InlineKeyboardButton(text='✅ Одобрить', callback_data='
 idea_kb = InlineKeyboardBuilder().row(approve_idea).as_markup()
 
 
-# Баг пофикшен =========================================================================================================
+# Баг ==================================================================================================================
 def bug_kb(tg: str):
     fix_bug = InlineKeyboardButton(text='✅ Исправлено', callback_data=f'fix_bug-{tg}')
     reject_bug = InlineKeyboardButton(text='❌ Отклонить', callback_data=f'reject_bug-{tg}')
-    keyboard = InlineKeyboardBuilder().row(fix_bug).as_markup()
+    keyboard = InlineKeyboardBuilder().row(fix_bug, reject_bug).as_markup()
     return keyboard

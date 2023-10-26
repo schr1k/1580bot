@@ -83,11 +83,11 @@ class DB:
         await self.connection.execute('UPDATE staff set role = $1, username = $2 WHERE tg = $3', role, username, tg)
 
 
-db = DB()
-
-
-async def main():
-    await db.connect()
-    print(await db.new_staff('1200522770', 'admin', 'matvey'))
-
-asyncio.run(main())
+# db = DB()
+#
+#
+# async def main():
+#     await db.connect()
+#     print(await db.new_staff('1200522770', 'admin', 'matvey'))
+#
+# asyncio.run(main())

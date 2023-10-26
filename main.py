@@ -354,7 +354,8 @@ async def set_bug(message: Message, state: FSMContext):
                                      caption=f'Отправитель - {sender}.\n'
                                              f'Сообщение - {message.caption}.',
                                      reply_markup=kb.bug_kb(str(message.from_user.id)))
-            await message.answer(text='Спасибо за помощь!', reply_markup=kb.to_main_kb)
+            await message.answer(text='Спасибо за помощь!\n'
+                                      'Мы сообщим вам когда ошибка будет исправлена.', reply_markup=kb.to_main_kb)
             await state.clear()
         elif message.text is not None:
             if await db.user_is_registered(str(message.from_user.id)):
@@ -369,12 +370,51 @@ async def set_bug(message: Message, state: FSMContext):
                                        text=f'Отправитель - {sender}.\n'
                                             f'Сообщение - {message.text}.',
                                        reply_markup=kb.bug_kb(str(message.from_user.id)))
-            await message.answer(text='Спасибо за помощь!', reply_markup=kb.to_main_kb)
+            await message.answer(text='Спасибо за помощь!\n'
+                                      'Мы сообщим вам когда ошибка будет исправлена.', reply_markup=kb.to_main_kb)
             await state.clear()
         else:
             await message.answer(text='Этот тип контента не поддерживается. Отправьте что-нибудь другое.')
     except Exception as e:
         errors.error(e)
+
+
+@dp.callback_query(F.data.split('-')[0] == 'fix_bug')
+async def fix_bug(call: CallbackQuery):
+    await call.answer()
+    if call.message.photo is not None:
+        await bot.send_message(chat_id=call.data.split('-')[1], text='Ошибка, о которой вы ранее сообщали, была исправлена.')
+        await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
+                                       caption=f'{call.message.caption}\n'
+                                               f'Баг пофикшен.')
+    elif call.message.text is not None:
+        await bot.send_message(chat_id=call.data.split('-')[1], text='Ошибка, о которой вы ранее сообщали, была исправлена.')
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
+                                    text=f'{call.message.text}\n'
+                                         f'Баг пофикшен.')
+    else:
+        await bot.send_message(chat_id=call.from_user.id, text='Произошла ошибка')
+
+
+@dp.callback_query(F.data.split('-')[0] == 'reject_bug')
+async def reject_bug(call: CallbackQuery):
+    await call.answer()
+    if call.message.photo is not None:
+        await bot.send_message(chat_id=call.data.split('-')[1], text='Ошибка, о которой вы ранее сообщали, не была исправлена.\n'
+                                                                     'Скорее всего разработчики не поняли где находится ошибка.\n'
+                                                                     'Попробуйте еще раз и обязательно приложите скриншот.')
+        await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
+                                       caption=f'{call.message.caption}\n'
+                                               f'Баг отклонен.')
+    elif call.message.text is not None:
+        await bot.send_message(chat_id=call.data.split('-')[1], text='Ошибка, о которой вы ранее сообщали, не была исправлена.\n'
+                                                                     'Скорее всего разработчики не поняли где находится ошибка.\n'
+                                                                     'Попробуйте еще раз и обязательно приложите скриншот.')
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
+                                    text=f'{call.message.text}\n'
+                                         f'Баг отклонен.')
+    else:
+        await bot.send_message(chat_id=call.from_user.id, text='Произошла ошибка')
 
 
 # Профиль ==============================================================================================================
