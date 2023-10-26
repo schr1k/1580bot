@@ -3,7 +3,6 @@ from aiogram.fsm.state import State, StatesGroup
 
 class GetStudentSchedule(StatesGroup):
     group = State()
-    weekday = State()
 
 
 class FindTeacher(StatesGroup):
