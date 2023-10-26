@@ -264,18 +264,19 @@ async def suggest_idea(call: CallbackQuery, state: FSMContext):
 @dp.message(SuggestIdea.idea)
 async def set_idea(message: Message, state: FSMContext):
     try:
+        sender = f'@{message.from_user.username}' if message.from_user.username is not None else message.from_user.id
         if message.photo is not None:
             if await db.user_is_registered(str(message.from_user.id)):
                 await bot.send_photo(chat_id=config.IDEAS_GROUP_ID,
                                      photo=message.photo[-1].file_id,
-                                     caption=f'Отправитель - @{message.from_user.username}.\n'
+                                     caption=f'Отправитель - {sender}.\n'
                                              f'Сообщение - {message.caption}.\n'
                                              f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
                                              f'Класс - {await db.get_class(str(message.from_user.id))}.',
                                      reply_markup=kb.idea_kb)
             else:
                 await bot.send_photo(chat_id=config.IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
-                                     caption=f'Отправитель - @{message.from_user.username}.\n'
+                                     caption=f'Отправитель - {sender}.\n'
                                              f'Сообщение - {message.caption}.',
                                      reply_markup=kb.idea_kb)
             await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
@@ -283,14 +284,14 @@ async def set_idea(message: Message, state: FSMContext):
         elif message.text is not None:
             if await db.user_is_registered(str(message.from_user.id)):
                 await bot.send_message(chat_id=config.IDEAS_GROUP_ID,
-                                       text=f'Отправитель - @{message.from_user.username}.\n'
+                                       text=f'Отправитель - {sender}.\n'
                                             f'Сообщение - {message.text}.\n'
                                             f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
                                             f'Класс - {await db.get_class(str(message.from_user.id))}.',
                                        reply_markup=kb.idea_kb)
             else:
                 await bot.send_message(chat_id=config.IDEAS_GROUP_ID,
-                                       text=f'Отправитель - @{message.from_user.username}.\n'
+                                       text=f'Отправитель - {sender}.\n'
                                             f'Сообщение - {message.text}.',
                                        reply_markup=kb.idea_kb)
             await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
@@ -318,6 +319,60 @@ async def approve_idea(call: CallbackQuery):
                                              f'Идея одобрена.')
         else:
             await bot.send_message(chat_id=call.from_user.id, text='Произошла ошибка')
+    except Exception as e:
+        errors.error(e)
+
+
+# Сообщить об ошибке ======================================================================================================
+@dp.callback_query(F.data == 'report_bug')
+async def report_bug(call: CallbackQuery, state: FSMContext):
+    try:
+        await call.answer()
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='Если вы обнаружили ошибку или недочет при использовании бота, напишите нам об этом (пожалуйста по возможности прикладывайте скриншот чтобы мы понимали где конкретно произошла ошибка).',
+                                    parse_mode='HTML', reply_markup=kb.to_main_kb)
+        await state.set_state(ReportBug.bug)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.message(ReportBug.bug)
+async def set_bug(message: Message, state: FSMContext):
+    try:
+        sender = f'@{message.from_user.username}' if message.from_user.username is not None else message.from_user.id
+        if message.photo is not None:
+            if await db.user_is_registered(str(message.from_user.id)):
+                await bot.send_photo(chat_id=config.BUGS_GROUP_ID,
+                                     photo=message.photo[-1].file_id,
+                                     caption=f'Отправитель - {sender}.\n'
+                                             f'Сообщение - {message.caption}.\n'
+                                             f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
+                                             f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                                     reply_markup=kb.bug_kb(str(message.from_user.id)))
+            else:
+                await bot.send_photo(chat_id=config.BUGS_GROUP_ID, photo=message.photo[-1].file_id,
+                                     caption=f'Отправитель - {sender}.\n'
+                                             f'Сообщение - {message.caption}.',
+                                     reply_markup=kb.bug_kb(str(message.from_user.id)))
+            await message.answer(text='Спасибо за помощь!', reply_markup=kb.to_main_kb)
+            await state.clear()
+        elif message.text is not None:
+            if await db.user_is_registered(str(message.from_user.id)):
+                await bot.send_message(chat_id=config.BUGS_GROUP_ID,
+                                       text=f'Отправитель - {sender}.\n'
+                                            f'Сообщение - {message.text}.\n'
+                                            f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
+                                            f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                                       reply_markup=kb.bug_kb(str(message.from_user.id)))
+            else:
+                await bot.send_message(chat_id=config.BUGS_GROUP_ID,
+                                       text=f'Отправитель - {sender}.\n'
+                                            f'Сообщение - {message.text}.',
+                                       reply_markup=kb.bug_kb(str(message.from_user.id)))
+            await message.answer(text='Спасибо за помощь!', reply_markup=kb.to_main_kb)
+            await state.clear()
+        else:
+            await message.answer(text='Этот тип контента не поддерживается. Отправьте что-нибудь другое.')
     except Exception as e:
         errors.error(e)
 

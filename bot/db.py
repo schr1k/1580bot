@@ -70,7 +70,7 @@ class DB:
         await self.connection.execute('INSERT INTO users (tg, username) VALUES ($1, $2)', tg, username)
 
     async def new_staff(self, tg: str, role: str, username: str):
-        await self.connection.execute('INSERT INTO staff (tg, role, username) VALUES ($1, $2)', tg, role, username)
+        await self.connection.execute('INSERT INTO staff (tg, role, username) VALUES ($1, $2, $3)', tg, role, username)
 
 # UPDATE ===============================================================================================================
     async def edit_group(self, tg: str, group: str) -> None:
@@ -83,11 +83,11 @@ class DB:
         await self.connection.execute('UPDATE staff set role = $1, username = $2 WHERE tg = $3', role, username, tg)
 
 
-# db = DB()
-#
-#
-# async def main():
-#     await db.connect()
-#     print(await db.staff_has_username('886971306'))
-#
-# asyncio.run(main())
+db = DB()
+
+
+async def main():
+    await db.connect()
+    print(await db.new_staff('1200522770', 'admin', 'matvey'))
+
+asyncio.run(main())
