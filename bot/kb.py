@@ -5,6 +5,15 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 to_main = InlineKeyboardButton(text='🔙 На Главную', callback_data='to_main')
 to_main_kb = InlineKeyboardBuilder().add(to_main).as_markup()
 
+to_school = InlineKeyboardButton(text='🔙 Школа', callback_data='school')
+to_school_kb = InlineKeyboardBuilder().add(to_school).as_markup()
+
+to_food = InlineKeyboardButton(text='🔙 Питание', callback_data='food')
+to_food_kb = InlineKeyboardBuilder().add(to_food).as_markup()
+
+to_library = InlineKeyboardButton(text='🔙 Библиотека', callback_data='library')
+to_library_kb = InlineKeyboardBuilder().add(to_library).as_markup()
+
 to_admin_panel = InlineKeyboardButton(text='🔙 Админ-панель', callback_data='admin_panel')
 to_admin_panel_kb = InlineKeyboardBuilder().add(to_admin_panel).as_markup()
 
@@ -14,12 +23,13 @@ find_teacher = InlineKeyboardButton(text='🔍 Найти учителя', callb
 suggest_idea = InlineKeyboardButton(text='💡 Предложить идею', callback_data='suggest_idea')
 report_bug = InlineKeyboardButton(text='⛔️ Сообщить об ошибке', callback_data='report_bug')
 profile = InlineKeyboardButton(text='👤 Профиль', callback_data='profile')
+school = InlineKeyboardButton(text='ℹ️ Школа', callback_data='school')
 user_main_kb = InlineKeyboardBuilder().row(get_schedule).row(find_teacher).row(suggest_idea).row(report_bug).row(
-    profile).as_markup()
+    profile, school).as_markup()
 
 admin_panel = InlineKeyboardButton(text='👨‍💻 Админ панель', callback_data='admin_panel')
 staff_main_kb = InlineKeyboardBuilder().row(get_schedule).row(find_teacher).row(suggest_idea).row(report_bug).row(
-    profile).row(admin_panel).as_markup()
+    profile, school).row(admin_panel).as_markup()
 
 
 # Расписание учителя ===================================================================================================
@@ -69,7 +79,7 @@ def student_week_kb(group: str):
 
 
 def to_student_schedule_kb(group: str):
-    student_schedule = InlineKeyboardButton(text='🔙 Назад', callback_data=f'student_schedule-{group}')
+    student_schedule = InlineKeyboardButton(text='🔙 Назад', callback_data=f'group-{group}')
     keyboard = InlineKeyboardBuilder().row(student_schedule).as_markup()
     return keyboard
 
@@ -89,6 +99,24 @@ building_2 = InlineKeyboardButton(text='2 корпус', callback_data='building
 building_3 = InlineKeyboardButton(text='3 корпус', callback_data='building-3')
 building_4 = InlineKeyboardButton(text='4 корпус', callback_data='building-4')
 buildings_kb = InlineKeyboardBuilder().row(building_1, building_2).row(building_3, building_4).row(to_main).as_markup()
+
+# Школа ================================================================================================================
+food = InlineKeyboardButton(text='🍽 Питание', callback_data='food')
+library = InlineKeyboardButton(text='📚 Библиотека', callback_data='library')
+lessons = InlineKeyboardButton(text='🔔 Звонки', callback_data='lessons')
+school_kb = InlineKeyboardBuilder().row(food).row(library).row(lessons).row(to_main).as_markup()
+
+# Питание ==============================================================================================================
+menu_1 = InlineKeyboardButton(text='Меню 1 корпуса', callback_data='menu-1')
+menu_2 = InlineKeyboardButton(text='Меню 2 корпуса', callback_data='menu-2')
+menu_3 = InlineKeyboardButton(text='Меню 3 корпуса', callback_data='menu-3')
+food_kb = InlineKeyboardBuilder().row(menu_1).row(menu_2).row(menu_3).row(to_school).as_markup()
+
+# Питание ==============================================================================================================
+library_1 = InlineKeyboardButton(text='Библиотека 1 корпуса', callback_data='library_1')
+library_2 = InlineKeyboardButton(text='Библиотека 2 корпуса', callback_data='library_2')
+library_3 = InlineKeyboardButton(text='Библиотека 3 корпуса', callback_data='library_3')
+library_kb = InlineKeyboardBuilder().row(library_1).row(library_2).row(library_3).row(to_school).as_markup()
 
 # Админ панель =========================================================================================================
 news = InlineKeyboardButton(text='✉️ Рассылка', callback_data='news')

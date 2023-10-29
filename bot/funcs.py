@@ -2,7 +2,7 @@ import json
 from bot.config import SCHEDULE_PATH, TEACHERS_PATH
 
 
-def get_json() -> dict:
+def get_schedule() -> dict:
     with open(SCHEDULE_PATH, encoding='utf-8') as f:
         return json.load(f)
 
@@ -13,7 +13,7 @@ def get_teachers() -> dict:
 
 
 def get_students_day_schedule(group: str, day: str) -> str:
-    day_schedule = get_json()[group][day]
+    day_schedule = get_schedule()[group][day]
     s = f'Расписание для {group} на {day}:\n'
     for key, value in day_schedule.items():
         if type(value) is dict and 'cabinet' in value.keys():
@@ -28,7 +28,7 @@ def get_students_day_schedule(group: str, day: str) -> str:
 def get_teachers_day_schedule(surname: str, day: str) -> str:
     s = f'{day}:\n'
     st = {}
-    for key, value in get_json().items():
+    for key, value in get_schedule().items():
         if day in value.keys():
             for k, v in value[day].items():
                 if type(v) is dict:
