@@ -10,7 +10,7 @@ from src.three.high.main import make_schedule_3h
 from src.three.primary.main import make_schedule_3p
 from src.four.high.main import make_schedule_4h
 from src.four.primary.main import make_schedule_4p
-from src.food import *
+from src.food.main import parse_menu
 
 
 logging.basicConfig(filename="all.log", level=logging.INFO,
