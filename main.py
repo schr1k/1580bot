@@ -17,7 +17,7 @@ from bot import config, kb
 from bot.states import *
 from bot.funcs import *
 
-from excel.main import start_scheduler
+from src.main import start_scheduler
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
@@ -118,8 +118,11 @@ async def get_student_schedule(call: CallbackQuery, state: FSMContext):
 async def student_weekday(message: Message, state: FSMContext):
     try:
         if fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
-            await message.answer('Выберите день недели.', reply_markup=kb.student_week_kb(message.text.lower()))
-            await state.clear()
+            if message.text in get_schedule().keys():
+                await message.answer('Выберите день недели.', reply_markup=kb.student_week_kb(message.text.lower()))
+                await state.clear()
+            else:
+                await message.answer('Класс не найден. Повторите ввод.')
         else:
             await message.answer('Неверный формат. Повторите ввод.')
     except Exception as e:
@@ -202,7 +205,7 @@ async def teacher_info(message: Message, state: FSMContext):
             if teachers[n]['subject'] is not None:
                 text += f'<i>Занимаемая должность:</i> {teachers[n]["subject"]}.'
             if teachers[n]["photo"]:
-                photo = FSInputFile(f'excel/teachers/photo/{n}.jpg')
+                photo = FSInputFile(f'src/teachers/photo/{n}.jpg')
                 await message.answer_photo(photo=photo, caption=text, parse_mode='HTML',
                                            reply_markup=kb.teacher_schedule_kb(message.text.split()[0].capitalize()))
             else:
@@ -219,6 +222,7 @@ async def teacher_info(message: Message, state: FSMContext):
 async def teacher_weekdays(call: CallbackQuery):
     try:
         await call.answer()
+        await call.message.delete()
         await call.message.answer(text='Выберите день недели.',
                                   reply_markup=kb.teacher_week_kb(call.data.split('-')[1]))
     except Exception as e:
@@ -371,12 +375,14 @@ async def set_bug(message: Message, state: FSMContext):
 async def fix_bug(call: CallbackQuery):
     await call.answer()
     if call.message.photo is not None:
-        await bot.send_message(chat_id=call.data.split('-')[1], text='Ошибка, о которой вы ранее сообщали, была исправлена.')
+        await bot.send_message(chat_id=call.data.split('-')[1],
+                               text='Ошибка, о которой вы ранее сообщали, была исправлена.')
         await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
                                        caption=f'{call.message.caption}\n'
                                                f'Баг пофикшен.')
     elif call.message.text is not None:
-        await bot.send_message(chat_id=call.data.split('-')[1], text='Ошибка, о которой вы ранее сообщали, была исправлена.')
+        await bot.send_message(chat_id=call.data.split('-')[1],
+                               text='Ошибка, о которой вы ранее сообщали, была исправлена.')
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
                                     text=f'{call.message.text}\n'
                                          f'Баг пофикшен.')
@@ -388,16 +394,18 @@ async def fix_bug(call: CallbackQuery):
 async def reject_bug(call: CallbackQuery):
     await call.answer()
     if call.message.photo is not None:
-        await bot.send_message(chat_id=call.data.split('-')[1], text='Ошибка, о которой вы ранее сообщали, не была исправлена.\n'
-                                                                     'Скорее всего разработчики не поняли где находится ошибка.\n'
-                                                                     'Попробуйте еще раз и обязательно приложите скриншот.')
+        await bot.send_message(chat_id=call.data.split('-')[1],
+                               text='Ошибка, о которой вы ранее сообщали, не была исправлена.\n'
+                                    'Скорее всего разработчики не поняли где находится ошибка.\n'
+                                    'Попробуйте еще раз и обязательно приложите скриншот.')
         await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
                                        caption=f'{call.message.caption}\n'
                                                f'Баг отклонен.')
     elif call.message.text is not None:
-        await bot.send_message(chat_id=call.data.split('-')[1], text='Ошибка, о которой вы ранее сообщали, не была исправлена.\n'
-                                                                     'Скорее всего разработчики не поняли где находится ошибка.\n'
-                                                                     'Попробуйте еще раз и обязательно приложите скриншот.')
+        await bot.send_message(chat_id=call.data.split('-')[1],
+                               text='Ошибка, о которой вы ранее сообщали, не была исправлена.\n'
+                                    'Скорее всего разработчики не поняли где находится ошибка.\n'
+                                    'Попробуйте еще раз и обязательно приложите скриншот.')
         await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
                                     text=f'{call.message.text}\n'
                                          f'Баг отклонен.')
@@ -516,6 +524,115 @@ async def set_building(call: CallbackQuery, state: FSMContext):
         errors.error(e)
 
 
+# Школа ================================================================================================================
+@dp.callback_query(F.data == 'school')
+async def school(call: CallbackQuery):
+    try:
+        await call.answer()
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                    text='График работы администрации школы: 09:00 - 17:30 (обед 13:15 - 13:45).',
+                                    reply_markup=kb.school_kb)
+    except Exception as e:
+        errors.error(e)
+
+
+# Питание ==============================================================================================================
+@dp.callback_query(F.data == 'food')
+async def food(call: CallbackQuery):
+    try:
+        await call.answer()
+        await call.message.delete()
+        await call.message.answer(text='График работы столовой:\n'
+                                       '<b>09:00 - 14:15</b>.\n'
+                                       'График работы буфета:\n'
+                                       '<b>09:00 – 15:45</b>.',
+                                  reply_markup=kb.food_kb, parse_mode='HTML')
+    except Exception as e:
+        errors.error(e)
+
+
+# Меню =================================================================================================================
+@dp.callback_query(F.data.split('-')[0] == 'menu')
+async def menu(call: CallbackQuery):
+    try:
+        await call.answer()
+        photo = FSInputFile(f'src/food/{call.data.split("-")[1]}.jpg')
+        await call.message.delete()
+        await call.message.answer_photo(photo=photo, reply_markup=kb.to_food_kb)
+    except Exception as e:
+        errors.error(e)
+
+
+# Библиотека ===========================================================================================================
+@dp.callback_query(F.data == 'library')
+async def library(call: CallbackQuery):
+    try:
+        await call.answer()
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
+                                    text='Библиотека ГБОУ "Бауманская инженерная школа № 1580" была основана при открытии школы в 1989 году. Основной фонд составляет 15 318 экземпляров, фонд учебной литературы – 84 257 экземпляров, периодические издания. Заведующая библиотекой - Стрекалова Марина Борисовна.',
+                                    reply_markup=kb.library_kb)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data == 'library_1')
+async def library_1(call: CallbackQuery):
+    try:
+        await call.answer()
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
+                                    text='Адрес: Балаклавский проспект, д. 6а (1 этаж, каб. 116).\n'
+                                         'Телефон: 8(495)316-50-36.\n'
+                                         'Режим работы: 09:00 - 17:00. Пн - Пт.',
+                                    reply_markup=kb.to_library_kb)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data == 'library_2')
+async def library_2(call: CallbackQuery):
+    try:
+        await call.answer()
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
+                                    text='Адрес: Балаклавский проспект, д. 6 (1 этаж, каб. 104).\n'
+                                         'Телефон: 8(499)619-39-35.\n'
+                                         'Режим работы: 09:00 - 17:00. Пн - Пт.',
+                                    reply_markup=kb.to_library_kb)
+    except Exception as e:
+        errors.error(e)
+
+
+@dp.callback_query(F.data == 'library_3')
+async def library_3(call: CallbackQuery):
+    try:
+        await call.answer()
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
+                                    text='Адрес: ул. Стасовой, д. 8 (4 этаж, каб. 418).\n'
+                                         'Телефон: 8(495)954-34-95.\n'
+                                         'Режим работы: 09:00 - 17:00. Пн - Пт.',
+                                    reply_markup=kb.to_library_kb)
+    except Exception as e:
+        errors.error(e)
+
+
+# Звонки ===============================================================================================================
+@dp.callback_query(F.data == 'lessons')
+async def lessons(call: CallbackQuery):
+    try:
+        await call.answer()
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
+                                    text='0 урок: 08:15 - 08:55.\n'
+                                         '1 урок: 09:00 - 09:40.\n'
+                                         '2 урок: 09:50 - 10:30.\n'
+                                         '3 урок: 10:45 - 11:25.\n'
+                                         '4 урок: 11:40 - 12:20.\n'
+                                         '5 урок: 12:40 - 13:20.\n'
+                                         '6 урок: 13:40 - 14:20.\n'
+                                         '7 урок: 14:40 - 15:20.\n'
+                                         '8 урок: 15:30 - 16:10.', reply_markup=kb.to_school_kb)
+    except Exception as e:
+        errors.error(e)
+
+
 # Админ панель =========================================================================================================
 @dp.callback_query(lambda call: call.data == 'admin_panel')
 async def admin_panel(call: CallbackQuery):
@@ -563,12 +680,12 @@ async def set_message(message: Message, state: FSMContext):
 async def set_target(call: CallbackQuery, state: FSMContext):
     try:
         await call.answer()
+        await state.update_data(target=call.data.split("-")[1])
         data = await state.get_data()
-        await state.update_data(target=call.data.split('-')[1])
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
                                     text=f'Подтвердите отправку сообщения:\n'
                                          f'Текст - {data["message"]}.\n'
-                                         f'Корпуса - {data["target"] if data["target"].isnumeric() else "все"}.',
+                                         f'Корпуса - {call.data.split("-")[1] if call.data.split("-")[1].isnumeric() else "все (все пользователи бота)"}.',
                                     reply_markup=kb.submit_kb)
         await state.set_state(News.submit)
     except Exception as e:
@@ -713,7 +830,7 @@ async def petrikova(message: Message):
 @dp.message(Command('52'))
 async def fiftytwo(message: Message):
     try:
-        photo = FSInputFile('mems/52.jpg')
+        photo = FSInputFile('src/mems/52.jpg')
         await message.answer_photo(photo=photo, caption='Yeei')
     except Exception as e:
         errors.error(e)
@@ -723,7 +840,7 @@ async def fiftytwo(message: Message):
 @dp.message(Command('invalid'))
 async def invalid(message: Message):
     try:
-        photo = FSInputFile('mems/invalid.jpg')
+        photo = FSInputFile('src/mems/invalid.jpg')
         await message.answer_photo(photo=photo)
     except Exception as e:
         errors.error(e)
@@ -733,7 +850,7 @@ async def invalid(message: Message):
 @dp.message(Command('jacuzzi'))
 async def jacuzzi(message: Message):
     try:
-        photo = FSInputFile('mems/jacuzzi.jpg')
+        photo = FSInputFile('src/mems/jacuzzi.jpg')
         await message.answer_photo(photo=photo)
     except Exception as e:
         errors.error(e)
@@ -743,7 +860,7 @@ async def jacuzzi(message: Message):
 @dp.message(Command('shrek'))
 async def shrek(message: Message):
     try:
-        photo = FSInputFile('mems/shrek.jpg')
+        photo = FSInputFile('src/mems/shrek.jpg')
         await message.answer_photo(photo=photo)
     except Exception as e:
         errors.error(e)
@@ -771,7 +888,7 @@ async def gids(message: Message):
 @dp.message()
 async def all(message: Message):
     try:
-        if str(message.chat.id) not in [config.IDEAS_GROUP_ID, config.APPROVED_IDEAS_GROUP_ID]:
+        if str(message.chat.id) not in [config.IDEAS_GROUP_ID, config.APPROVED_IDEAS_GROUP_ID, config.BUGS_GROUP_ID]:
             await message.answer('Команда не распознана. Отправьте /start для выхода в главное меню.')
     except Exception as e:
         errors.error(e)

@@ -4,15 +4,15 @@ import simplejson as json
 from bot import config
 
 
-def make_schedule_2():
-    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/rasp2k_2.xlsx', header=None).T.values.tolist()
-    with open(f'{config.PROJECT_PATH}/excel/two/excel.json', 'w', encoding='utf-8') as f:
+def make_schedule_1():
+    df = pd.read_excel('https://lycu1580.mskobr.ru/files/attach_files/rasp1k.xlsx', header=None).T.values.tolist()
+    with open(f'{config.PROJECT_PATH}/src/one/excel.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
-    with open(f'{config.PROJECT_PATH}/excel/two/excel.json', encoding='utf-8') as f:
+    with open(f'{config.PROJECT_PATH}/src/one/excel.json', encoding='utf-8') as f:
         excel = json.load(f)
 
-    excel = excel[2:26] + excel[28:56] + excel[58:73] + excel[75:-2]
+    excel = excel[2:46] + excel[48:-2]
 
     weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
 
@@ -26,11 +26,10 @@ def make_schedule_2():
                     sp = lessons[j][0].split('\n')
                     sp.append(lessons[j][1])
                     if len(sp) == 3:
-                        sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': sp[2], 'building': '2'}
+                        sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': sp[2], 'building': "1"}
                     else:
 
-                        sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': sp[1], 'building': '2'}
-
+                        sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': sp[1], 'building': "1"}
                     lessons[j] = sl
             day_schedule = {}
             for lesson_number, j in zip(range(1, 9), list(lessons)):
@@ -59,5 +58,4 @@ def make_schedule_2():
     with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
 
-
-make_schedule_2()
+make_schedule_1()

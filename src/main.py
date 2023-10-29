@@ -4,12 +4,13 @@ import time
 from threading import Thread
 from datetime import datetime
 
-from excel.one.main import make_schedule_1
-from excel.two.main import make_schedule_2
-from excel.three.high.main import make_schedule_3h
-from excel.three.primary.main import make_schedule_3p
-from excel.four.high.main import make_schedule_4h
-from excel.four.primary.main import make_schedule_4p
+from src.one.main import make_schedule_1
+from src.two.main import make_schedule_2
+from src.three.high.main import make_schedule_3h
+from src.three.primary.main import make_schedule_3p
+from src.four.high.main import make_schedule_4h
+from src.four.primary.main import make_schedule_4p
+from src.food import *
 
 
 logging.basicConfig(filename="all.log", level=logging.INFO,
@@ -22,7 +23,7 @@ fh.setFormatter(formatter)
 errors.addHandler(fh)
 
 
-def tasks():
+def schedules():
     t1 = Thread(target=make_schedule_1)
     t2 = Thread(target=make_schedule_2)
     t3 = Thread(target=make_schedule_3h)
@@ -37,14 +38,24 @@ def tasks():
     t6.run()
 
 
-def run_tasks():
-    tasks()
+def menus():
+    t1 = Thread(target=parse_menu)
+    t1.run()
+
+
+def run_schedules():
+    schedules()
     print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
-    return sch.CancelJob
+
+
+def run_menus():
+    menus()
+    print(f'Меню обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
 
 
 def start_scheduler():
-    sch.every().day.at('20:00:00').do(run_tasks)
+    sch.every().day.at('20:00').do(run_schedules)
+    sch.every().hour.do(run_menus)
     while True:
         sch.run_pending()
         time.sleep(1)
