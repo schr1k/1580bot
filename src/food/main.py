@@ -1,3 +1,5 @@
+import platform
+
 import pdf2image
 import requests
 
@@ -12,5 +14,8 @@ def parse_menu():
     urls = [url1, url2, url3]
     for building, url in enumerate(urls):
         pdf = requests.get(url=url, stream=True)
-        image = pdf2image.convert_from_bytes(pdf.content, poppler_path=config.POPPLER_PATH)
+        if platform.system() == 'Windows':
+            image = pdf2image.convert_from_bytes(pdf.content, poppler_path=config.POPPLER_PATH)
+        else:
+            image = pdf2image.convert_from_bytes(pdf.content)
         image[0].save(f'{config.PROJECT_PATH}/src/food/{building + 1}.jpg', 'JPEG')

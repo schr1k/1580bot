@@ -11,16 +11,18 @@ venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-4. Change credentials in config.py.
+4. Download [poppler](https://github.com/oschwartz10612/poppler-windows/releases/).
+5. Change credentials in config.py.
 ```python
 TOKEN = '6531558275:AAEm3wMfef9u26G8DtCGjztZ_QOP1X7nbxA'
 IDEAS_GROUP_ID = '-1001796292186'
 APPROVED_IDEAS_GROUP_ID = '-1001930546995'
 BUGS_GROUP_ID = '-1002054325044'
 
-SCHEDULE_PATH = 'C:/Users/soino/Code/Python/1580bot/excel/schedule.json'
-TEACHERS_PATH = 'C:/Users/soino/Code/Python/1580bot/excel/teachers.json'
-PROJECT_PATH = 'C:/Users/soino/Code/Python/1580bot'
+SCHEDULE_PATH = 'Absolute path to schedule.json'
+TEACHERS_PATH = 'Absolute path to teachers.json'
+POPPLER_PATH = 'Absolute path to bin directory of poppler'
+PROJECT_PATH = 'Absolute path to project directory'
 
 POSTGRES_USER = 'postgres'
 POSTGRES_PASSWORD = 'postgres'
