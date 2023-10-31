@@ -12,6 +12,8 @@ from src.four.high.main import make_schedule_4h
 from src.four.primary.main import make_schedule_4p
 from src.food.main import parse_menu
 
+from teachers.parser import parse_photo, parse_subject
+
 
 logging.basicConfig(filename="all.log", level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
@@ -43,6 +45,13 @@ def menus():
     t1.run()
 
 
+def teachers():
+    t1 = Thread(target=parse_subject)
+    t2 = Thread(target=parse_photo)
+    t1.run()
+    t2.run()
+
+
 def run_schedules():
     schedules()
     print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
@@ -53,10 +62,17 @@ def run_menus():
     print(f'Меню обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
 
 
+def run_teachers():
+    teachers()
+    print(f'Учителя обновлены ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+
+
 def start_scheduler():
     sch.every().day.at('20:00').do(run_schedules)
+    sch.every().day.at('20:00').do(run_teachers)
     sch.every().hour.do(run_menus)
     while True:
         sch.run_pending()
         time.sleep(1)
+
 

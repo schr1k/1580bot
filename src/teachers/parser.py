@@ -53,8 +53,5 @@ def parse_subject():
                             teachers[i]['subject'] = subject
 
 
-parse_subject()
-parse_photo()
-
 with open('../teachers.json', 'w', encoding='utf-8') as f:
     json.dump(teachers, f, ensure_ascii=False, indent=4)
