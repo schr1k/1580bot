@@ -34,7 +34,8 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
                 if type(v) is dict:
                     if v is not None and v["teacher"] is not None and surname in v["teacher"]:
                         st[k] = {}
-                        st[k]["cabinet"] = v['cabinet']
+                        if "cabinet" in v.keys():
+                            st[k]["cabinet"] = v['cabinet']
                         st[k]['teacher'] = v["teacher"]
                         st[k]["building"] = v["building"]
     sst = {}
@@ -44,7 +45,7 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
         if 'cabinet' in value.keys():
             s += f'На <b>{key}</b> уроке <b>{value["teacher"]}</b> в <b>{value["cabinet"]} (в {value["building"]} корпусе)</b>.\n'
         else:
-            s += f'Не указан кабинет, в котором <b>{value["teacher"]}</b> на <b>{key}</b> уроке.'
+            s += f'Не указан кабинет, в котором <b>{value["teacher"]}</b> на <b>{key}</b> уроке.\n'
     if len(s) == len(day + ':\n'):
         s = f'В {day} у выбранного учителя нет уроков.'
     return s
