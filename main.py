@@ -163,8 +163,8 @@ async def find_teacher(call: CallbackQuery, state: FSMContext):
                                          '1) Полное ФИО (Иванов Иван Иванович).\n'
                                          '2) Фамилия и имя (Иванов Иван).\n'
                                          '3) Фамилия (Иванов).\n'
-                                         '<b>Регистр при вводе не учитывается</b>.',
-                                    parse_mode='HTML', reply_markup=kb.to_main_kb)
+                                         '<b>Регистр при вводе не учитывается</b>.', parse_mode='HTML',
+                                    reply_markup=kb.to_main_kb)
         await state.set_state(FindTeacher.teacher)
     except Exception as e:
         errors.error(e)
@@ -178,8 +178,7 @@ async def teacher_info(message: Message, state: FSMContext):
         if len(message.text.split()) == 3:
             surname, name, patronymic = message.text.split()
             for i, j in teachers.items():
-                if surname.lower() == j['surname'].lower() and name.lower() == j[
-                    'name'].lower() and patronymic.lower() == j['patronymic'].lower():
+                if surname.lower() == j['surname'].lower() and name.lower() == j['name'].lower() and patronymic.lower() == j['patronymic'].lower():
                     flag = True
                     n = i
                     break
@@ -259,8 +258,7 @@ async def set_idea(message: Message, state: FSMContext):
         sender = f'@{message.from_user.username}' if message.from_user.username is not None else message.from_user.id
         if message.photo is not None:
             if await db.user_is_registered(str(message.from_user.id)):
-                await bot.send_photo(chat_id=config.IDEAS_GROUP_ID,
-                                     photo=message.photo[-1].file_id,
+                await bot.send_photo(chat_id=config.IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
                                      caption=f'Отправитель - {sender}.\n'
                                              f'Сообщение - {message.caption}.\n'
                                              f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
@@ -269,22 +267,19 @@ async def set_idea(message: Message, state: FSMContext):
             else:
                 await bot.send_photo(chat_id=config.IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
                                      caption=f'Отправитель - {sender}.\n'
-                                             f'Сообщение - {message.caption}.',
-                                     reply_markup=kb.idea_kb)
+                                             f'Сообщение - {message.caption}.', reply_markup=kb.idea_kb)
             await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
             await state.clear()
         elif message.text is not None:
             if await db.user_is_registered(str(message.from_user.id)):
-                await bot.send_message(chat_id=config.IDEAS_GROUP_ID,
-                                       text=f'Отправитель - {sender}.\n'
-                                            f'Сообщение - {message.text}.\n'
-                                            f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
-                                            f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - {sender}.\n'
+                                                                           f'Сообщение - {message.text}.\n'
+                                                                           f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
+                                                                           f'Класс - {await db.get_class(str(message.from_user.id))}.',
                                        reply_markup=kb.idea_kb)
             else:
-                await bot.send_message(chat_id=config.IDEAS_GROUP_ID,
-                                       text=f'Отправитель - {sender}.\n'
-                                            f'Сообщение - {message.text}.',
+                await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - {sender}.\n'
+                                                                           f'Сообщение - {message.text}.',
                                        reply_markup=kb.idea_kb)
             await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
             await state.clear()
@@ -334,8 +329,7 @@ async def set_bug(message: Message, state: FSMContext):
         sender = f'@{message.from_user.username}' if message.from_user.username is not None else message.from_user.id
         if message.photo is not None:
             if await db.user_is_registered(str(message.from_user.id)):
-                await bot.send_photo(chat_id=config.BUGS_GROUP_ID,
-                                     photo=message.photo[-1].file_id,
+                await bot.send_photo(chat_id=config.BUGS_GROUP_ID, photo=message.photo[-1].file_id,
                                      caption=f'Отправитель - {sender}.\n'
                                              f'Сообщение - {message.caption}.\n'
                                              f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
@@ -351,16 +345,14 @@ async def set_bug(message: Message, state: FSMContext):
             await state.clear()
         elif message.text is not None:
             if await db.user_is_registered(str(message.from_user.id)):
-                await bot.send_message(chat_id=config.BUGS_GROUP_ID,
-                                       text=f'Отправитель - {sender}.\n'
-                                            f'Сообщение - {message.text}.\n'
-                                            f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
-                                            f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                await bot.send_message(chat_id=config.BUGS_GROUP_ID, text=f'Отправитель - {sender}.\n'
+                                                                          f'Сообщение - {message.text}.\n'
+                                                                          f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
+                                                                          f'Класс - {await db.get_class(str(message.from_user.id))}.',
                                        reply_markup=kb.bug_kb(str(message.from_user.id)))
             else:
-                await bot.send_message(chat_id=config.BUGS_GROUP_ID,
-                                       text=f'Отправитель - {sender}.\n'
-                                            f'Сообщение - {message.text}.',
+                await bot.send_message(chat_id=config.BUGS_GROUP_ID, text=f'Отправитель - {sender}.\n'
+                                                                          f'Сообщение - {message.text}.',
                                        reply_markup=kb.bug_kb(str(message.from_user.id)))
             await message.answer(text='Спасибо за помощь!\n'
                                       'Мы сообщим вам когда ошибка будет исправлена.', reply_markup=kb.to_main_kb)
@@ -425,8 +417,8 @@ async def profile(call: CallbackQuery):
         else:
             text = 'Если вы ученик школы № 1580, то вы можете пройти регистрацию, чтобы не вводить каждый раз номер класса и получать новости вашего корпуса.'
             keyboard = kb.unfilled_profile_kb
-        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                    text=text, reply_markup=keyboard)
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id, text=text,
+                                    reply_markup=keyboard)
     except Exception as e:
         errors.error(e)
 
@@ -545,8 +537,7 @@ async def food(call: CallbackQuery):
         await call.message.answer(text='График работы столовой:\n'
                                        '<b>09:00 - 14:15</b>.\n'
                                        'График работы буфета:\n'
-                                       '<b>09:00 – 15:45</b>.',
-                                  reply_markup=kb.food_kb, parse_mode='HTML')
+                                       '<b>09:00 – 15:45</b>.', reply_markup=kb.food_kb, parse_mode='HTML')
     except Exception as e:
         errors.error(e)
 
@@ -582,8 +573,7 @@ async def library_1(call: CallbackQuery):
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
                                     text='Адрес: Балаклавский проспект, д. 6а (1 этаж, каб. 116).\n'
                                          'Телефон: 8(495)316-50-36.\n'
-                                         'Режим работы: 09:00 - 17:00. Пн - Пт.',
-                                    reply_markup=kb.to_library_kb)
+                                         'Режим работы: 09:00 - 17:00. Пн - Пт.', reply_markup=kb.to_library_kb)
     except Exception as e:
         errors.error(e)
 
@@ -595,8 +585,7 @@ async def library_2(call: CallbackQuery):
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
                                     text='Адрес: Балаклавский проспект, д. 6 (1 этаж, каб. 104).\n'
                                          'Телефон: 8(499)619-39-35.\n'
-                                         'Режим работы: 09:00 - 17:00. Пн - Пт.',
-                                    reply_markup=kb.to_library_kb)
+                                         'Режим работы: 09:00 - 17:00. Пн - Пт.', reply_markup=kb.to_library_kb)
     except Exception as e:
         errors.error(e)
 
@@ -608,8 +597,7 @@ async def library_3(call: CallbackQuery):
         await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
                                     text='Адрес: ул. Стасовой, д. 8 (4 этаж, каб. 418).\n'
                                          'Телефон: 8(495)954-34-95.\n'
-                                         'Режим работы: 09:00 - 17:00. Пн - Пт.',
-                                    reply_markup=kb.to_library_kb)
+                                         'Режим работы: 09:00 - 17:00. Пн - Пт.', reply_markup=kb.to_library_kb)
     except Exception as e:
         errors.error(e)
 
@@ -648,8 +636,8 @@ async def admin_panel(call: CallbackQuery):
         else:
             role = 'новостник'
         text += f'Ваша роль - <b>{role}</b>.'
-        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
-                                    text=text, reply_markup=keyboard, parse_mode='HTML')
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id, text=text,
+                                    reply_markup=keyboard, parse_mode='HTML')
     except Exception as e:
         errors.error(e)
 
@@ -743,8 +731,8 @@ async def set_role(call: CallbackQuery, state: FSMContext):
         await call.answer()
         await state.update_data(role=call.data)
         data = await state.get_data()
-        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
-                                    text='Роль выдана.', reply_markup=kb.to_admin_panel_kb)
+        await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id, text='Роль выдана.',
+                                    reply_markup=kb.to_admin_panel_kb)
         if await db.staff_exists(data['id']):
             await db.edit_role(data['id'], data['role'], await db.get_username_by_tg(data['id']))
         else:
