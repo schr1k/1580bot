@@ -11,8 +11,7 @@ from src.three.primary.main import make_schedule_3p
 from src.four.high.main import make_schedule_4h
 from src.four.primary.main import make_schedule_4p
 from src.food.main import parse_menu
-
-from teachers.parser import parse_photo, parse_subject
+from src.teachers.parser import parse_photo, parse_subject
 
 
 logging.basicConfig(filename="all.log", level=logging.INFO,
@@ -74,5 +73,3 @@ def start_scheduler():
     while True:
         sch.run_pending()
         time.sleep(1)
-
-
