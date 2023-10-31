@@ -2,7 +2,9 @@ from bs4 import BeautifulSoup
 import requests
 import json
 
-with open('../teachers.json', 'r', encoding='utf-8') as f:
+from bot import config
+
+with open(config.TEACHERS_PATH, 'r', encoding='utf-8') as f:
     teachers = json.load(f)
 
 data = requests.get('https://lycu1580.mskobr.ru/o-nas/pedagogicheskii-sostav')
@@ -53,5 +55,5 @@ def parse_subject():
                             teachers[i]['subject'] = subject
 
 
-with open('../teachers.json', 'w', encoding='utf-8') as f:
+with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
     json.dump(teachers, f, ensure_ascii=False, indent=4)
