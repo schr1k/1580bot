@@ -54,16 +54,19 @@ def teachers():
 def run_schedules():
     schedules()
     print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    return sch.CancelJob
 
 
 def run_menus():
     menus()
     print(f'Меню обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    return sch.CancelJob
 
 
 def run_teachers():
     teachers()
     print(f'Учителя обновлены ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    return sch.CancelJob
 
 
 def start_scheduler():
