@@ -22,7 +22,7 @@ def parse_photo():
                     if j['surname'] == surname and j['name'] == name and j['patronymic'] == patronymic:
                         teachers[i]['photo'] = True
                         p = requests.get(f'https://lycu1580.mskobr.ru/{src}')
-                        with open(f"photo/{i}.jpg", "wb") as f:
+                        with open(f"{config.PROJECT_PATH}/src/teachers/photo/{i}.jpg", "wb") as f:
                             f.write(p.content)
         elif len(div.find('a', class_='fio').text.split()) == 2:
             surname, name = div.find('a', class_='fio').text.split()
@@ -32,7 +32,7 @@ def parse_photo():
                     if j['surname'] == surname and j['name'] == name:
                         teachers[i]['photo'] = True
                         p = requests.get(f'https://lycu1580.mskobr.ru/{src}')
-                        with open(f"photo/{i}.jpg", "wb") as f:
+                        with open(f"{config.PROJECT_PATH}/src/teachers/photo/{i}.jpg", "wb") as f:
                             f.write(p.content)
 
 
