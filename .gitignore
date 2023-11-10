@@ -1,6 +1,7 @@
 venv
 .idea
 __pycache__
-*.log
 config.py
+*.log
 *.json
+*.jpg
