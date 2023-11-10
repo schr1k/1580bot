@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import locale
-from threading import Thread
 from re import fullmatch
 from datetime import datetime
 
@@ -17,7 +16,7 @@ from bot import config, kb
 from bot.states import *
 from bot.funcs import *
 
-from src.main import start_scheduler
+from src.main import create_schedule
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
@@ -40,9 +39,6 @@ formatter = logging.Formatter(
     '%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
 fh.setFormatter(formatter)
 errors.addHandler(fh)
-
-with open(config.SCHEDULE_PATH, encoding='utf-8') as f:
-    schedule = json.load(f)
 
 
 # Главная ==============================================================================================================
@@ -452,6 +448,7 @@ async def set_registration_group(message: Message, state: FSMContext):
     try:
         await state.update_data(group=message.text)
         data = await state.get_data()
+        schedule = get_schedule()
         if not fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
             await message.answer('Неверный формат. Повторите ввод.')
         elif schedule[data['group']]['Понедельник']['1']['building'] != data['building']:
@@ -482,6 +479,7 @@ async def change_group(call: CallbackQuery, state: FSMContext):
 @dp.message(ChangeGroup.group)
 async def set_group(message: Message, state: FSMContext):
     try:
+        schedule = get_schedule()
         if not fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
             await message.answer('Неверный формат. Повторите ввод.')
         elif schedule[message.text]['Понедельник']['1']['building'] != await db.get_building(str(message.from_user.id)):
@@ -884,8 +882,8 @@ async def all(message: Message):
 
 async def main():
     await db.connect()
+    await asyncio.create_task(create_schedule())
     await dp.start_polling(bot)
-    await asyncio.create_task(start_scheduler())
 
 
 if __name__ == '__main__':

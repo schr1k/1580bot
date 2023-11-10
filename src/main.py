@@ -1,7 +1,5 @@
 import logging
-import schedule as sch
-import time
-from threading import Thread
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from datetime import datetime
 
 from src.one.main import make_schedule_1
@@ -25,54 +23,29 @@ errors.addHandler(fh)
 
 
 def schedules():
-    t1 = Thread(target=make_schedule_1)
-    t2 = Thread(target=make_schedule_2)
-    t3 = Thread(target=make_schedule_3h)
-    t4 = Thread(target=make_schedule_3p)
-    t5 = Thread(target=make_schedule_4h)
-    t6 = Thread(target=make_schedule_4p)
-    t1.run()
-    t2.run()
-    t3.run()
-    t4.run()
-    t5.run()
-    t6.run()
+    make_schedule_1()
+    make_schedule_2()
+    make_schedule_3h()
+    make_schedule_3p()
+    make_schedule_4h()
+    make_schedule_4p()
+    print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
 
 
 def menus():
-    t1 = Thread(target=parse_menu)
-    t1.run()
+    parse_menu()
+    print(f'Меню обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
 
 
 def teachers():
-    t1 = Thread(target=parse_subject)
-    t2 = Thread(target=parse_photo)
-    t1.run()
-    t2.run()
-
-
-def run_schedules():
-    schedules()
-    print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
-    return sch.CancelJob
-
-
-def run_menus():
-    menus()
-    print(f'Меню обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
-    return sch.CancelJob
-
-
-def run_teachers():
-    teachers()
+    parse_subject()
+    parse_photo()
     print(f'Учителя обновлены ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
-    return sch.CancelJob
 
 
-def start_scheduler():
-    sch.every().day.at('20:00').do(run_schedules)
-    sch.every().day.at('20:00').do(run_teachers)
-    sch.every().hour.do(run_menus)
-    while True:
-        sch.run_pending()
-        time.sleep(1)
+async def create_schedule():
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(schedules, "interval", hours=24, start_date='2023-01-01 20:00:00')
+    scheduler.add_job(teachers, "interval", hours=12, start_date='2023-01-01 20:00:00')
+    scheduler.add_job(menus, "interval", hours=6, start_date='2023-01-01 20:00:00')
+    scheduler.start()
