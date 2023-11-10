@@ -32,7 +32,7 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
         if day in value.keys():
             for k, v in value[day].items():
                 if type(v) is dict:
-                    if v is not None and v["teacher"] is not None and surname in v["teacher"]:
+                    if v is not None and v["teacher"] is not None and surname == v["teacher"].split(' ')[0]:
                         st[k] = {}
                         if "cabinet" in v.keys():
                             st[k]["cabinet"] = v['cabinet']
