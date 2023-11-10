@@ -884,8 +884,8 @@ async def all(message: Message):
 
 async def main():
     await db.connect()
-    Thread(target=start_scheduler).start()
     await dp.start_polling(bot)
+    await asyncio.create_task(start_scheduler())
 
 
 if __name__ == '__main__':
