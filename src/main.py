@@ -45,7 +45,7 @@ def teachers():
 
 async def create_schedule():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(schedules, "interval", hours=24, start_date='2023-01-01 20:00:00')
-    scheduler.add_job(teachers, "interval", hours=12, start_date='2023-01-01 20:00:00')
-    scheduler.add_job(menus, "interval", hours=6, start_date='2023-01-01 20:00:00')
+    scheduler.add_job(schedules, "interval", hours=8, start_date='2023-01-01 20:00:00')
+    scheduler.add_job(teachers, "interval", hours=6, start_date='2023-01-01 20:00:00')
+    scheduler.add_job(menus, "interval", hours=4, start_date='2023-01-01 20:00:00')
     scheduler.start()

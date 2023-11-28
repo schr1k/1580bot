@@ -28,7 +28,6 @@ def make_schedule_1():
                     if len(sp) == 3:
                         sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': sp[2], 'building': "1"}
                     else:
-
                         sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': sp[1], 'building': "1"}
                     lessons[j] = sl
             day_schedule = {}
