@@ -1,31 +1,35 @@
 import asyncio
-import logging
 import locale
-from re import fullmatch
+import logging
 from datetime import datetime
+from re import fullmatch
 
 from aiogram import Bot, Dispatcher, F
+from aiogram.filters.command import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.types import FSInputFile, Message, CallbackQuery
-from aiogram.filters.command import Command
+from aiogram.types import CallbackQuery, FSInputFile, Message
 from redis.asyncio import Redis
 
+from bot import kb
+from bot.config import *
 from bot.db import DB
-from bot import config, kb
-from bot.states import *
 from bot.funcs import *
-
+from bot.states import *
 from src.main import create_schedule
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
 db = DB()
 
-redis = Redis.from_url('redis://localhost/0')
+redis = Redis(
+    host=REDIS_HOST,
+    port=REDIS_PORT,
+    db=REDIS_DB
+)
 storage = RedisStorage(redis)
 
-bot = Bot(config.TOKEN)
+bot = Bot(TOKEN)
 dp = Dispatcher(storage=storage)
 
 weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
@@ -170,11 +174,13 @@ async def find_teacher(call: CallbackQuery, state: FSMContext):
 async def teacher_info(message: Message, state: FSMContext):
     try:
         flag = False
+        n = 0
         teachers = get_teachers()
         if len(message.text.split()) == 3:
             surname, name, patronymic = message.text.split()
             for i, j in teachers.items():
-                if surname.lower() == j['surname'].lower() and name.lower() == j['name'].lower() and patronymic.lower() == j['patronymic'].lower():
+                if surname.lower() == j['surname'].lower() and name.lower() == j[
+                    'name'].lower() and patronymic.lower() == j['patronymic'].lower():
                     flag = True
                     n = i
                     break
@@ -254,28 +260,28 @@ async def set_idea(message: Message, state: FSMContext):
         sender = f'@{message.from_user.username}' if message.from_user.username is not None else message.from_user.id
         if message.photo is not None:
             if await db.user_is_registered(str(message.from_user.id)):
-                await bot.send_photo(chat_id=config.IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
+                await bot.send_photo(chat_id=IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
                                      caption=f'Отправитель - {sender}.\n'
                                              f'Сообщение - {message.caption}.\n'
                                              f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
                                              f'Класс - {await db.get_class(str(message.from_user.id))}.',
                                      reply_markup=kb.idea_kb)
             else:
-                await bot.send_photo(chat_id=config.IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
+                await bot.send_photo(chat_id=IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
                                      caption=f'Отправитель - {sender}.\n'
                                              f'Сообщение - {message.caption}.', reply_markup=kb.idea_kb)
             await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
             await state.clear()
         elif message.text is not None:
             if await db.user_is_registered(str(message.from_user.id)):
-                await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - {sender}.\n'
-                                                                           f'Сообщение - {message.text}.\n'
-                                                                           f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
-                                                                           f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                await bot.send_message(chat_id=IDEAS_GROUP_ID, text=f'Отправитель - {sender}.\n'
+                                                                    f'Сообщение - {message.text}.\n'
+                                                                    f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
+                                                                    f'Класс - {await db.get_class(str(message.from_user.id))}.',
                                        reply_markup=kb.idea_kb)
             else:
-                await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - {sender}.\n'
-                                                                           f'Сообщение - {message.text}.',
+                await bot.send_message(chat_id=IDEAS_GROUP_ID, text=f'Отправитель - {sender}.\n'
+                                                                    f'Сообщение - {message.text}.',
                                        reply_markup=kb.idea_kb)
             await message.answer(text='Спасибо за предложение!', reply_markup=kb.to_main_kb)
             await state.clear()
@@ -290,14 +296,14 @@ async def approve_idea(call: CallbackQuery):
     try:
         await call.answer()
         if call.message.photo is not None:
-            await bot.send_photo(chat_id=config.APPROVED_IDEAS_GROUP_ID, photo=call.message.photo[-1].file_id,
+            await bot.send_photo(chat_id=APPROVED_IDEAS_GROUP_ID, photo=call.message.photo[-1].file_id,
                                  caption=f'{call.message.caption}')
-            await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.IDEAS_GROUP_ID,
+            await bot.edit_message_caption(message_id=call.message.message_id, chat_id=IDEAS_GROUP_ID,
                                            caption=f'{call.message.caption}\n'
                                                    f'Идея одобрена.')
         elif call.message.text is not None:
-            await bot.send_message(chat_id=config.APPROVED_IDEAS_GROUP_ID, text=f'{call.message.text}')
-            await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.IDEAS_GROUP_ID,
+            await bot.send_message(chat_id=APPROVED_IDEAS_GROUP_ID, text=f'{call.message.text}')
+            await bot.edit_message_text(message_id=call.message.message_id, chat_id=IDEAS_GROUP_ID,
                                         text=f'{call.message.text}\n'
                                              f'Идея одобрена.')
         else:
@@ -325,14 +331,14 @@ async def set_bug(message: Message, state: FSMContext):
         sender = f'@{message.from_user.username}' if message.from_user.username is not None else message.from_user.id
         if message.photo is not None:
             if await db.user_is_registered(str(message.from_user.id)):
-                await bot.send_photo(chat_id=config.BUGS_GROUP_ID, photo=message.photo[-1].file_id,
+                await bot.send_photo(chat_id=BUGS_GROUP_ID, photo=message.photo[-1].file_id,
                                      caption=f'Отправитель - {sender}.\n'
                                              f'Сообщение - {message.caption}.\n'
                                              f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
                                              f'Класс - {await db.get_class(str(message.from_user.id))}.',
                                      reply_markup=kb.bug_kb(str(message.from_user.id)))
             else:
-                await bot.send_photo(chat_id=config.BUGS_GROUP_ID, photo=message.photo[-1].file_id,
+                await bot.send_photo(chat_id=BUGS_GROUP_ID, photo=message.photo[-1].file_id,
                                      caption=f'Отправитель - {sender}.\n'
                                              f'Сообщение - {message.caption}.',
                                      reply_markup=kb.bug_kb(str(message.from_user.id)))
@@ -341,14 +347,14 @@ async def set_bug(message: Message, state: FSMContext):
             await state.clear()
         elif message.text is not None:
             if await db.user_is_registered(str(message.from_user.id)):
-                await bot.send_message(chat_id=config.BUGS_GROUP_ID, text=f'Отправитель - {sender}.\n'
-                                                                          f'Сообщение - {message.text}.\n'
-                                                                          f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
-                                                                          f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                await bot.send_message(chat_id=BUGS_GROUP_ID, text=f'Отправитель - {sender}.\n'
+                                                                   f'Сообщение - {message.text}.\n'
+                                                                   f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
+                                                                   f'Класс - {await db.get_class(str(message.from_user.id))}.',
                                        reply_markup=kb.bug_kb(str(message.from_user.id)))
             else:
-                await bot.send_message(chat_id=config.BUGS_GROUP_ID, text=f'Отправитель - {sender}.\n'
-                                                                          f'Сообщение - {message.text}.',
+                await bot.send_message(chat_id=BUGS_GROUP_ID, text=f'Отправитель - {sender}.\n'
+                                                                   f'Сообщение - {message.text}.',
                                        reply_markup=kb.bug_kb(str(message.from_user.id)))
             await message.answer(text='Спасибо за помощь!\n'
                                       'Мы сообщим вам когда ошибка будет исправлена.', reply_markup=kb.to_main_kb)
@@ -365,13 +371,13 @@ async def fix_bug(call: CallbackQuery):
     if call.message.photo is not None:
         await bot.send_message(chat_id=call.data.split('-')[1],
                                text='Ошибка, о которой вы ранее сообщали, была исправлена.')
-        await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
+        await bot.edit_message_caption(message_id=call.message.message_id, chat_id=BUGS_GROUP_ID,
                                        caption=f'{call.message.caption}\n'
                                                f'Баг пофикшен.')
     elif call.message.text is not None:
         await bot.send_message(chat_id=call.data.split('-')[1],
                                text='Ошибка, о которой вы ранее сообщали, была исправлена.')
-        await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=BUGS_GROUP_ID,
                                     text=f'{call.message.text}\n'
                                          f'Баг пофикшен.')
     else:
@@ -386,7 +392,7 @@ async def reject_bug(call: CallbackQuery):
                                text='Ошибка, о которой вы ранее сообщали, не была исправлена.\n'
                                     'Скорее всего разработчики не поняли где находится ошибка.\n'
                                     'Попробуйте еще раз и обязательно приложите скриншот.')
-        await bot.edit_message_caption(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
+        await bot.edit_message_caption(message_id=call.message.message_id, chat_id=BUGS_GROUP_ID,
                                        caption=f'{call.message.caption}\n'
                                                f'Баг отклонен.')
     elif call.message.text is not None:
@@ -394,7 +400,7 @@ async def reject_bug(call: CallbackQuery):
                                text='Ошибка, о которой вы ранее сообщали, не была исправлена.\n'
                                     'Скорее всего разработчики не поняли где находится ошибка.\n'
                                     'Попробуйте еще раз и обязательно приложите скриншот.')
-        await bot.edit_message_text(message_id=call.message.message_id, chat_id=config.BUGS_GROUP_ID,
+        await bot.edit_message_text(message_id=call.message.message_id, chat_id=BUGS_GROUP_ID,
                                     text=f'{call.message.text}\n'
                                          f'Баг отклонен.')
     else:
@@ -874,7 +880,7 @@ async def gids(message: Message):
 @dp.message()
 async def all(message: Message):
     try:
-        if str(message.chat.id) not in [config.IDEAS_GROUP_ID, config.APPROVED_IDEAS_GROUP_ID, config.BUGS_GROUP_ID]:
+        if str(message.chat.id) not in [IDEAS_GROUP_ID, APPROVED_IDEAS_GROUP_ID, BUGS_GROUP_ID]:
             await message.answer('Команда не распознана. Отправьте /start для выхода в главное меню.')
     except Exception as e:
         errors.error(e)
