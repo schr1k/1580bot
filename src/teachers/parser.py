@@ -2,7 +2,9 @@ from bs4 import BeautifulSoup
 import requests
 import json
 
-from bot import config
+from bot.config import Config
+
+config = Config()
 
 with open(config.TEACHERS_PATH, 'r', encoding='utf-8') as f:
     teachers = json.load(f)
@@ -35,6 +37,9 @@ def parse_photo():
                         with open(f"{config.PROJECT_PATH}/src/teachers/photo/{i}.jpg", "wb") as f:
                             f.write(p.content)
 
+    with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
+        json.dump(teachers, f, ensure_ascii=False, indent=4)
+
 
 def parse_subject():
     for div in soup.findAll('div', class_='col-md-3 teacherblock'):
@@ -54,6 +59,5 @@ def parse_subject():
                         if j['surname'] == surname and j['name'] == name:
                             teachers[i]['subject'] = subject
 
-
-with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
-    json.dump(teachers, f, ensure_ascii=False, indent=4)
+    with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
+        json.dump(teachers, f, ensure_ascii=False, indent=4)

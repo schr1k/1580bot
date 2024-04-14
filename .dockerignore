@@ -1,0 +1,14 @@
+venv
+.idea
+__pycache__
+.gitignore
+.git
+README.md
+.dockerignore
+docker-compose.yml
+Dockerfile
+logs
+docker-logs
+*.log
+*.json
+*.jpg

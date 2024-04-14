@@ -1,7 +1,9 @@
 import pandas as pd
 import simplejson as json
 
-from bot import config
+from bot.config import Config
+
+config = Config()
 
 
 def make_schedule_2():
@@ -60,4 +62,3 @@ def make_schedule_2():
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
 
 
-make_schedule_2()

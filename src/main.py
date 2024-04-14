@@ -3,6 +3,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from datetime import datetime
 
 from src.one.main import make_schedule_1
+from src.teachers.main import parse_teachers
 from src.two.main import make_schedule_2
 from src.three.high.main import make_schedule_3h
 from src.three.primary.main import make_schedule_3p
@@ -23,13 +24,16 @@ errors.addHandler(fh)
 
 
 def schedules():
-    make_schedule_1()
-    make_schedule_2()
-    make_schedule_3h()
-    make_schedule_3p()
-    make_schedule_4h()
-    make_schedule_4p()
-    print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    try:
+        make_schedule_1()
+        make_schedule_2()
+        make_schedule_3h()
+        make_schedule_3p()
+        make_schedule_4h()
+        make_schedule_4p()
+        print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    except Exception as e:
+        errors.error(e)
 
 
 def menus():
@@ -45,6 +49,10 @@ def teachers():
 
 async def create_schedule():
     scheduler = AsyncIOScheduler()
+    schedules()
+    menus()
+    parse_teachers()
+    teachers()
     scheduler.add_job(schedules, "interval", hours=8, start_date='2023-01-01 20:00:00')
     scheduler.add_job(teachers, "interval", hours=6, start_date='2023-01-01 20:00:00')
     scheduler.add_job(menus, "interval", hours=4, start_date='2023-01-01 20:00:00')

@@ -1,14 +1,16 @@
 import json
-from bot.config import SCHEDULE_PATH, TEACHERS_PATH
+from bot.config import Config
+
+config = Config()
 
 
 def get_schedule() -> dict:
-    with open(SCHEDULE_PATH, encoding='utf-8') as f:
+    with open(config.SCHEDULE_PATH, encoding='utf-8') as f:
         return json.load(f)
 
 
 def get_teachers() -> dict:
-    with open(TEACHERS_PATH, encoding='utf-8') as f:
+    with open(config.TEACHERS_PATH, encoding='utf-8') as f:
         return json.load(f)
 
 

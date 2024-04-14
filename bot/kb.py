@@ -8,6 +8,9 @@ to_main_kb = InlineKeyboardBuilder().add(to_main).as_markup()
 to_school = InlineKeyboardButton(text='🔙 Школа', callback_data='school')
 to_school_kb = InlineKeyboardBuilder().add(to_school).as_markup()
 
+to_teacher = InlineKeyboardButton(text='🔙 Поиск', callback_data='find_teacher')
+to_teacher_kb = InlineKeyboardBuilder().add(to_school).as_markup()
+
 to_food = InlineKeyboardButton(text='🔙 Питание', callback_data='food')
 to_food_kb = InlineKeyboardBuilder().add(to_food).as_markup()
 
@@ -53,8 +56,7 @@ def teacher_week_kb(teacher: str):
     thursday = InlineKeyboardButton(text='Четверг', callback_data=f'teacher-Четверг-{teacher}')
     friday = InlineKeyboardButton(text='Пятница', callback_data=f'teacher-Пятница-{teacher}')
     saturday = InlineKeyboardButton(text='Суббота', callback_data=f'teacher-Суббота-{teacher}')
-    keyboard = InlineKeyboardBuilder().row(monday, thursday).row(tuesday, friday).row(wednesday, saturday).row(
-        to_main).as_markup()
+    keyboard = InlineKeyboardBuilder().row(monday, thursday).row(tuesday, friday).row(wednesday, saturday).row(to_teacher).as_markup()
     return keyboard
 
 
