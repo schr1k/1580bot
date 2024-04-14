@@ -3,7 +3,9 @@ import platform
 import pdf2image
 import requests
 
-from bot import config
+from bot.config import Config
+
+config = Config()
 
 
 def parse_menu():

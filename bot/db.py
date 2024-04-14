@@ -2,8 +2,9 @@ import asyncio
 
 import asyncpg
 
-from bot import config
+from bot.config import Config
 
+config = Config()
 
 class DB:
     def __init__(self):

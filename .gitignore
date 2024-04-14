@@ -1,7 +1,8 @@
 venv
 .idea
 __pycache__
-config.py
+*.env
 *.log
 *.json
-*.jpg
+docker-logs
+logs

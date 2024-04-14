@@ -1,7 +1,9 @@
 import pandas as pd
 import simplejson as json
 
-from bot import config
+from bot.config import Config
+
+config = Config()
 
 
 def make_schedule_3p():
@@ -72,5 +74,3 @@ def make_schedule_3p():
 
     with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
-
-make_schedule_3p()

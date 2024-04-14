@@ -1,0 +1,75 @@
+services:
+    1580_postgres:
+        container_name:
+            1580_postgres
+        image:
+            postgres:alpine
+        ports:
+            - 5433:${POSTGRES_PORT}
+        restart:
+            unless-stopped
+        volumes:
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+            - 1580_postgres_data:/var/lib/postgresql/data
+        env_file:
+            - path: .docker.env
+              required: true
+        healthcheck:
+            test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
+        deploy:
+            resources:
+                limits:
+                    cpus: "0.1"
+                    memory: 100M
+    1580_redis:
+        container_name:
+            1580_redis
+        image:
+            redis:alpine
+        ports:
+            - 6380:${REDIS_PORT}
+        restart:
+            unless-stopped
+        volumes:
+            - 1580_redis_data:/var/lib/redis/data
+        env_file:
+            - path: .docker.env
+              required: true
+        healthcheck:
+            test: [ "CMD-SHELL", "redis-cli PING | grep PONG" ]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
+        deploy:
+            resources:
+                limits:
+                    cpus: "0.1"
+                    memory: 100M
+    bot:
+        container_name:
+            bot
+        build:
+            context:
+                .
+            dockerfile:
+                Dockerfile
+        restart:
+            unless-stopped
+        volumes:
+            - ./docker-logs:/app/logs
+        depends_on:
+            - 1580_redis
+            - 1580_postgres
+        deploy:
+            resources:
+                limits:
+                    cpus: "0.5"
+                    memory: 500M
+volumes:
+    1580_postgres_data:
+    1580_redis_data:
