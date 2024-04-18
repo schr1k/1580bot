@@ -45,7 +45,7 @@ def get_teachers_day_schedule(surname: str, day: str) -> str:
         sst[i] = st[i]
     for key, value in sst.items():
         if 'cabinet' in value.keys():
-            s += f'На <b>{key}</b> уроке <b>{value["teacher"]}</b> в <b>{value["cabinet"]} (в {value["building"]} корпусе)</b>.\n'
+            s += f'На <b>{key}</b> уроке <b>{value["teacher"]}</b> в <b>{value["cabinet"] if value["cabinet"] is not None else "неопознанном кабинете"} (в {value["building"]} корпусе)</b>.\n'
         else:
             s += f'Не указан кабинет, в котором <b>{value["teacher"]}</b> на <b>{key}</b> уроке.\n'
     if len(s) == len(day + ':\n'):

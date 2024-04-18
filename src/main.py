@@ -48,12 +48,15 @@ def teachers():
 
 
 async def create_schedule():
-    scheduler = AsyncIOScheduler()
-    schedules()
-    menus()
-    parse_teachers()
-    teachers()
-    scheduler.add_job(schedules, "interval", hours=8, start_date='2023-01-01 20:00:00')
-    scheduler.add_job(teachers, "interval", hours=6, start_date='2023-01-01 20:00:00')
-    scheduler.add_job(menus, "interval", hours=4, start_date='2023-01-01 20:00:00')
-    scheduler.start()
+    try:
+        scheduler = AsyncIOScheduler()
+        schedules()
+        menus()
+        parse_teachers()
+        teachers()
+        scheduler.add_job(schedules, "interval", hours=8, start_date='2023-01-01 20:00:00', name='schedules')
+        scheduler.add_job(teachers, "interval", hours=6, start_date='2023-01-01 20:00:00', name='teachers')
+        scheduler.add_job(menus, "interval", hours=4, start_date='2023-01-01 20:00:00', name='menus')
+        scheduler.start()
+    except Exception as e:
+        errors.error(e)
