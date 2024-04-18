@@ -34,11 +34,11 @@ dp = Dispatcher(storage=storage)
 
 weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
 
-logging.basicConfig(filename="logs/all.log", level=logging.INFO,
+logging.basicConfig(filename="all.log", level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
 errors = logging.getLogger("errors")
 errors.setLevel(logging.ERROR)
-fh = logging.FileHandler("logs/errors.log")
+fh = logging.FileHandler("errors.log")
 formatter = logging.Formatter(
     '%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
 fh.setFormatter(formatter)
@@ -74,7 +74,7 @@ async def call_start(call: CallbackQuery, state: FSMContext):
                                 reply_markup=keyboard, parse_mode='HTML')
 
 
-# Помощь ==============================================================================================================
+# Помощь ===============================================================================================================
 @dp.message(Command('help'))
 async def help(message: Message, state: FSMContext):
     await state.clear()
@@ -95,7 +95,7 @@ async def help(message: Message, state: FSMContext):
 @dp.callback_query(F.data == 'get_student_schedule')
 async def get_student_schedule(call: CallbackQuery, state: FSMContext):
     await call.answer()
-    keyboard = kb.group_button(await db.get_class(str(call.from_user.id))) if await db.user_is_registered(
+    keyboard = kb.group_button(await db.get_group(str(call.from_user.id))) if await db.user_is_registered(
         str(call.from_user.id)) else kb.to_main_kb
     await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
                                 text='Введите название вашего класса (например 11с1).', reply_markup=keyboard)
@@ -114,7 +114,7 @@ async def student_weekday(message: Message, state: FSMContext):
         await message.answer('Неверный формат. Повторите ввод.')
 
 
-@dp.callback_query(F.data.split('-')[0] == 'group')
+@dp.callback_query(F.data.split('-')[0] == 'group_button')
 async def call_student_weekday(call: CallbackQuery, state: FSMContext):
     await call.answer()
     await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
@@ -136,13 +136,16 @@ async def get_student_weekday_schedule(call: CallbackQuery):
 @dp.callback_query(F.data == 'find_teacher')
 async def find_teacher(call: CallbackQuery, state: FSMContext):
     await call.answer()
+    keyboard = kb.teacher_button(await db.get_teacher(str(call.from_user.id))) if await db.get_teacher(
+        str(call.from_user.id)) is not None else kb.to_main_kb
     await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
-                                text='Сейчас доступно 3 режима поиска:\n'
+                                text='Введите инициалы учителя.\n'
+                                     'Сейчас доступно 3 режима поиска:\n'
                                      '1) Полное ФИО (Иванов Иван Иванович).\n'
                                      '2) Фамилия и имя (Иванов Иван).\n'
                                      '3) Фамилия (Иванов).\n'
                                      '<b>Регистр при вводе не учитывается</b>.', parse_mode='HTML',
-                                reply_markup=kb.to_main_kb)
+                                reply_markup=keyboard)
     await state.set_state(FindTeacher.teacher)
 
 
@@ -191,6 +194,33 @@ async def teacher_info(message: Message, state: FSMContext):
         await message.answer('Учитель не найден. Повторите ввод.')
 
 
+@dp.callback_query(F.data.split('-')[0] == 'teacher_button')
+async def call_teacher_info(call: CallbackQuery):
+    await call.answer()
+    flag = False
+    n = 0
+    teachers = get_teachers()
+    surname = call.data.split('-')[1]
+    for i, j in teachers.items():
+        if surname.lower() == j['surname'].lower():
+            flag = True
+            n = i
+            break
+    if not flag:
+        await call.message.answer(text='Учитель не найден. Измените фамилию учителя в профиле.',
+                                  reply_markup=kb.to_main_kb)
+    text = f'<b>{teachers[n]["surname"]} {teachers[n]["name"]} {teachers[n]["patronymic"]}</b>\n\n<i>Почта:</i> {teachers[n]["email"]}.\n'
+    if teachers[n]['subject'] is not None:
+        text += f'<i>Занимаемая должность:</i> {teachers[n]["subject"]}.'
+    if teachers[n]["photo"]:
+        photo = FSInputFile(f'src/teachers/photo/{n}.jpg')
+        await call.message.answer_photo(photo=photo, caption=text, parse_mode='HTML',
+                                        reply_markup=kb.teacher_schedule_kb(call.data.split('-')[1]))
+    else:
+        await call.message.answer(text=text, parse_mode='HTML',
+                                  reply_markup=kb.teacher_schedule_kb(call.data.split('-')[1]))
+
+
 @dp.callback_query(F.data.split('-')[0] == 'teacher_schedule')
 async def teacher_weekdays(call: CallbackQuery):
     await call.answer()
@@ -226,7 +256,7 @@ async def set_idea(message: Message, state: FSMContext):
                                  caption=f'Отправитель - {sender}.\n'
                                          f'Сообщение - {message.caption}.\n'
                                          f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
-                                         f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                                         f'Класс - {await db.get_group(str(message.from_user.id))}.',
                                  reply_markup=kb.idea_kb)
         else:
             await bot.send_photo(chat_id=config.IDEAS_GROUP_ID, photo=message.photo[-1].file_id,
@@ -239,7 +269,7 @@ async def set_idea(message: Message, state: FSMContext):
             await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - {sender}.\n'
                                                                        f'Сообщение - {message.text}.\n'
                                                                        f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
-                                                                       f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                                                                       f'Класс - {await db.get_group(str(message.from_user.id))}.',
                                    reply_markup=kb.idea_kb)
         else:
             await bot.send_message(chat_id=config.IDEAS_GROUP_ID, text=f'Отправитель - {sender}.\n'
@@ -269,7 +299,7 @@ async def approve_idea(call: CallbackQuery):
         await bot.send_message(chat_id=call.from_user.id, text='Произошла ошибка')
 
 
-# Сообщить об ошибке ======================================================================================================
+# Сообщить об ошибке ===================================================================================================
 @dp.callback_query(F.data == 'report_bug')
 async def report_bug(call: CallbackQuery, state: FSMContext):
     await call.answer()
@@ -288,7 +318,7 @@ async def set_bug(message: Message, state: FSMContext):
                                  caption=f'Отправитель - {sender}.\n'
                                          f'Сообщение - {message.caption}.\n'
                                          f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
-                                         f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                                         f'Класс - {await db.get_group(str(message.from_user.id))}.',
                                  reply_markup=kb.bug_kb(str(message.from_user.id)))
         else:
             await bot.send_photo(chat_id=config.BUGS_GROUP_ID, photo=message.photo[-1].file_id,
@@ -303,7 +333,7 @@ async def set_bug(message: Message, state: FSMContext):
             await bot.send_message(chat_id=config.BUGS_GROUP_ID, text=f'Отправитель - {sender}.\n'
                                                                       f'Сообщение - {message.text}.\n'
                                                                       f'Корпус - {await db.get_building(str(message.from_user.id))}.\n'
-                                                                      f'Класс - {await db.get_class(str(message.from_user.id))}.',
+                                                                      f'Класс - {await db.get_group(str(message.from_user.id))}.',
                                    reply_markup=kb.bug_kb(str(message.from_user.id)))
         else:
             await bot.send_message(chat_id=config.BUGS_GROUP_ID, text=f'Отправитель - {sender}.\n'
@@ -362,9 +392,13 @@ async def reject_bug(call: CallbackQuery):
 @dp.callback_query(F.data == 'profile')
 async def profile(call: CallbackQuery):
     await call.answer()
+    building = await db.get_building(str(call.from_user.id))
+    group = await db.get_group(str(call.from_user.id))
+    teacher = await db.get_teacher(str(call.from_user.id))
     if await db.user_is_registered(str(call.from_user.id)):
-        text = (f'Ваш корпус - {await db.get_building(str(call.from_user.id))}.\n'
-                f'Ваш класс - {await db.get_class(str(call.from_user.id))}.')
+        text = (f'Ваш корпус - {building if building is not None else "Не указан"}.\n'
+                f'Ваш класс - {group if group is not None else "Не указан"}.\n'
+                f'Ваш учитель - {teacher if teacher is not None else "Не указан"}.')
         keyboard = kb.filled_profile_kb
     else:
         text = 'Если вы ученик школы № 1580, то вы можете пройти регистрацию, чтобы не вводить каждый раз номер класса и получать новости вашего корпуса.'
@@ -393,20 +427,42 @@ async def set_registration_building(call: CallbackQuery, state: FSMContext):
 
 @dp.message(Registration.group)
 async def set_registration_group(message: Message, state: FSMContext):
-    await state.update_data(group=message.text)
     data = await state.get_data()
     schedule = get_schedule()
-    if not fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text):
-        await message.answer('Неверный формат. Повторите ввод.')
-    elif schedule[data['group']]['Понедельник']['1']['building'] != data['building']:
-        await message.answer('Этот класс не найден в выбранном корпусе. Повторите ввод.')
+    if not bool(fullmatch(r'\d{1,2}[а-яА-Я]\d?', message.text)):
+        await message.answer(text='Неверный формат. Повторите ввод.')
+    elif schedule[message.text.lower()]['Понедельник']['1']['building'] != data['building']:
+        await message.answer(text='Этот класс не найден в выбранном корпусе. Повторите ввод.')
     else:
-        await message.answer(
-            'Спасибо за регистрацию. Теперь вы можете получить расписание вашего класса на сегодня в один клик.',
-            reply_markup=kb.to_main_kb)
-        await db.edit_group(str(message.from_user.id), data['group'])
-        await db.edit_building(str(message.from_user.id), data['building'])
-        await state.clear()
+        await state.update_data(group=message.text)
+        await message.answer(text='Введите фамилию вашего классного руководителя\n'
+                                  '<b>Регистр при вводе не учитывается</b>.',
+                             parse_mode='HTML')
+        await state.set_state(Registration.teacher)
+
+
+@dp.message(Registration.teacher)
+async def set_registration_teacher(message: Message, state: FSMContext):
+    if len(message.text.split(' ')) != 1:
+        await message.answer(text='Неверный формат. Повторите ввод.')
+    teachers = get_teachers()
+    flag = False
+    surname = message.text
+    for i, j in teachers.items():
+        if surname.lower() == j['surname'].lower():
+            flag = True
+            break
+    if not flag:
+        await message.answer(text='Учитель не найден. Повторите ввод.')
+    await state.update_data(teacher=message.text.capitalize())
+    data = await state.get_data()
+    await message.answer(
+        text='Спасибо за регистрацию. Теперь вы можете получить расписание вашего класса или вашего классного руководителя в один клик.',
+        reply_markup=kb.to_main_kb)
+    await db.edit_group(str(message.from_user.id), data['group'])
+    await db.edit_building(str(message.from_user.id), data['building'])
+    await db.edit_teacher(str(message.from_user.id), data['teacher'])
+    await state.clear()
 
 
 # Изменение класса =====================================================================================================
@@ -444,6 +500,35 @@ async def change_building(call: CallbackQuery, state: FSMContext):
 async def set_building(call: CallbackQuery, state: FSMContext):
     await bot.send_message(call.from_user.id, 'Корпус изменен.', reply_markup=kb.to_main_kb)
     await db.edit_building(str(call.from_user.id), call.data.split('-')[1])
+    await state.clear()
+
+
+# Изменение классного руководителя =====================================================================================
+@dp.callback_query(F.data == 'change_teacher')
+async def change_teacher(call: CallbackQuery, state: FSMContext):
+    await call.answer()
+    await bot.edit_message_text(message_id=call.message.message_id, chat_id=call.from_user.id,
+                                text='Введите фамилию вашего классного руководителя\n'
+                                     '<b>Регистр при вводе не учитывается</b>.',
+                                parse_mode='HTML')
+    await state.set_state(ChangeTeacher.teacher)
+
+
+@dp.message(ChangeTeacher.teacher)
+async def set_teacher(message: Message, state: FSMContext):
+    if len(message.text.split(' ')) != 1:
+        await message.answer(text='Неверный формат. Повторите ввод.')
+    teachers = get_teachers()
+    flag = False
+    surname = message.text
+    for i, j in teachers.items():
+        if surname.lower() == j['surname'].lower():
+            flag = True
+            break
+    if not flag:
+        await message.answer(text='Учитель не найден. Повторите ввод.')
+    await db.edit_teacher(str(message.from_user.id), message.text.capitalize())
+    await message.answer('Классный руководитель изменен.', reply_markup=kb.to_main_kb)
     await state.clear()
 
 
@@ -637,19 +722,19 @@ async def slot(message: Message):
     await message.answer_dice(emoji='🎰')
 
 
-# Футбол ================================================================================================================
+# Футбол ===============================================================================================================
 @dp.message(Command('football'))
 async def football(message: Message):
     await message.answer_dice(emoji='⚽️')
 
 
-# Баскетбол ================================================================================================================
+# Баскетбол ============================================================================================================
 @dp.message(Command('basketball'))
 async def basketball(message: Message):
     await message.answer_dice(emoji='🏀')
 
 
-# Боулинг ================================================================================================================
+# Боулинг ==============================================================================================================
 @dp.message(Command('bowling'))
 async def bowling(message: Message):
     await message.answer_dice(emoji='🎳')
@@ -713,19 +798,19 @@ async def gids(message: Message):
     await message.answer(str(message.chat.id))
 
 
-# all ==================================================================================================================
+# command_exception ====================================================================================================
 @dp.message()
-async def all(message: Message):
+async def command_exception(message: Message):
     if str(message.chat.id) not in [config.IDEAS_GROUP_ID, config.APPROVED_IDEAS_GROUP_ID, config.BUGS_GROUP_ID]:
         await message.answer('Команда не распознана. Отправьте /start для выхода в главное меню.')
 
 
 async def main():
+    await db.connect()
+    await asyncio.create_task(create_schedule())
+    print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
     try:
-        await db.connect()
-        await asyncio.create_task(create_schedule())
         await dp.start_polling(bot)
-        print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
     except Exception as e:
         errors.error(e)
 

@@ -30,7 +30,4 @@ class Config(BaseSettings):
     REDIS_DB: int
 
     class Config:
-        env_file = ".docker.env"
-
-
-config: Config()
+        env_file = ".env"

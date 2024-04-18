@@ -26,6 +26,7 @@ class ReportBug(StatesGroup):
 class Registration(StatesGroup):
     building = State()
     group = State()
+    teacher = State()
 
 
 class ChangeGroup(StatesGroup):
@@ -34,6 +35,10 @@ class ChangeGroup(StatesGroup):
 
 class ChangeBuilding(StatesGroup):
     building = State()
+
+
+class ChangeTeacher(StatesGroup):
+    teacher = State()
 
 
 class GiveRole(StatesGroup):

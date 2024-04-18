@@ -62,8 +62,15 @@ def teacher_week_kb(teacher: str):
 
 # Кнопка выбора класса для заполнивших профиль =========================================================================
 def group_button(group: str):
-    group = InlineKeyboardButton(text=group, callback_data=f'group-{group}')
+    group = InlineKeyboardButton(text=group, callback_data=f'group_button-{group}')
     keyboard = InlineKeyboardBuilder().row(group).row(to_main).as_markup()
+    return keyboard
+
+
+# Кнопка выбора учителя для заполнивших профиль =========================================================================
+def teacher_button(teacher: str):
+    teacher = InlineKeyboardButton(text=teacher, callback_data=f'teacher_button-{teacher}')
+    keyboard = InlineKeyboardBuilder().row(teacher).row(to_main).as_markup()
     return keyboard
 
 
@@ -89,7 +96,8 @@ def to_student_schedule_kb(group: str):
 # Профиль (заполненный) ================================================================================================
 change_group = InlineKeyboardButton(text='🎒 Изменить класс', callback_data='change_group')
 change_building = InlineKeyboardButton(text='🏫 Изменить корпус', callback_data='change_building')
-filled_profile_kb = InlineKeyboardBuilder().row(change_group).row(change_building).row(to_main).as_markup()
+change_teacher = InlineKeyboardButton(text='👩‍🏫 Изменить учителя', callback_data='change_teacher')
+filled_profile_kb = InlineKeyboardBuilder().row(change_group).row(change_building).row(change_teacher).row(to_main).as_markup()
 
 # Профиль (незаполненный) ==============================================================================================
 registration = InlineKeyboardButton(text='📝 Регистрация', callback_data='registration')

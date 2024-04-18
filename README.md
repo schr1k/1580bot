@@ -21,7 +21,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 4. Download [poppler](https://github.com/oschwartz10612/poppler-windows/releases/).
-5. Change credentials in .env.
+5. Change credentials in `.env`.
 ```dotenv
 # Telegram
 TOKEN='Bot token'
