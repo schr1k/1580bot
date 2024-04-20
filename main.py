@@ -654,7 +654,7 @@ async def set_target(call: CallbackQuery, state: FSMContext):
     data = await state.get_data()
     await bot.edit_message_text(chat_id=call.from_user.id, message_id=call.message.message_id,
                                 text=f'Подтвердите отправку сообщения:\n'
-                                     f'Текст - {data["message"]}.\n'
+                                     f'Текст - {data["message"]}\n'
                                      f'Корпуса - {call.data.split("-")[1] if call.data.split("-")[1].isnumeric() else "все (все пользователи бота)"}.',
                                 reply_markup=kb.submit_kb)
     await state.set_state(News.submit)
