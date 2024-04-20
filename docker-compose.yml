@@ -60,8 +60,6 @@ services:
                 Dockerfile
         restart:
             unless-stopped
-        volumes:
-            - ./docker-logs:/app/logs
         depends_on:
             - 1580_redis
             - 1580_postgres

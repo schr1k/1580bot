@@ -5,16 +5,30 @@ config = Config()
 
 
 def get_schedule() -> dict:
+    """
+    Get full school schedule in json format
+    :return: :class:`dict`: full school schedule in json format
+    """
     with open(config.SCHEDULE_PATH, encoding='utf-8') as f:
         return json.load(f)
 
 
 def get_teachers() -> dict:
+    """
+    Get full teacher schedule in json format
+    :return: :class:`dict`: full teacher schedule in json format
+    """
     with open(config.TEACHERS_PATH, encoding='utf-8') as f:
         return json.load(f)
 
 
 def get_students_day_schedule(group: str, day: str) -> str:
+    """
+    Get formated schedule for provided group on specified weekday
+    :param group: group name
+    :param day: weekday
+    :return: :class:`str`: formated schedule for provided group on specified weekday
+    """
     day_schedule = get_schedule()[group][day]
     s = f'Расписание для {group} на {day}:\n'
     for key, value in day_schedule.items():
@@ -28,6 +42,12 @@ def get_students_day_schedule(group: str, day: str) -> str:
 
 
 def get_teachers_day_schedule(surname: str, day: str) -> str:
+    """
+    Get formated schedule for provided teacher on specified weekday
+    :param surname: Teacher's surname
+    :param day: weekday
+    :return: :class:`str`: formated schedule for provided teacher on specified weekday
+    """
     s = f'{day}:\n'
     st = {}
     for key, value in get_schedule().items():

@@ -23,7 +23,7 @@ class DB:
         """
         Check if user exists
         :param tg: User telegram id
-        :return: **True** if user exists else **False**
+        :return: :class:`bool`: True if user exists else False
         """
         result = await self.connection.fetchrow('SELECT tg FROM users WHERE tg = $1', tg)
         return False if result is None else True
@@ -32,7 +32,7 @@ class DB:
         """
         Check if user is staff
         :param tg: User telegram id
-        :return: **True** if user us staff else **False**
+        :return: :class:`bool`: True if user is staff else False
         """
         result = await self.connection.fetchrow('SELECT tg FROM staff WHERE tg = $1', tg)
         return False if result is None else True
@@ -41,7 +41,7 @@ class DB:
         """
         Check if user is registered
         :param tg: User telegram id
-        :return: **True** if user is registered else **False**
+        :return: :class:`bool`: True if user is registered else False
         """
         result = await self.connection.fetchrow('SELECT class FROM users WHERE tg = $1', tg)
         return False if dict(result)['class'] is None else True
@@ -83,7 +83,7 @@ class DB:
 
     async def get_teacher(self, tg: str) -> str:
         """
-        Get teacher name of user with given telegram id
+        Get teacher's surname for user with given telegram id
         :param tg: User telegram id
         :return: :class:`str`: user's teacher name (11с1)
         """
