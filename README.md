@@ -4,8 +4,8 @@
 ```bash
 python -m venv venv
 ```
-2. Activate it.
 
+2. Activate it.
 * On windows: 
 ```bash
 venv/Scripts/activate
@@ -20,7 +20,9 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-4. Download [poppler](https://github.com/oschwartz10612/poppler-windows/releases/).
+
+4. Download [poppler](https://github.com/oschwartz10612/poppler-windows/releases/), [postgres](https://www.postgresql.org/download/) and [redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/).
+
 5. Change credentials in `.env`.
 ```dotenv
 # Telegram
@@ -49,7 +51,6 @@ REDIS_DB=0
 ```
 
 6. Create tables.
-
 ```postgresql
 CREATE TABLE users (
     id SERIAL,
@@ -65,15 +66,33 @@ CREATE TABLE staff (
     username VARCHAR,
     role VARCHAR
 );
-
 ```
 
 7. Run [main.py](main.py)
+```bash
+python main.py
+```
+
+---
 
 ## Docker setup:
 1. Install [docker](https://docs.docker.com/engine/install/).
-2. Run app.
 
+2. Change dotenv path in [config.py](./bot/config.py) to  `.docker.env`.
+
+3. Run app.
 ```bash
 docker compose up --build
 ```
+
+---
+
+## Contributing
+
+1. Create fork on GitHub.
+
+2. Clone it locally.
+
+3. Push changes to fork.
+
+4. Create pull request to master branch.
