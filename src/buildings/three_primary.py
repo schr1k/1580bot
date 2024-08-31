@@ -8,10 +8,10 @@ config = Config()
 
 def make_schedule_3p():  # https://lycu1580.mskobr.ru/files/schedule/rasp_3k_ns.xlsx
     df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/sch3k_1.xlsx', header=None).T.values.tolist()
-    with open('public/json/buildings/4p.json', 'w', encoding='utf-8') as f:
+    with open('public/json/buildings/3p.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
-    with open('public/json/buildings/4p.json', encoding='utf-8') as f:
+    with open('public/json/buildings/3p.json', encoding='utf-8') as f:
         excel = json.load(f)
 
     excel = excel[2:]

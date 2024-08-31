@@ -8,10 +8,10 @@ config = Config()
 
 def make_schedule_3h():
     df = pd.read_excel('https://docs.google.com/spreadsheets/d/1-M70uv_a6ufQFZUh03MD8Wi_Fnx35AUB7yFAAF5Br5Q/export?format=xlsx', header=None).T.values.tolist()
-    with open('public/json/buildings/4h.json', 'w', encoding='utf-8') as f:
+    with open('public/json/buildings/3h.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
-    with open('public/json/buildings/4h.json', encoding='utf-8') as f:
+    with open('public/json/buildings/3h.json', encoding='utf-8') as f:
         excel = json.load(f)
 
     excel = excel[2:18] + excel[20:40] + excel[42:66] + excel[68:83] + excel[85:98]

@@ -8,10 +8,10 @@ config = Config()
 
 def make_schedule_4h():  # https://lycu1580.mskobr.ru/files/schedule/rasp_symbol_2.xlsx
     df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/sch4k_1.xls', header=None).T.values.tolist()
-    with open('public/json/buildings/3h.json', 'w', encoding='utf-8') as f:
+    with open('public/json/buildings/4h.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
-    with open('public/json/buildings/3h.json', encoding='utf-8') as f:
+    with open('public/json/buildings/4h.json', encoding='utf-8') as f:
         excel = json.load(f)
 
     excel = excel[2:46] + excel[48:]
