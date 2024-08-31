@@ -11,11 +11,11 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.types import CallbackQuery, FSInputFile, Message
 from redis.asyncio import Redis
 
-from bot import kb
-from bot.db import DB
-from bot.funcs import *
-from bot.states import *
-from src.main import create_schedule
+from src.bot import kb
+from src.bot.db import DB
+from src.funcs import *
+from src.bot.states import *
+from src.buildings.main import create_schedule
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
@@ -32,7 +32,7 @@ storage = RedisStorage(redis)
 bot = Bot(config.TOKEN)
 dp = Dispatcher(storage=storage)
 
-weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
 
 logging.basicConfig(filename="all.log", level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
@@ -183,7 +183,7 @@ async def teacher_info(message: Message, state: FSMContext):
         if teachers[n]['subject'] is not None:
             text += f'<i>Занимаемая должность:</i> {teachers[n]["subject"]}.'
         if teachers[n]["photo"]:
-            photo = FSInputFile(f'src/teachers/photo/{n}.jpg')
+            photo = FSInputFile(f'public/photo/photo/{n}.jpg')
             await message.answer_photo(photo=photo, caption=text, parse_mode='HTML',
                                        reply_markup=kb.teacher_schedule_kb(message.text.split()[0].capitalize()))
         else:
@@ -213,7 +213,7 @@ async def call_teacher_info(call: CallbackQuery):
     if teachers[n]['subject'] is not None:
         text += f'<i>Занимаемая должность:</i> {teachers[n]["subject"]}.'
     if teachers[n]["photo"]:
-        photo = FSInputFile(f'src/teachers/photo/{n}.jpg')
+        photo = FSInputFile(f'public/photo/photo/{n}.jpg')
         await call.message.answer_photo(photo=photo, caption=text, parse_mode='HTML',
                                         reply_markup=kb.teacher_schedule_kb(call.data.split('-')[1]))
     else:
@@ -556,9 +556,9 @@ async def food(call: CallbackQuery):
 @dp.callback_query(F.data.split('-')[0] == 'menu')
 async def menu(call: CallbackQuery):
     await call.answer()
-    photo = FSInputFile(f'src/food/{call.data.split("-")[1]}.jpg')
-    await call.message.delete()
+    photo = FSInputFile(f'public/photo/food/{call.data.split("-")[1]}.jpg')
     await call.message.answer_photo(photo=photo, reply_markup=kb.to_food_kb)
+    await call.message.delete()
 
 
 # Библиотека ===========================================================================================================
@@ -761,28 +761,28 @@ async def petrikova(message: Message):
 # 52 ===================================================================================================================
 @dp.message(Command('52'))
 async def fiftytwo(message: Message):
-    photo = FSInputFile('src/mems/52.jpg')
+    photo = FSInputFile('public/photo/mems/52.jpg')
     await message.answer_photo(photo=photo, caption='Yeei')
 
 
 # Инвалид =============================================================================================================
 @dp.message(Command('invalid'))
 async def invalid(message: Message):
-    photo = FSInputFile('src/mems/invalid.jpg')
+    photo = FSInputFile('public/photo/mems/invalid.jpg')
     await message.answer_photo(photo=photo)
 
 
 # Джакузи ==============================================================================================================
 @dp.message(Command('jacuzzi'))
 async def jacuzzi(message: Message):
-    photo = FSInputFile('src/mems/jacuzzi.jpg')
+    photo = FSInputFile('public/photo/mems/jacuzzi.jpg')
     await message.answer_photo(photo=photo)
 
 
 # Шрэк =================================================================================================================
 @dp.message(Command('shrek'))
 async def shrek(message: Message):
-    photo = FSInputFile('src/mems/shrek.jpg')
+    photo = FSInputFile('public/photo/mems/shrek.jpg')
     await message.answer_photo(photo=photo)
 
 

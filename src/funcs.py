@@ -1,5 +1,5 @@
 import json
-from bot.config import Config
+from src.bot.config import Config
 
 config = Config()
 
@@ -9,7 +9,7 @@ def get_schedule() -> dict:
     Get full school schedule in json format
     :return: :class:`dict`: full school schedule in json format
     """
-    with open(config.SCHEDULE_PATH, encoding='utf-8') as f:
+    with open('public/json/schedule.json', encoding='utf-8') as f:
         return json.load(f)
 
 
@@ -18,7 +18,7 @@ def get_teachers() -> dict:
     Get full teacher schedule in json format
     :return: :class:`dict`: full teacher schedule in json format
     """
-    with open(config.TEACHERS_PATH, encoding='utf-8') as f:
+    with open('public/json/teachers.json', encoding='utf-8') as f:
         return json.load(f)
 
 
@@ -29,6 +29,8 @@ def get_students_day_schedule(group: str, day: str) -> str:
     :param day: weekday
     :return: :class:`str`: formated schedule for provided group on specified weekday
     """
+    if day not in get_schedule()[group].keys():
+        return f'В {day} у {group} нет уроков.'
     day_schedule = get_schedule()[group][day]
     s = f'Расписание для {group} на {day}:\n'
     for key, value in day_schedule.items():

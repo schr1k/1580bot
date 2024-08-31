@@ -1,4 +1,4 @@
-name: Deploy with docker compose
+name: Deploy with pm2
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Deploy with docker compose
+      - name: Deploy with pm2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{secrets.SSH_HOST}}
@@ -20,6 +20,7 @@ jobs:
           password: ${{secrets.SSH_PASSWORD}}
           script: |
             cd ${{ secrets.PROJECT_FOLDER }}
+            pip install -r requirements.txt
             git checkout master
             git pull
-            pm2 restart 1580
+            pm2 restart ecosystem.config.js

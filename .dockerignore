@@ -1,12 +1,22 @@
+# Python
 venv
-.idea
 __pycache__
-.gitignore
-.git
-README.md
-.dockerignore
-docker-compose.yml
+
+# IDEs
+.idea
+.vscode
+
+# Docker
 Dockerfile
+compose.yaml
+.dockerignore
+
+# Git
+.git
+.github
+.gitignore
+README.md
+
 logs
 docker-logs
 *.log

@@ -1,32 +1,32 @@
 import pandas as pd
 import simplejson as json
 
-from bot.config import Config
+from src.bot.config import Config
 
 config = Config()
 
 
-def make_schedule_3p():
-    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/rasp_3k_ns.xlsx', header=None).T.values.tolist()
-    with open(f'{config.PROJECT_PATH}/src/three/primary/excel.json', 'w', encoding='utf-8') as f:
+def make_schedule_3p():  # https://lycu1580.mskobr.ru/files/schedule/rasp_3k_ns.xlsx
+    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/sch3k_1.xlsx', header=None).T.values.tolist()
+    with open('public/json/buildings/4p.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
-    with open(f'{config.PROJECT_PATH}/src/three/primary/excel.json', encoding='utf-8') as f:
+    with open('public/json/buildings/4p.json', encoding='utf-8') as f:
         excel = json.load(f)
 
     excel = excel[2:]
 
-    weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"]
+    weekdays = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
 
     schedule = {}
 
     for column in range(len(excel)):
-        group = excel[column][0]
-        for c, i in enumerate(range(1, len(excel[column]), 7)):
-            lessons = excel[column][i + 1: i + 7]
+        group = str(excel[column][0]).lower()
+        for c, i in enumerate(range(1, len(excel[column]), 8)):
+            lessons = excel[column][i: i + 7]
             for j in range(len(lessons)):
                 if lessons[j] is not None:
-                    sp = lessons[j].split('\n')
+                    sp = str(lessons[j]).split('\n')
                     if len(sp) == 2:
                         sl = {'lesson': sp[0].strip(), 'teacher': sp[1].strip(), 'building': '3'}
                     elif len(sp) == 3:
@@ -53,11 +53,12 @@ def make_schedule_3p():
                 day_schedule[lesson_number] = j
             day_schedule = {i: j for i, j in zip(range(1, 9), lessons)}
             if group in schedule:
-                if weekdays[c] in schedule[group]:
-                    schedule[group][weekdays[c]] = day_schedule
-                else:
-                    schedule[group][weekdays[c]] = {}
-                    schedule[group][weekdays[c]] = day_schedule
+                if c < len(weekdays):
+                    if weekdays[c] in schedule[group]:
+                        schedule[group][weekdays[c]] = day_schedule
+                    else:
+                        schedule[group][weekdays[c]] = {}
+                        schedule[group][weekdays[c]] = day_schedule
             else:
                 schedule[group] = {}
                 if weekdays[c] in schedule[group]:
@@ -66,11 +67,11 @@ def make_schedule_3p():
                     schedule[group][weekdays[c]] = {}
                     schedule[group][weekdays[c]] = day_schedule
 
-    with open(config.SCHEDULE_PATH, 'r', encoding='utf-8') as f:
+    with open('public/json/schedule.json', 'r', encoding='utf-8') as f:
         all_schedule = json.load(f)
 
     for i, j in schedule.items():
         all_schedule[i] = j
 
-    with open(config.SCHEDULE_PATH, 'w', encoding='utf-8') as f:
+    with open('public/json/schedule.json', 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
