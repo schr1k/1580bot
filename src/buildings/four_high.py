@@ -61,4 +61,3 @@ def make_schedule_3h():
 
     with open('public/json/schedule.json', 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
-
