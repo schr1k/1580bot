@@ -58,6 +58,3 @@ def make_schedule_4p():  # https://lycu1580.mskobr.ru/files/schedule/rasp_symbol
 
     with open('public/json/schedule.json', 'w', encoding='utf-8') as f:
         json.dump(all_schedule, f, indent=4, ensure_ascii=False)
-
-
-make_schedule_4p()
