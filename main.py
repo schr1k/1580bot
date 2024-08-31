@@ -806,10 +806,10 @@ async def command_exception(message: Message):
 
 
 async def main():
-    await db.connect()
-    await asyncio.create_task(create_schedule())
-    print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
     try:
+        await db.connect()
+        await asyncio.create_task(create_schedule())
+        print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
         await dp.start_polling(bot)
     except Exception as e:
         errors.error(e)

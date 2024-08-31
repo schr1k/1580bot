@@ -12,10 +12,7 @@ class Config(BaseSettings):
     BUGS_GROUP_ID: str
 
     # Paths
-    PROJECT_PATH: str
-    SCHEDULE_PATH: str
-    TEACHERS_PATH: str
-    POPPLER_PATH: str | None
+    POPPLER_PATH: str | None = None
 
     # Postgres
     POSTGRES_USER: str
@@ -30,4 +27,4 @@ class Config(BaseSettings):
     REDIS_DB: int
 
     class Config:
-        env_file = ".env"
+        env_file = '.env'

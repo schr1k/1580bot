@@ -17,8 +17,6 @@ compose.yaml
 .gitignore
 README.md
 
-logs
-docker-logs
 *.log
 *.json
 *.jpg

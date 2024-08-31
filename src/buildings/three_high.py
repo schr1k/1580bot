@@ -1,7 +1,7 @@
 import pandas as pd
 import simplejson as json
 
-from src.bot.config import Config
+from src.config import Config
 
 config = Config()
 

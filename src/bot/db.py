@@ -1,6 +1,6 @@
 import asyncpg
 
-from src.bot.config import Config
+from src.config import Config
 
 config = Config()
 

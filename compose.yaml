@@ -11,8 +11,12 @@ services:
         volumes:
             - ./init.sql:/docker-entrypoint-initdb.d/init.sql
             - 1580_postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         env_file:
-            - path: .docker.env
+            - path: .env
               required: true
         healthcheck:
             test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'" ]
@@ -23,8 +27,8 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: "0.1"
-                    memory: 100M
+                    cpus: "1"
+                    memory: 1000M
     1580_redis:
         container_name:
             1580_redis
@@ -37,7 +41,7 @@ services:
         volumes:
             - 1580_redis_data:/var/lib/redis/data
         env_file:
-            - path: .docker.env
+            - path: .env
               required: true
         healthcheck:
             test: [ "CMD-SHELL", "redis-cli PING | grep PONG" ]
@@ -48,8 +52,8 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: "0.1"
-                    memory: 100M
+                    cpus: "1"
+                    memory: 1000M
     bot:
         container_name:
             bot
@@ -66,8 +70,8 @@ services:
         deploy:
             resources:
                 limits:
-                    cpus: "0.5"
-                    memory: 500M
+                    cpus: "2"
+                    memory: 2000M
 volumes:
     1580_postgres_data:
     1580_redis_data:
