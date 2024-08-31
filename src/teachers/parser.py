@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 
-from src.bot.config import Config
+from src.config import Config
 
 config = Config()
 

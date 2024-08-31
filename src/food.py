@@ -3,7 +3,7 @@ import platform
 import pdf2image
 import requests
 
-from bot.config import Config
+from src.config import Config
 
 config = Config()
 

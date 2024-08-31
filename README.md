@@ -1,3 +1,5 @@
+# Official 1580 school telegram bot
+
 ## Plain setup:
 
 1. Create virtual environment.
@@ -76,9 +78,7 @@ python main.py
 ## Docker setup:
 1. Install [docker](https://docs.docker.com/engine/install/).
 
-2. Change dotenv path in [config.py](src/bot/config.py) to  `.docker.env`.
-
-3. Run app.
+2. Run app.
 ```bash
 docker compose up --build
 ```

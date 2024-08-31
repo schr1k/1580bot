@@ -6,9 +6,7 @@ __pycache__
 .idea
 .vscode
 
-*.env
+.env
 *.log
 *.json
-docker-logs
-logs
-public/photo/photo
+public/photo/teachers/*.jpg
