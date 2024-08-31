@@ -1,17 +1,25 @@
-FROM python:3.11-alpine
+FROM python:3.12-alpine
 
 WORKDIR /app
 
+RUN apk update && apk add musl musl-utils musl-locales tzdata
+
+RUN echo 'Europe/Moscow' >  /etc/timezone
+
+RUN echo 'export LC_ALL=ru_RU.UTF-8' >> /etc/profile.d/locale.sh
+
+ENV TZ=Europe/Moscow
+
+ENV LC_ALL ru_RU.UTF-8
+
+ENV LANG ru_RU.UTF-8
+
+ENV LANGUAGE ru_RU.UTF-8
+
 COPY . .
 
-RUN apk update
-
-RUN apk add poppler-utils tzdata
-
-RUN ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
+RUN mkdir "logs"
 
 RUN pip install -r requirements.txt
-
-RUN mkdir "logs"
 
 CMD ["python3.11", "-u", "main.py"]

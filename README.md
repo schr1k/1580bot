@@ -23,7 +23,7 @@ pip install -r requirements.txt
 
 4. Download [poppler](https://github.com/oschwartz10612/poppler-windows/releases/), [postgres](https://www.postgresql.org/download/) and [redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/).
 
-5. Change credentials in `.env`.
+5. Change credentials in [.env](./.env).
 ```dotenv
 # Telegram
 TOKEN='Bot token'
@@ -32,10 +32,7 @@ APPROVED_IDEAS_GROUP_ID='id of approved ideas group'
 BUGS_GROUP_ID='id of bugs group'
 
 # Paths
-SCHEDULE_PATH='Absolute path to schedule.json'
-TEACHERS_PATH='Absolute path to teachers.json'
 POPPLER_PATH='Absolute path to bin directory of poppler'
-PROJECT_PATH='Absolute path to project directory'
 
 # Postgres
 POSTGRES_HOST='localhost'
@@ -57,7 +54,8 @@ CREATE TABLE users (
     tg VARCHAR,
     username VARCHAR,
     class VARCHAR,
-    building VARCHAR
+    building VARCHAR,
+    teacher VARCHAR
 );
 
 CREATE TABLE staff (
@@ -78,7 +76,7 @@ python main.py
 ## Docker setup:
 1. Install [docker](https://docs.docker.com/engine/install/).
 
-2. Change dotenv path in [config.py](./bot/config.py) to  `.docker.env`.
+2. Change dotenv path in [config.py](src/bot/config.py) to  `.docker.env`.
 
 3. Run app.
 ```bash

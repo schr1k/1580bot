@@ -3,7 +3,8 @@ CREATE TABLE users (
     tg VARCHAR,
     username VARCHAR,
     class VARCHAR,
-    building VARCHAR
+    building VARCHAR,
+    teacher VARCHAR
 );
 
 CREATE TABLE staff (

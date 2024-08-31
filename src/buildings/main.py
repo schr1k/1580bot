@@ -2,14 +2,13 @@ import logging
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from datetime import datetime
 
-from src.one.main import make_schedule_1
-from src.teachers.main import parse_teachers
-from src.two.main import make_schedule_2
-from src.three.high.main import make_schedule_3h
-from src.three.primary.main import make_schedule_3p
-from src.four.high.main import make_schedule_4h
-from src.four.primary.main import make_schedule_4p
-from src.food.main import parse_menu
+from src.buildings.one import make_schedule_1
+from src.buildings.two import make_schedule_2
+from src.buildings.four_high import make_schedule_3h
+from src.buildings.four_primary import make_schedule_3p
+from src.buildings.three_high import make_schedule_4h
+from src.buildings.three_primary import make_schedule_4p
+from src.food import parse_menu
 from src.teachers.parser import parse_photo, parse_subject
 
 
@@ -50,10 +49,10 @@ def teachers():
 async def create_schedule():
     try:
         scheduler = AsyncIOScheduler()
-        schedules()
-        menus()
-        parse_teachers()
-        teachers()
+        # schedules()
+        # menus()
+        # parse_teachers()
+        # teachers()
         scheduler.add_job(schedules, "interval", hours=8, start_date='2023-01-01 20:00:00', name='schedules')
         scheduler.add_job(teachers, "interval", hours=6, start_date='2023-01-01 20:00:00', name='teachers')
         scheduler.add_job(menus, "interval", hours=4, start_date='2023-01-01 20:00:00', name='menus')

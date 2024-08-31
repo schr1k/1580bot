@@ -20,4 +20,4 @@ def parse_menu():
             image = pdf2image.convert_from_bytes(pdf.content, poppler_path=config.POPPLER_PATH)
         else:
             image = pdf2image.convert_from_bytes(pdf.content)
-        image[0].save(f'{config.PROJECT_PATH}/src/food/{building + 1}.jpg', 'JPEG')
+        image[0].save(f'public/photo/food/{building + 1}.jpg', 'JPEG')

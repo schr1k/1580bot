@@ -2,11 +2,11 @@ from bs4 import BeautifulSoup
 import requests
 import json
 
-from bot.config import Config
+from src.bot.config import Config
 
 config = Config()
 
-with open(config.TEACHERS_PATH, 'r', encoding='utf-8') as f:
+with open('public/json/teachers.json', 'r', encoding='utf-8') as f:
     teachers = json.load(f)
 
 data = requests.get('https://lycu1580.mskobr.ru/o-nas/pedagogicheskii-sostav')
@@ -37,7 +37,7 @@ def parse_photo():
                         with open(f"{config.PROJECT_PATH}/src/teachers/photo/{i}.jpg", "wb") as f:
                             f.write(p.content)
 
-    with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
+    with open('public/json/teachers.json', 'w', encoding='utf-8') as f:
         json.dump(teachers, f, ensure_ascii=False, indent=4)
 
 
@@ -59,5 +59,5 @@ def parse_subject():
                         if j['surname'] == surname and j['name'] == name:
                             teachers[i]['subject'] = subject
 
-    with open(config.TEACHERS_PATH, 'w', encoding='utf-8') as f:
+    with open('public/json/teachers.json', 'w', encoding='utf-8') as f:
         json.dump(teachers, f, ensure_ascii=False, indent=4)

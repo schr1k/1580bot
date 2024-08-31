@@ -1,8 +1,14 @@
+# Python
 venv
-.idea
 __pycache__
+
+# IDEs
+.idea
+.vscode
+
 *.env
 *.log
 *.json
 docker-logs
 logs
+public/photo/photo
