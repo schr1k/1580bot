@@ -9,12 +9,12 @@ config = Config()
 with open('public/json/teachers.json', 'r', encoding='utf-8') as f:
     teachers = json.load(f)
 
-data = requests.get('https://lycu1580.mskobr.ru/o-nas/pedagogicheskii-sostav')
-soup = BeautifulSoup(data.text, 'html.parser')
 sl = {}
 
 
 def parse_photo():
+    data = requests.get('https://lycu1580.mskobr.ru/o-nas/pedagogicheskii-sostav')
+    soup = BeautifulSoup(data.text, 'html.parser')
     for div in soup.findAll('div', class_='col-md-3 teacherblock'):
         if len(div.find('a', class_='fio').text.split()) == 3:
             surname, name, patronymic = div.find('a', class_='fio').text.split()
@@ -24,7 +24,7 @@ def parse_photo():
                     if j['surname'] == surname and j['name'] == name and j['patronymic'] == patronymic:
                         teachers[i]['photo'] = True
                         p = requests.get(f'https://lycu1580.mskobr.ru/{src}')
-                        with open(f"{config.PROJECT_PATH}/src/teachers/photo/{i}.jpg", "wb") as f:
+                        with open("src/public/photo/teachers/{i}.jpg", "wb") as f:
                             f.write(p.content)
         elif len(div.find('a', class_='fio').text.split()) == 2:
             surname, name = div.find('a', class_='fio').text.split()
@@ -34,7 +34,7 @@ def parse_photo():
                     if j['surname'] == surname and j['name'] == name:
                         teachers[i]['photo'] = True
                         p = requests.get(f'https://lycu1580.mskobr.ru/{src}')
-                        with open(f"{config.PROJECT_PATH}/src/teachers/photo/{i}.jpg", "wb") as f:
+                        with open("src/public/photo/teachers/{i}.jpg", "wb") as f:
                             f.write(p.content)
 
     with open('public/json/teachers.json', 'w', encoding='utf-8') as f:
@@ -42,6 +42,8 @@ def parse_photo():
 
 
 def parse_subject():
+    data = requests.get('https://lycu1580.mskobr.ru/o-nas/pedagogicheskii-sostav')
+    soup = BeautifulSoup(data.text, 'html.parser')
     for div in soup.findAll('div', class_='col-md-3 teacherblock'):
         if div.find('a', class_='fio') is not None:
             if len(div.find('a', class_='fio').text.split()) == 3:

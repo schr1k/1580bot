@@ -6,7 +6,7 @@ config = Config()
 
 
 def parse_teachers():
-    df = pd.read_excel(f'{config.PROJECT_PATH}/src/teachers/emails.xlsx').values.tolist()
+    df = pd.read_excel(f'src/public/teachers.xlsx').values.tolist()
     teachers = {}
     for i in df:
         teachers[i[0]] = {
