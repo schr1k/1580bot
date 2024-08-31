@@ -15,7 +15,7 @@ from src.bot import kb
 from src.bot.db import DB
 from src.funcs import *
 from src.bot.states import *
-from src.buildings.main import create_schedule
+from src.main import create_schedule
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
