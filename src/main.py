@@ -4,10 +4,10 @@ from datetime import datetime
 
 from src.buildings.one import make_schedule_1
 from src.buildings.two import make_schedule_2
-from src.buildings.four_high import make_schedule_3h
-from src.buildings.four_primary import make_schedule_3p
-from src.buildings.three_high import make_schedule_4h
-from src.buildings.three_primary import make_schedule_4p
+from src.buildings.three_high import make_schedule_3h
+from src.buildings.three_primary import make_schedule_3p
+from src.buildings.four_high import make_schedule_4h
+from src.buildings.four_primary import make_schedule_4p
 from src.food import parse_menu
 from src.teachers.parser import parse_photo, parse_subject
 
