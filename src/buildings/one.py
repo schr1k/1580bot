@@ -6,15 +6,15 @@ from src.config import Config
 config = Config()
 
 
-def make_schedule_1():
-    df = pd.read_excel('https://lycu1580.mskobr.ru/files/attach_files/rasp1k.xlsx', header=None).T.values.tolist()
+def make_schedule_1():  # https://lycu1580.mskobr.ru/files/attach_files/rasp1k.xlsx
+    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/sch1k_1.xlsx', header=None, engine='openpyxl').T.values.tolist()
     with open('public/json/buildings/1.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
     with open(f'public/json/buildings/1.json', encoding='utf-8') as f:
         excel = json.load(f)
 
-    excel = excel[2:46] + excel[48:-2]
+    excel = excel[2:42] + excel[45:93]
 
     weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
 
