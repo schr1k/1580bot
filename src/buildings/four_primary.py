@@ -7,7 +7,7 @@ config = Config()
 
 
 def make_schedule_4p():  # https://lycu1580.mskobr.ru/files/schedule/rasp_symbol_ns_4.xlsx
-    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/sch4k_ns_1.xlsx', header=None).T.values.tolist()
+    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/sch4k_ns_2.xlsx', header=None, engine='openpyxl').T.values.tolist()
     with open('public/json/buildings/4p.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
@@ -20,17 +20,18 @@ def make_schedule_4p():  # https://lycu1580.mskobr.ru/files/schedule/rasp_symbol
 
     schedule = {}
 
-    for column in range(len(excel)):
+    for column in range(len(excel))[::2]:
         group = str(excel[column][0]).lower()
         for c, i in enumerate(range(0, len(excel[column]), 6)):
-            lessons = excel[column][i + 1: i + 7]
+            lessons = list(zip(excel[column][i + 1: i + 7], excel[column + 1][i + 1: i + 7]))
             for j in range(len(lessons)):
-                if lessons[j] is not None:
-                    sp = str(lessons[j]).split('\n')
-                    if len(sp) == 2:
-                        sl = {'lesson': sp[0], 'teacher': sp[1], 'building': '4'}
+                if lessons[j] is not None and lessons[j][0] is not None:
+                    sp = str(lessons[j][0]).split('\n')
+                    sp.append(lessons[j][1])
+                    if len(sp) == 3:
+                        sl = {'lesson': sp[0], 'teacher': sp[1], 'cabinet': sp[2], 'building': '4'}
                     else:
-                        sl = {'lesson': sp[0], 'teacher': None, 'building': '4'}
+                        sl = {'lesson': sp[0][:36], 'teacher': sp[0][37:], 'cabinet': sp[1], 'building': '4'}
                     lessons[j] = sl
             day_schedule = {}
             for lesson_number, j in zip(range(1, 9), list(lessons)):

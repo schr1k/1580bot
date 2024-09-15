@@ -10,8 +10,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Deploy with pm2
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -20,7 +18,6 @@ jobs:
           password: ${{secrets.SSH_PASSWORD}}
           script: |
             cd ${{ secrets.PROJECT_FOLDER }}
-            pip install -r requirements.txt
             git checkout master
             git pull
             pm2 restart ecosystem.config.js

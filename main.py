@@ -183,7 +183,7 @@ async def teacher_info(message: Message, state: FSMContext):
         if teachers[n]['subject'] is not None:
             text += f'<i>Занимаемая должность:</i> {teachers[n]["subject"]}.'
         if teachers[n]["photo"]:
-            photo = FSInputFile(f'public/photo/photo/{n}.jpg')
+            photo = FSInputFile(f'public/photo/teachers/{n}.jpg')
             await message.answer_photo(photo=photo, caption=text, parse_mode='HTML',
                                        reply_markup=kb.teacher_schedule_kb(message.text.split()[0].capitalize()))
         else:
@@ -213,7 +213,7 @@ async def call_teacher_info(call: CallbackQuery):
     if teachers[n]['subject'] is not None:
         text += f'<i>Занимаемая должность:</i> {teachers[n]["subject"]}.'
     if teachers[n]["photo"]:
-        photo = FSInputFile(f'public/photo/photo/{n}.jpg')
+        photo = FSInputFile(f'public/photo/teachers/{n}.jpg')
         await call.message.answer_photo(photo=photo, caption=text, parse_mode='HTML',
                                         reply_markup=kb.teacher_schedule_kb(call.data.split('-')[1]))
     else:
@@ -806,9 +806,9 @@ async def command_exception(message: Message):
 
 
 async def main():
+    await db.connect()
+    await asyncio.create_task(create_schedule())
     try:
-        await db.connect()
-        await asyncio.create_task(create_schedule())
         print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
         await dp.start_polling(bot)
     except Exception as e:

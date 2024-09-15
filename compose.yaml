@@ -67,6 +67,11 @@ services:
         depends_on:
             - 1580_redis
             - 1580_postgres
+        develop:
+            watch:
+                - action: sync+restart
+                  path: .
+                  target: /app
         deploy:
             resources:
                 limits:
