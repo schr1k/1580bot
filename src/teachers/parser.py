@@ -37,8 +37,9 @@ def parse_photo():
                         with open(f'src/public/photo/teachers/{i}.jpg', 'wb') as f:
                             f.write(p.content)
 
-    with open('public/json/teachers.json', 'w', encoding='utf-8') as f:
-        json.dump(teachers, f, ensure_ascii=False, indent=4)
+    if len(teachers.keys() != 0):
+        with open('public/json/teachers.json', 'w', encoding='utf-8') as f:
+            json.dump(teachers, f, ensure_ascii=False, indent=4)
 
 
 def parse_subject():
@@ -61,5 +62,6 @@ def parse_subject():
                         if j['surname'] == surname and j['name'] == name:
                             teachers[i]['subject'] = subject
 
-    with open('public/json/teachers.json', 'w', encoding='utf-8') as f:
-        json.dump(teachers, f, ensure_ascii=False, indent=4)
+    if len(teachers.keys() != 0):
+        with open('public/json/teachers.json', 'w', encoding='utf-8') as f:
+            json.dump(teachers, f, ensure_ascii=False, indent=4)
