@@ -23,7 +23,7 @@ def make_schedule_4h():  # https://lycu1580.mskobr.ru/files/schedule/rasp_symbol
     for column in range(len(excel))[::2]:
         group = str(excel[column][0]).lower()
         for c, i in enumerate(range(0, len(excel[column]), 9)):
-            lessons = list(zip(excel[column][i + 2: i + 10], excel[column + 1][i + 1: i + 9]))
+            lessons = list(zip(excel[column][i + 2: i + 10], excel[column + 1][i + 2: i + 10]))
             for j in range(len(lessons)):
                 if lessons[j] is not None and lessons[j][0] is not None:
                     sp = str(lessons[j][0]).split('\n')
