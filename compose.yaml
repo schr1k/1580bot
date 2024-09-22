@@ -56,7 +56,7 @@ services:
                     memory: 1000M
     bot:
         container_name:
-            bot
+            1580_bot
         build:
             context:
                 .
