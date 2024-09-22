@@ -20,4 +20,4 @@ jobs:
             cd ${{ secrets.PROJECT_FOLDER }}
             git checkout master
             git pull
-            pm2 restart ecosystem.config.js
+            docker compose up --build -d

@@ -11,21 +11,18 @@ ENV LANG ru_RU.UTF-8
 ENV LANGUAGE ru_RU.UTF-8
 
 RUN apk --no-cache add \
+    poppler-utils \
     musl-locales \
-    musl-locales-lang \
-    python3 \
-    musl-utils \
-    tzdata
+    musl-utils
 
-RUN echo 'Europe/Moscow' >  /etc/timezone
-
-RUN echo 'export LC_ALL=ru_RU.UTF-8' >> /etc/profile.d/locale.sh
+RUN echo 'Europe/Moscow' >  /etc/timezone  \
+    echo 'export LC_ALL=ru_RU.UTF-8' >> /etc/profile.d/locale.sh
 
 WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --no-cache-dir
 
 COPY . .
 
