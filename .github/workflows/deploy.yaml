@@ -1,4 +1,4 @@
-name: Deploy with pm2
+name: Deploy with docker
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy with pm2
+      - name: Deploy with docker
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{secrets.SSH_HOST}}
