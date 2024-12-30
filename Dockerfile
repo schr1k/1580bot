@@ -10,7 +10,7 @@ ENV LANG ru_RU.UTF-8
 
 ENV LANGUAGE ru_RU.UTF-8
 
-RUN apk --no-cache add \
+RUN apk update && apk --no-cache add \
     poppler-utils \
     musl-locales \
     musl-utils
