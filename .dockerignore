@@ -16,7 +16,12 @@ compose.yaml
 .github
 .gitignore
 README.md
+LICENSE.md
+CODE_OF_CONDUCT.md
 
+.env.example
 *.log
-*.json
-*.jpg
+public/photo/teachers/*.jpg
+public/photo/food/*.jpg
+
+ecosystem.config.js

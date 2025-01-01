@@ -45,7 +45,7 @@ services:
               required: true
         healthcheck:
             test: [ "CMD-SHELL", "redis-cli PING | grep PONG" ]
-            interval: 10s
+            interval: 60s
             timeout: 5s
             retries: 5
             start_period: 10s
