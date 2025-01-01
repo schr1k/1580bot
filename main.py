@@ -34,15 +34,7 @@ dp = Dispatcher(storage=storage)
 
 weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота']
 
-logging.basicConfig(filename="all.log", level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
-errors = logging.getLogger("errors")
-errors.setLevel(logging.ERROR)
-fh = logging.FileHandler("errors.log")
-formatter = logging.Formatter(
-    '%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
-fh.setFormatter(formatter)
-errors.addHandler(fh)
+logging.basicConfig(level=logging.INFO)
 
 
 # Главная ==============================================================================================================
@@ -808,11 +800,8 @@ async def command_exception(message: Message):
 async def main():
     await db.connect()
     await asyncio.create_task(create_schedule())
-    try:
-        print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
-        await dp.start_polling(bot)
-    except Exception as e:
-        errors.error(e)
+    print(f'Бот запущен ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    await dp.start_polling(bot)
 
 
 if __name__ == '__main__':

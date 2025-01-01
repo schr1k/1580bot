@@ -4,13 +4,13 @@ ENV MUSL_LOCPATH="/usr/share/i18n/locales/musl"
 
 ENV TZ=Europe/Moscow
 
-ENV LC_ALL ru_RU.UTF-8
+ENV LC_ALL=ru_RU.UTF-8
 
-ENV LANG ru_RU.UTF-8
+ENV LANG=ru_RU.UTF-8
 
-ENV LANGUAGE ru_RU.UTF-8
+ENV LANGUAGE=ru_RU.UTF-8
 
-RUN apk update && apk --no-cache add \
+RUN apk --no-cache add \
     poppler-utils \
     musl-locales \
     musl-utils

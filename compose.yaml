@@ -3,9 +3,9 @@ services:
         container_name:
             1580_postgres
         image:
-            postgres:alpine
+            postgres:17-alpine
         ports:
-            - 5433:${POSTGRES_PORT}
+            - "127.0.0.1:5433:${POSTGRES_PORT}"
         restart:
             unless-stopped
         volumes:
@@ -33,9 +33,9 @@ services:
         container_name:
             1580_redis
         image:
-            redis:alpine
+            redis:7-alpine
         ports:
-            - 6380:${REDIS_PORT}
+            - "127.0.0.1:6380:${REDIS_PORT}"
         restart:
             unless-stopped
         volumes:
