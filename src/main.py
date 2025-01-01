@@ -12,14 +12,7 @@ from src.food import parse_menu
 from src.teachers.parser import parse_photo, parse_subject
 
 
-logging.basicConfig(filename="all.log", level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
-errors = logging.getLogger("errors")
-errors.setLevel(logging.ERROR)
-fh = logging.FileHandler("errors.log")
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(filename)s function: %(funcName)s line: %(lineno)d - %(message)s')
-fh.setFormatter(formatter)
-errors.addHandler(fh)
+logging.basicConfig(level=logging.INFO)
 
 
 def schedules():
@@ -32,30 +25,32 @@ def schedules():
         make_schedule_4p()
         print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
     except Exception as e:
-        errors.error(e)
+        logging.exception(e)
 
 
 def menus():
-    parse_menu()
-    print(f'Меню обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    try:
+        parse_menu()
+        print(f'Меню обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    except Exception as e:
+        logging.exception(e)
 
 
 def teachers():
-    parse_subject()
-    parse_photo()
-    print(f'Учителя обновлены ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    try:
+        parse_subject()
+        parse_photo()
+        print(f'Учителя обновлены ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+    except Exception as e:
+        logging.exception(e)
 
 
 async def create_schedule():
-    try:
-        scheduler = AsyncIOScheduler()
-        # schedules()
-        # menus()
-        # parse_teachers()
-        # teachers()
-        scheduler.add_job(schedules, "interval", hours=8, start_date='2023-01-01 20:00:00', name='schedules')
-        scheduler.add_job(teachers, "interval", hours=6, start_date='2023-01-01 20:00:00', name='teachers')
-        scheduler.add_job(menus, "interval", hours=4, start_date='2023-01-01 20:00:00', name='menus')
-        scheduler.start()
-    except Exception as e:
-        errors.error(e)
+    scheduler = AsyncIOScheduler()
+    schedules()
+    menus()
+    teachers()
+    scheduler.add_job(schedules, "interval", hours=8, start_date='2023-01-01 20:00:00', name='schedules')
+    scheduler.add_job(teachers, "interval", hours=6, start_date='2023-01-01 20:00:00', name='teachers')
+    scheduler.add_job(menus, "interval", hours=4, start_date='2023-01-01 20:00:00', name='menus')
+    scheduler.start()

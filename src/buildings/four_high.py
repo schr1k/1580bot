@@ -7,7 +7,7 @@ config = Config()
 
 
 def make_schedule_4h():  # https://lycu1580.mskobr.ru/files/schedule/rasp_symbol_2.xlsx
-    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/sch4k_3.xls', header=None, engine='xlrd').T.values.tolist()
+    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/4%D0%BA_20242511.xlsx', header=None, engine='openpyxl').T.values.tolist()
     with open('public/json/buildings/4h.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 
