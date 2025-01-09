@@ -23,7 +23,7 @@ def schedules():
         make_schedule_3p()
         make_schedule_4h()
         make_schedule_4p()
-        print(f'Расписание обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+        logging.info('Расписание обновлено.')
     except Exception as e:
         logging.exception(e)
 
@@ -31,7 +31,7 @@ def schedules():
 def menus():
     try:
         parse_menu()
-        print(f'Меню обновлено ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+        logging.info('Меню обновлено.')
     except Exception as e:
         logging.exception(e)
 
@@ -40,7 +40,7 @@ def teachers():
     try:
         parse_subject()
         parse_photo()
-        print(f'Учителя обновлены ({datetime.now().strftime("%H:%M:%S %d.%m.%Y")}).')
+        logging.info('Учителя обновлены.')
     except Exception as e:
         logging.exception(e)
 
@@ -50,7 +50,7 @@ async def create_schedule():
     schedules()
     menus()
     teachers()
-    scheduler.add_job(schedules, "interval", hours=8, start_date='2023-01-01 20:00:00', name='schedules')
-    scheduler.add_job(teachers, "interval", hours=6, start_date='2023-01-01 20:00:00', name='teachers')
-    scheduler.add_job(menus, "interval", hours=4, start_date='2023-01-01 20:00:00', name='menus')
+    scheduler.add_job(schedules, "interval", hours=24, start_date='2023-01-01 20:00:00', name='schedules')
+    scheduler.add_job(teachers, "interval", hours=12, start_date='2023-01-01 20:00:00', name='teachers')
+    scheduler.add_job(menus, "interval", hours=6, start_date='2023-01-01 20:00:00', name='menus')
     scheduler.start()
