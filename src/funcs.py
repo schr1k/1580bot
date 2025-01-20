@@ -1,7 +1,4 @@
 import json
-from src.config import Config
-
-config = Config()
 
 
 def get_schedule() -> dict:

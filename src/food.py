@@ -3,9 +3,7 @@ import platform
 import pdf2image
 import requests
 
-from src.config import Config
-
-config = Config()
+from src.config import config
 
 
 def parse_menu():

@@ -20,8 +20,8 @@ class News(StatesGroup):
     Represents the state group for news submission and management.
     """
     message = State()
-    target = State() 
-    submit = State() 
+    target = State()
+    submit = State()
 
 
 class SuggestIdea(StatesGroup):

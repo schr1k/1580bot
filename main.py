@@ -13,14 +13,14 @@ from redis.asyncio import Redis
 
 from src.bot import kb
 from src.bot.db import DB
-from src.funcs import *
 from src.bot.states import *
+from src.config import config
+from src.funcs import *
 from src.main import create_schedule
 
 locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
 
 db = DB()
-config = Config()
 
 redis = Redis(
     host=config.REDIS_HOST,
