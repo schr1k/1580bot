@@ -1,8 +1,6 @@
-import pandas as pd
 import json
-from src.config import Config
 
-config = Config()
+import pandas as pd
 
 
 def parse_teachers():

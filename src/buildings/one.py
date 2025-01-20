@@ -1,13 +1,13 @@
 import pandas as pd
 import simplejson as json
 
-from src.config import Config
 
-config = Config()
-
-
-def make_schedule_1():  # https://lycu1580.mskobr.ru/files/attach_files/rasp1k.xlsx
-    df = pd.read_excel('https://lycu1580.mskobr.ru/files/schedule/sch1k_1.xlsx', header=None, engine='openpyxl').T.values.tolist()
+def make_schedule_1():
+    df = pd.read_excel(
+        io='https://lycu1580.mskobr.ru/files/schedule/sch1k_1.xlsx',
+        header=None,
+        engine='openpyxl'
+    ).T.values.tolist()
     with open('public/json/buildings/1.json', 'w', encoding='utf-8') as f:
         json.dump(df, f, indent=4, ensure_ascii=False, ignore_nan=True)
 

@@ -13,7 +13,7 @@ python -m venv venv
 venv/Scripts/activate
 ```
 
-* On linux: 
+* On linux:
 ```bash
 source venv/bin/activate
 ```
@@ -26,6 +26,10 @@ pip install -r requirements.txt
 4. Download [poppler](https://github.com/oschwartz10612/poppler-windows/releases/), [postgres](https://www.postgresql.org/download/) and [redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/).
 
 5. Change credentials in [.env](./.env).
+```bash
+cp .env.example .env
+```
+
 ```dotenv
 # Telegram
 TOKEN='Bot token'

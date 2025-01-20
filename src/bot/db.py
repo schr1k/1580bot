@@ -1,8 +1,6 @@
 import asyncpg
 
-from src.config import Config
-
-config = Config()
+from src.config import config
 
 
 class DB:
@@ -17,7 +15,7 @@ class DB:
             port=config.POSTGRES_PORT,
             database=config.POSTGRES_DB,
             min_size=5,
-            max_size=100,
+            max_size=50,
         )
 
     # SELECT ===============================================================================================================

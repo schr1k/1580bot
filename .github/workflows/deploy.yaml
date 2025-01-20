@@ -1,4 +1,4 @@
-name: Deploy with docker
+name: Deploy with pm2
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy with docker
+      - name: Deploy with pm2
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{secrets.SSH_HOST}}
@@ -20,4 +20,4 @@ jobs:
             cd ${{ secrets.PROJECT_FOLDER }}
             git checkout master
             git pull
-            docker compose up --build -d
+            pm2 restart ecosystem.config.js
